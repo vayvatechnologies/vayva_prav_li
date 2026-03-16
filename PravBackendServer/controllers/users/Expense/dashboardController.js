@@ -1,7 +1,7 @@
 const { sendSuccess, sendError } = require('../../../utils/responseHelper');
 const db = require('../../../utils/db');
 const { checkUserAuthToken } = require('../../general/generalController');
-const { fetchUpcomingReminders} = require('../../users/Expense/ReminderController');
+const { fetchUpcomingReminders} = require('../../users/Expense/reminderController');
 const { fetchUserExpenseSpendsChartDataByFilter,fetchUserDashboardUserSpends} = require('../../users/Expense/expenseDetailsController');
 const { fetchHealthDetailByDate} = require('../../users/health/healthController');
 
