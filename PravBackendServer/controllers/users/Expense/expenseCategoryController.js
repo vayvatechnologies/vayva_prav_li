@@ -2,7 +2,7 @@ const { sendSuccess, sendError } = require('../../../utils/responseHelper');
 const db = require('../../../utils/db');
 
 const { checkUserAuthToken,fnGetExpenseType, fnGetCycleTypes, fnGetExpenseMood, fnGetPaymentStatus, fnGetPaymentMode } = require('../../general/generalController');
-const { insertReminder,getReminderByParentId,deleteReminderbyTypeAndParentId,deleteReminderbyIds} = require('../../users/Expense/ReminderController');
+const { insertReminder,getReminderByParentId,deleteReminderbyTypeAndParentId,deleteReminderbyIds} = require('../../users/Expense/reminderController');
 
 // Helper Function
 const toIntOrNull = (value) => {
