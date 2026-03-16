@@ -1,0 +1,317 @@
+{
+	"_version": "1.21.0",
+	"sap.app": {
+		"id": "sap.ui.demo.toolpageapp",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"fallbackLocale": "en",
+			"supportedLocales": [
+				"en",
+				"de"
+			],
+			"terminologies": {
+				"sports": {
+					"bundleUrl": "i18n/terminologies/sports/i18n.terminologies.sports.properties",
+					"bundleUrlRelativeTo": "manifest",
+					"supportedLocales": [
+						"en",
+						"de"
+					]
+				},
+				"travel": {
+					"bundleUrl": "i18n/terminologies/travel/i18n.terminologies.travel.properties",
+					"bundleUrlRelativeTo": "manifest",
+					"supportedLocales": [
+						"en",
+						"de"
+					]
+				}
+			}
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal",
+			"sap_fiori_3",
+			"sap_horizon"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.ui.demo.toolpageapp.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.77.0",
+			"libs": {
+				"sap.m": {},
+				"sap.suite.ui.microchart": {
+					"lazy": true
+				},
+				"sap.tnt": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {},
+      			"sap.viz": {},
+				"sap.uxap": {},
+				"sap.ui.unified": {},
+				"sap.ui.export": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleUrl": "i18n/i18n.properties",
+					"async": true,
+					"fallbackLocale": "en",
+					"supportedLocales": [
+						"en",
+						"de"
+					],
+					"terminologies": {
+						"sports": {
+							"bundleUrl": "i18n/terminologies/sports/i18n.terminologies.sports.properties",
+							"bundleUrlRelativeTo": "manifest",
+							"supportedLocales": [
+								"en",
+								"de"
+							]
+						},
+						"travel": {
+							"bundleUrl": "i18n/terminologies/travel/i18n.terminologies.travel.properties",
+							"bundleUrlRelativeTo": "manifest",
+							"supportedLocales": [
+								"en",
+								"de"
+							]
+						}
+					},
+					"enhanceWith": [
+						{
+							"bundleUrl": "reuse/appvar1/i18n/i18n.properties",
+							"fallbackLocale": "en",
+							"supportedLocales": [
+								"en",
+								"de"
+							],
+							"terminologies": {
+								"sports": {
+									"bundleUrl": "reuse/appvar1/i18n/terminologies/sports/i18n.terminologies.sports.properties",
+									"bundleUrlRelativeTo": "manifest",
+									"supportedLocales": [
+										"en",
+										"de"
+									]
+								},
+								"travel": {
+									"bundleUrl": "reuse/appvar1/i18n/terminologies/travel/i18n.terminologies.travel.properties",
+									"bundleUrlRelativeTo": "manifest",
+									"supportedLocales": [
+										"en",
+										"de"
+									]
+								}
+							}
+						},
+						{
+							"bundleUrl": "reuse/appvar2/i18n/i18n.properties",
+							"bundleUrlRelativeTo": "manifest",
+							"supportedLocales": [
+								"en",
+								"de"
+							],
+							"fallbackLocale": "en",
+							"terminologies": {
+								"travel": {
+									"bundleUrl": "reuse/appvar2/i18n/terminologies/travel/i18n.terminologies.travel.properties",
+									"bundleUrlRelativeTo": "manifest",
+									"supportedLocales": [
+										"en",
+										"de"
+									]
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlId": "mainContents",
+				"viewType": "XML",
+				"controlAggregation": "pages",
+				"viewPath": "sap.ui.demo.toolpageapp.view"
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "home",
+					"target": "home",
+          			"loginRequired": false
+				},
+				{
+					"pattern": "ExpenseTracker",
+					"name": "ExpenseTracker",
+					"target": "ExpenseTracker",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "Dashboard",
+					"name": "Dashboard",
+					"target": "Dashboard",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "termsAndConditions",
+					"name": "termsAndConditions",
+					"target": "termsAndConditions",
+          			"loginRequired": false
+				},
+				{
+					"pattern": "privacyPolicy",
+					"name": "privacyPolicy",
+					"target": "privacyPolicy",
+          			"loginRequired": false
+				},
+				{
+					"pattern": "settings",
+					"name": "settings",
+					"target": "settings",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "contact",
+					"name": "contact",
+					"target": "contact",
+          			"loginRequired": false
+				},
+				{
+					"pattern": "ExpenseCategory",
+					"name": "ExpenseCategory",
+					"target": "ExpenseCategory",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "ExpenseOverview",
+					"name": "ExpenseOverview",
+					"target": "ExpenseOverview",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "ExpenseOverviewChat",
+					"name": "ExpenseOverviewChat",
+					"target": "ExpenseOverviewChat",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "HealthMonitor",
+					"name": "HealthMonitor",
+					"target": "HealthMonitor",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "Todo",
+					"name": "Todo",
+					"target": "Todo",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "Calendar",
+					"name": "Calendar",
+					"target": "Calendar",
+          			"loginRequired": true
+				},
+				{
+					"pattern": "AdminDashboard",
+					"name": "AdminDashboard",
+					"target": "AdminDashboard",
+          			"loginRequired": true
+				}
+				
+				
+			],
+			"targets": {
+				"home": {
+					"viewId": "home",
+					"viewName": "Login"
+				},
+				"ExpenseTracker": {
+					"viewId": "ExpenseTracker",
+					"viewName": "user.expense.ExpenseTracker"
+				},
+				"ExpenseCategory": {
+					"viewId": "ExpenseCategory",
+					"viewName": "user.expense.ExpenseCategory"
+				},
+				"ExpenseOverview": {
+					"viewId": "ExpenseOverview",
+					"viewName": "user.expense.ExpenseOverview"
+				},
+				"ExpenseOverviewChat": {
+					"viewId": "ExpenseOverviewChat",
+					"viewName": "user.expense.ExpenseOverviewChat"
+				},
+				"Todo": {
+					"viewId": "Todo",
+					"viewName": "user.productivity.Todo"
+				},
+				"Calendar": {
+					"viewId": "Calendar",
+					"viewName": "user.productivity.Calendar"
+				},
+				"HealthMonitor": {
+					"viewId": "HealthMonitor",
+					"viewName": "user.health.HealthMonitor"
+				},
+				"Dashboard": {
+					"viewId": "Dashboard",
+					"viewName": "Dashboard"
+				},
+				"termsAndConditions": {
+					"viewId": "termsAndConditions",
+					"viewName": "AppInfo.termsAndConditions"
+				},
+				"privacyPolicy": {
+					"viewId": "privacyPolicy",
+					"viewName": "AppInfo.privacyPolicy"
+				},
+				"settings": {
+					"viewId": "settings",
+					"viewName": "AppInfo.settings"
+				},
+				"contact": {
+					"viewId": "contact",
+					"viewName": "AppInfo.contact"
+				},
+				
+				"AdminDashboard": {
+					"viewId": "AdminDashboard",
+					"viewName": "admin.Dashboard"
+				}
+			}
+		}
+	}
+}

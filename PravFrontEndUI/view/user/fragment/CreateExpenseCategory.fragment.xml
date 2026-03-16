@@ -1,0 +1,383 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout">
+
+	<Dialog  stretch="{= ${device>/system/phone} }"
+		id="expenseDialog"
+		contentWidth="50%"
+		contentHeight="auto"
+		stretchOnPhone="true"
+		class="sapUiResponsiveContentPadding"
+		afterClose="onCreateExpenseDialogClose">
+
+		<!-- ================= HEADER ================= -->
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title
+						class="sapUiTinyMarginBegin sapMBarTitle"
+						text="{= ${oGetExpenseCategoryModel>/fragMode} === 'Create' 
+							? 'Add Expense Category' : 'Edit Expense Category' }" />
+				</contentLeft>
+
+				<contentRight>
+					<Button icon="sap-icon://decline"
+						type="Transparent"
+						press="onCreateExpenseDialogClose" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+
+		<!-- =================== TABS =================== -->
+		<IconTabBar id="myTwoTabs"
+			class=""
+			expandable="false">
+
+			<items>
+
+				<!-- ====================================================== -->
+				<!-- ===================== TAB 1 ========================== -->
+				<!-- ====================================================== -->
+				<IconTabFilter
+					key="tab1"
+					text="Category"
+					icon="sap-icon://money-bills">
+
+					<VBox class="sapUiSmallMargin sapUiTinyMarginTop  sapUiResponsiveContentPadding " width="100%">
+
+ 						 
+ <FlexBox direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"  wrap="Wrap" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+
+							<!-- Suggestions -->
+							<VBox width="{= ${device>/system/phone} ? '98%' : '45%' }">
+									<Label text="Category" required="true" />
+							     <!-- <Input value="{oGetExpenseCategoryModel>/expenseCategory/category}" width="97%" /> -->
+								<ComboBox visible="{= ${oGetExpenseCategoryModel>/fragMode} === 'Create' }"
+								 items="{categoryModel>/expense}" selectionChange=".onCategoryInputChange"
+								 value="{oGetExpenseCategoryModel>/expenseCategory/categoryInput}"
+								  selectedKey="{oGetExpenseCategoryModel>/expenseCategory/category}">
+									<core:Item    key="{categoryModel>key}" text="{categoryModel>text}" />
+								</ComboBox>
+									<ObjectIdentifier title="{oGetExpenseCategoryModel>/expenseCategory/categoryInput}" 
+										 visible="{= ${oGetExpenseCategoryModel>/fragMode} === 'Edit' }"
+									/>
+
+							</VBox>
+
+							<!-- Limits Section -->
+							<VBox width="{= ${device>/system/phone} ? '98%' : '50%' }">
+								 <Label text="Sub Category" required="true"/>
+							     <!-- <Input value="{oGetExpenseCategoryModel>/expenseCategory/subcategory}" width="97%" /> -->
+     <ComboBox   items="{subcategoryModel>/}"  visible="{= ${oGetExpenseCategoryModel>/fragMode} === 'Create' }" value="{oGetExpenseCategoryModel>/expenseCategory/subcategoryInput}"
+							 selectedKey="{oGetExpenseCategoryModel>/expenseCategory/subcategory}">
+							<core:Item  
+                    key="{subcategoryModel>subcategory}"
+                    text="{subcategoryModel>subcategory}" />
+						</ComboBox>
+						<ObjectIdentifier title="{oGetExpenseCategoryModel>/expenseCategory/subcategory}" 
+										 visible="{=${oGetExpenseCategoryModel>/fragMode} === 'Edit' }"
+									/>
+							</VBox>
+
+						</FlexBox>
+
+
+ 						<FlexBox direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"  wrap="Wrap" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+
+							<!-- Suggestions -->
+							<VBox width="{= ${device>/system/phone} ? '98%' : '45%' }">
+								<Label text="Suggestions" required="true"/>
+								<TextArea growing="true"
+									growingMaxLines="6"
+									rows="3"
+									width="96%"
+                value="{oGetExpenseCategoryModel>/expenseCategory/suggestions}"  />
+							</VBox>
+
+							<!-- Limits Section -->
+							<VBox width="{= ${device>/system/phone} ? '98%' : '50%' }">
+								<Label text="Spend Limit in (Month)" required="true" />
+								<Input width="96%" type="Number" liveChange=".onSpendLimitChange" change=".onSpendLimitChange"
+                value="{oGetExpenseCategoryModel>/expenseCategory/spend_limit_month}"/>
+
+								<HBox width="100%" class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+									<VBox width="23%">
+                    <Label text="Week" />
+                    <Label text="{oGetExpenseCategoryModel>/expenseCategory/weeklimit}" wrapping="true" />
+                </VBox>
+
+                <VBox width="23%">
+                    <Label text="Monthly" />
+                    <Label text="{oGetExpenseCategoryModel>/expenseCategory/monthlimit}" wrapping="true" />
+                </VBox>
+
+                <VBox width="23%">
+                    <Label text="Quarterly" />
+                    <Label text="{oGetExpenseCategoryModel>/expenseCategory/quarterlimit}" wrapping="true" />
+                </VBox>
+
+                <VBox width="23%">
+                    <Label text="Yearly" />
+                    <Label text="{oGetExpenseCategoryModel>/expenseCategory/yearlimit}" wrapping="true" />
+                </VBox>
+								</HBox>
+							</VBox>
+
+						</FlexBox>
+
+ 						<FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+
+							<VBox width="45%">
+								<Label text="Payment Preference" required="true"/>
+								<ComboBox width="100%"
+									selectedKey="{oGetExpenseCategoryModel>/expenseCategory/payment_mode}"
+									items="{oGetExpenseCategoryModel>/paymentModes}">
+									<core:Item key="{oGetExpenseCategoryModel>key}"
+										text="{oGetExpenseCategoryModel>text}" />
+								</ComboBox>
+							</VBox>
+
+							<VBox width="23%" justifyContent="Start">
+								<Label text="Is Planned" />
+								<Switch width="100%"
+									state="{oGetExpenseCategoryModel>/expenseCategory/is_planned}"
+									change=".onSwitchChange" />
+							</VBox>
+							<VBox width="23%" justifyContent="Start" visible="{=${oGetExpenseCategoryModel>/fragMode} === 'Edit' }"> 
+								<Label text="Status" />
+								<Switch width="100%"
+									state="{oGetExpenseCategoryModel>/expenseCategory/status}"
+									change=".onSwitchChange" />
+							</VBox>
+
+							 
+
+						</FlexBox>
+
+						<Button text="Next"
+							type="Emphasized"
+							class="sapUiSmallMarginTop"
+							press=".onNextStep" />
+
+					</VBox>
+				</IconTabFilter>
+
+				<!-- ====================================================== -->
+				<!-- ===================== TAB 2 ========================== -->
+				<!-- ====================================================== -->
+				<IconTabFilter
+    key="tab2"
+    text="Recurring"
+    icon="sap-icon://supplier">
+
+    <HBox width="100%" class="sapUiSmallMargin sapUiTinyMarginTop sapUiResponsiveContentPadding ">
+
+        <FlexBox direction="{= ${device>/system/phone} ? 'Column' : 'Row' }" width="100%">
+
+            <!-- LEFT SIDE -->
+            <VBox width="{= ${device>/system/phone} ? '100%' : '60%' }">
+
+                <!-- Start Date -->
+                <HBox justifyContent="{= ${device>/system/phone} ? 'Start' : 'SpaceBetween' }" alignItems="Center">
+                   
+				   <VBox >
+								<Label text="Make Recurring?" wrapping="true" />
+								<Switch state="{oGetExpenseCategoryModel>/expenseCategory/recurring}" change="onChangeRecurring" />
+							</VBox>
+							<VBox class="sapUiTinyMarginBegin"  visible="{oGetExpenseCategoryModel>/expenseCategory/recurring}" >
+                <Label text="Start Date"  required="true"/>
+				    	<DatePicker id="ExpenseCategoriesStratDate"
+    value="{
+        path: 'oGetExpenseCategoryModel>/expenseCategory/recurring_startdate',
+        formatter: '.formatter.formatDateValue'
+    }"
+    displayFormat="long"
+    valueFormat="yyyy-MM-dd" 
+    minDate="{
+        path: 'oGetExpenseCategoryModel>/expenseCategory/recurring_startdate',
+        formatter: '.formatter.convertIntoDateTimePIckerformat'
+    }"
+    change=".onPreviewRecurrence"
+/>
+<!-- <DatePicker value="{oGetExpenseCategoryModel>/expenseCategory/recurring_startdate}" displayFormat="long"
+                       valueFormat="yyyy-MM-dd" minDate="{
+            path: 'oGetExpenseCategoryModel>/expenseCategory/recurring_startdate',
+            formatter: '.formatter.convertIntoDateTimePIckerformat'
+        }"  change=".onPreviewRecurrence" /> -->
+                   </VBox>
+                </HBox>
+
+                <!-- Frequency -->
+                <IconTabBar  visible="{oGetExpenseCategoryModel>/expenseCategory/recurring}" expandable="false"
+                    selectedKey="{oGetExpenseCategoryModel>/expenseCategory/recurringtype}"
+                    select=".onFrequencySelect"
+                    class="sapUiSmallMarginBottom">
+
+                    <items>
+                        <IconTabFilter key="Daily" text="Daily">
+						 <!-- DAILY -->
+						<VBox class="sapUiSmallMarginTop" >
+							<Label text="Every X day(s)" />
+							<Input type="Number" width="6rem"
+									placeholder="Enter days 1,2,,,31"
+								value="{oGetExpenseCategoryModel>/expenseCategory/recurringinterval}"
+								liveChange="onPreviewRecurrence"
+								change="onPreviewRecurrence"/>
+						</VBox>
+
+                        </IconTabFilter>
+                        <IconTabFilter key="Weekly" text="Weekly" >
+							<!-- WEEKLY -->
+							<HBox  class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+
+								<VBox width="30%">
+									<Label text="Every X week(s)" />
+									<Input type="Number" width="6rem"
+									placeholder="Enter days 1,2,,,"
+										value="{oGetExpenseCategoryModel>/expenseCategory/recurringinterval}"
+										liveChange="onPreviewRecurrence"
+										change="onPreviewRecurrence"/>
+								</VBox>
+
+								<VBox width="65%">
+									<Label text="On:" />
+									<HBox wrap="Wrap">
+
+										<CheckBox text="Sun" selected="{oGetExpenseCategoryModel>/recurrence/days/sun}" select="onPreviewRecurrence"/>
+										<CheckBox text="Mon" selected="{oGetExpenseCategoryModel>/recurrence/days/mon}" select="onPreviewRecurrence"/>
+										<CheckBox text="Tue" selected="{oGetExpenseCategoryModel>/recurrence/days/tue}" select="onPreviewRecurrence"/>
+										<CheckBox text="Wed" selected="{oGetExpenseCategoryModel>/recurrence/days/wed}" select="onPreviewRecurrence"/>
+										<CheckBox text="Thu" selected="{oGetExpenseCategoryModel>/recurrence/days/thu}" select="onPreviewRecurrence"/>
+										<CheckBox text="Fri" selected="{oGetExpenseCategoryModel>/recurrence/days/fri}" select="onPreviewRecurrence"/>
+										<CheckBox text="Sat" selected="{oGetExpenseCategoryModel>/recurrence/days/sat}" select="onPreviewRecurrence"/>
+
+									</HBox>
+								</VBox>
+							</HBox>
+
+                        </IconTabFilter>
+                        <IconTabFilter key="Monthly" text="Monthly" >						
+							<!-- MONTHLY -->
+							<HBox  class="sapUiSmallMarginTop"  
+								justifyContent="SpaceBetween">
+
+								<VBox width="48%">
+									<Label text="Every X month(s)" />
+									<Input type="Number" width="6rem"
+									placeholder="Enter days 1,2,,upto 12"
+										value="{oGetExpenseCategoryModel>/expenseCategory/recurringinterval}"
+										liveChange="onPreviewRecurrence"
+										change="onPreviewRecurrence"/>
+								</VBox>
+
+								<VBox width="48%">
+									<Label text="On day" />
+									<Input type="text"  width="100%"
+									placeholder="Enter days 1,2,,,31"
+										value="{oGetExpenseCategoryModel>/expenseCategory/recurring_day_of_month}"
+									
+										change="onPreviewRecurrence"/>
+								</VBox>
+							</HBox>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+ 
+
+                
+
+                <!-- END SETTINGS -->
+                <VBox class="sapUiSmallMarginTop" visible="{oGetExpenseCategoryModel>/expenseCategory/recurring}">
+                    <Title text="End Date Range" />
+
+                    <HBox alignItems="Center">
+                        <RadioButton text="End by" select="onPreviewRecurrence"
+                            selected="{oGetExpenseCategoryModel>/recurrence/endByEnabled}" />
+                        <DatePicker value="{
+        path: 'oGetExpenseCategoryModel>/expenseCategory/enddate_by',
+        formatter: '.formatter.formatDateValue'
+    }"  displayFormat="long"
+    valueFormat="yyyy-MM-dd" 
+                         minDate="{
+            path: 'oGetExpenseCategoryModel>/expenseCategory/enddate_by',
+            formatter: '.formatter.getMinDate'
+        }" id="oExpenseCategoryEndDate"  change="onPreviewRecurrence"
+                            class="sapUiSmallMarginBegin"/>
+                    </HBox>
+
+                    <HBox alignItems="Center" class="sapUiSmallMarginTop">
+                        <RadioButton text="End after"  select="onPreviewRecurrence"
+                            selected="{oGetExpenseCategoryModel>/recurrence/endAfterEnabled}" />
+                        <Input width="5rem" type="Number"
+                            value="{oGetExpenseCategoryModel>/expenseCategory/end_interval}"
+                            change="onPreviewRecurrence"
+                            class="sapUiSmallMarginBegin"/>
+                        <Label text="occurrences" class="sapUiSmallMarginBegin" />
+                    </HBox>
+                </VBox>
+
+            </VBox>
+
+            <!-- RIGHT SIDE PREVIEW -->
+            <VBox width="{= ${device>/system/phone} ? '100%' : '40%' }"  visible="{oGetExpenseCategoryModel>/expenseCategory/recurring}">
+                <HBox justifyContent="SpaceBetween" width="85%">
+					<Title text="Recurring Dates" />
+					<Button text="Preview Recurring" class="sapUiTinyMarginBegin" press=".onPreviewRecurrence" />
+				</HBox>
+                <List
+					items="{oGetExpenseCategoryModel>/recurrence/preview}"
+					height="18rem">
+
+					<CustomListItem>
+						<HBox
+							width="100%"
+							justifyContent="SpaceBetween"
+							alignItems="Center">
+
+							<!-- Date -->
+							<Text 
+							 text="{
+            path: 'oGetExpenseCategoryModel>date',
+            formatter: '.formatter.dateToFixedString'
+        }"
+		 class="sapUiTinyMargin"/>
+
+							<!-- Custom Delete Icon -->
+							<Button
+								icon="sap-icon://delete"
+								type="Transparent"
+								tooltip="Delete"
+								press=".onDeletePreview"
+								visible="{= ${oGetExpenseCategoryModel>status} !== 'Completed' }"/>
+						</HBox>
+					</CustomListItem>
+
+				</List>
+
+            </VBox>
+
+        </FlexBox>
+    </HBox>
+</IconTabFilter>
+
+
+			</items>
+		</IconTabBar>
+
+		<!-- ================= BUTTONS ================= -->
+		<endButton>
+			<Button text="Cancel"  type="Transparent"
+        icon="sap-icon://decline"   press="onCreateExpenseDialogClose" />
+		</endButton>
+
+		<beginButton>
+			<Button text="Save" type="Success"
+        icon="sap-icon://save"   press=".onSaveExpense" />
+		</beginButton>
+
+	</Dialog>
+
+</core:FragmentDefinition>

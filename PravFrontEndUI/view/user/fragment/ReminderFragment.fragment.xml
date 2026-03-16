@@ -1,0 +1,115 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout">
+	<Dialog
+		id="addReminderDialog"
+		title="{= ${viewModel>/reminderData/mode} === 'Add' ? 'Reminder' : 'Reminder' } {viewModel>/formData/category} / {viewModel>/formData/subcategory}"
+		class="sapUiResponsivePadding"
+		stretchOnPhone="true"
+		draggable="true"
+		resizable="true"
+		contentWidth="50%">
+		<content>
+			<HBox justifyContent="SpaceBetween" wrap="Wrap" class="sapUiSmallMargin">
+				<!-- Left Column -->
+				<VBox width="48%">
+					<Label text="Title"/>
+					<Input id="title" value="{viewModel>/reminderData/title}"/>
+
+					<HBox>
+						<VBox justifyContent="SpaceBetween" alignItems="Center">
+							<Label text="Recurring?"/>
+							<Switch id="recurringSwitch" state="{viewModel>/reminderData/is_recurring}" change="onRecurringSwitchChange"/>
+						</VBox>
+					</HBox>
+
+					<Label text="Start Date" visible="{viewModel>/reminderData/visibility/recurringFields}"/>
+					<DatePicker value="{viewModel>/reminderData/start_date}" visible="{viewModel>/reminderData/visibility/recurringFields}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" placeholder="Select a date"/>
+
+					<Label text="Reminder At" visible="{viewModel>/reminderData/visibility/nonRecurringFields}"/>
+					<DateTimePicker value="{viewModel>/reminderData/remainder_at}" visible="{viewModel>/reminderData/visibility/nonRecurringFields}" displayFormat="medium"/>
+
+					<VBox visible="{viewModel>/reminderData/visibility/recurringFields}">
+						<Label text="Repeat Type"/>
+						<Select selectedKey="{viewModel>/reminderData/repeat_type}" change="onRepeatTypeChange" width="100%">
+							<core:Item key="Daily" text="Daily"/>
+							<core:Item key="Weekly" text="Weekly"/>
+							<core:Item key="Monthly" text="Monthly"/>
+							<!-- <core:Item key="Yearly" text="Yearly"/> -->
+						</Select>
+
+						<Label text="Repeat on Days" visible="{viewModel>/reminderData/visibility/weeklyFields}"/>
+						<MultiComboBox selectedKeys="{viewModel>/reminderData/repeat_days}" visible="{viewModel>/reminderData/visibility/weeklyFields}">
+							<core:Item key="Mon" text="Monday"/>
+							<core:Item key="Tue" text="Tuesday"/>
+							<core:Item key="Wed" text="Wednesday"/>
+							<core:Item key="Thu" text="Thursday"/>
+							<core:Item key="Fri" text="Friday"/>
+							<core:Item key="Sat" text="Saturday"/>
+							<core:Item key="Sun" text="Sunday"/>
+						</MultiComboBox>
+						<VBox visible="{viewModel>/reminderData/visibility/monthlyFields}">
+						<Label text="Repeat Month"/>
+						<MultiComboBox selectedKeys="{viewModel>/reminderData/repeat_month}">
+							<core:Item key="1" text="January"/>
+							<core:Item key="2" text="February"/>
+							<core:Item key="3" text="March"/>
+							<core:Item key="4" text="April"/>
+							<core:Item key="5" text="May"/>
+							<core:Item key="6" text="June"/>
+							<core:Item key="7" text="July"/>
+							<core:Item key="8" text="August"/>
+							<core:Item key="9" text="September"/>
+							<core:Item key="10" text="October"/>
+							<core:Item key="11" text="November"/>
+							<core:Item key="12" text="December"/>
+						</MultiComboBox>
+					</VBox>
+
+					<VBox visible="{viewModel>/reminderData/visibility/yearlyFields}">
+						<HBox>
+							<Label text="Repeat no. of Months"/>
+							<Input placeholder="1,6,12,." type="Number" value="{viewModel>/reminderData/repeat_day_of_month}"/>
+						</HBox>
+					</VBox>
+					</VBox>
+
+					
+				</VBox>
+
+				<!-- Right Column -->
+				<VBox width="48%">
+					<Label text="Description"/>
+					<Input value="{viewModel>/reminderData/description}"/>
+
+					<Label text="Expected Next Reminder"/>
+					<Text text="{viewModel>/reminderData/expectedNextReminder}"/>
+
+					<Label text="End Date" visible="{viewModel>/reminderData/visibility/recurringFields}"/>
+					<DatePicker value="{viewModel>/reminderData/end_date}" visible="{viewModel>/reminderData/visibility/recurringFields}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy"/>
+
+					<Label text="Due In Days" visible="{viewModel>/reminderData/visibility/nonRecurringFields}"/>
+					<Input type="Number" value="{viewModel>/reminderData/due_days}" visible="{viewModel>/reminderData/visibility/nonRecurringFields}"/>
+
+					<VBox visible="{viewModel>/reminderData/visibility/monthlyFields}">
+						<Label text="Repeat on Days (1-30)"/>
+						<Input value="{viewModel>/reminderData/repeat_day_of_month}" placeholder="e.g., 1,15,30"/>
+					</VBox>
+
+					<VBox visible="{viewModel>/reminderData/visibility/recurringFields}">
+						<Label text="Repeat Time"/>
+						<TimePicker value="{viewModel>/reminderData/repeat_time}"/>
+					</VBox>
+				</VBox>
+			</HBox>
+		</content>
+
+		<beginButton>
+			<Button text="OK" type="Emphasized" press="onReminderOk"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onReminderCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

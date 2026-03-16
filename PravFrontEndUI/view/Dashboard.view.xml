@@ -1,0 +1,493 @@
+<mvc:View
+	controllerName="sap.ui.demo.toolpageapp.controller.Dashboard"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
+	xmlns:m="sap.m"  xmlns:tiles="sap.m"
+	xmlns:generic="sap.m"
+	xmlns:mc="sap.suite.ui.microchart"
+	xmlns:smc="sap.ui.comp.smartmicrochart"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+>
+	<Page showHeader="false">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo
+				rootRole="Region"
+				rootLabel="{i18n>Home_rootLabel}"
+				contentRole="Main"
+				contentLabel="{i18n>Home_contentLabel}" />
+		</landmarkInfo>
+		<Panel width="98%"
+			expandable="false"
+			expanded="false"
+			class="  sapUiSmallMarginBottom newsPanel">
+			<!-- Show/Hide Button -->
+			<!-- Custom "Header" with Title left and Button right -->
+			<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMargin">
+				<!-- Left title -->
+				<VBox>
+					<Title
+						text="{i18n>WELCOME_TEXT} {oApplicationConfigModel>/applicationInfo/name}"
+						level="H3" />
+					<Label text="{i18n>OVERVIEW_UPDATES}" />
+				</VBox>
+				<!-- Right show/hide button -->
+				<Button press="onToggleCarousel"
+					text="{= !${oUserDashboardModel>/toogleOverviewShow} ? 'show' : 'hide' }"
+					icon="{= !${oUserDashboardModel>/toogleOverviewShow} ? 'sap-icon://show' : 'sap-icon://hide' }" />
+			</HBox>
+
+			<!-- Carousel for Hot News / Featured tiles -->
+
+
+			<ScrollContainer
+				width="100%"
+				height="auto"
+				horizontal="true"
+				vertical="false"
+				visible="{oUserDashboardModel>/toogleOverviewShow}">
+				<HBox justifyContent="SpaceBetween"
+					alignItems="Center"
+					width="auto"
+					wrap="NoWrap">
+
+					<!-- <Carousel  
+							id="idDashboardCarousel" 
+							showPageIndicator="true"    width="100%"
+							loop="true"
+							pageChanged=".onCarouselPageChanged"
+							   > -->
+
+
+					
+
+					
+			 
+
+
+
+
+
+					<Carousel pageIndicatorPlacement="OverContentBottom"
+						class="heroCarousel   sapUiTinyMarginTop"
+						visible="{=! ${device>/system/phone}}"
+						loop="true"
+						showPageIndicator="false"
+						interval="3000">
+
+						<!-- Slide 1 -->
+						<VBox
+							class="heroSlide"
+							press="onBannerPress"
+							data-route="newsOne">
+
+							<Image
+								src="\images\Users\Dashboard/imageSlide3.png"
+								class="heroImage"
+								decorative="false"
+								densityAware="false" />
+
+							<VBox class="heroOverlay">
+								<Text text="Take Control of Your Finances" class="heroTitle" />
+								<Text text="Clear insights. Smarter decisions. Better financial growth." class="heroSubtitle" />
+							</VBox>
+
+						</VBox>
+
+						<!-- Slide 2 -->
+						<VBox
+							class="heroSlide"
+							press="onBannerPress"
+							data-route="newsTwo">
+
+							<Image
+								src="\images\Users\Dashboard/imageSlide2.png"
+								class="heroImage"
+								decorative="false"
+								densityAware="false" />
+
+							<VBox class="heroOverlay">
+								<Text text="Your Personal Finance Hub" class="heroTitle" />
+								<Text text="Everything you need to manage expenses, tasks, and plans in one place." class="heroSubtitle" />
+							</VBox>
+
+						</VBox>
+								<!-- Slide 3 -->
+						<VBox
+							class="heroSlide"
+							press="onBannerPress"
+							data-route="newsTwo">
+
+							<Image
+								src="\images\Users\Dashboard/imageSlide1.png"
+								class="heroImage"
+								decorative="false"
+								densityAware="false" />
+
+							<VBox class="heroOverlay">
+								<Text text="Smart Financial Management" class="heroTitle" />
+								<Text text="Track expenses, analyze trends, and stay in complete control of your money." class="heroSubtitle" />
+							</VBox>
+
+						</VBox>
+
+					</Carousel>
+
+
+					<VBox class="tileRow">
+						<GenericTile
+							class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout reduceTwoByHalfToOnebyHalf"
+							header="{i18n>TODO_TASKS}"
+							press="onNavtoToDo" frameType="TwoByHalf">
+							<TileContent unit="" footer="Current Quarter">
+								<ImageContent src="sap-icon://customer-history" />
+							</TileContent>
+						</GenericTile>
+
+						<GenericTile
+							class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout reduceTwoByHalfToOnebyHalf"
+							header="{i18n>ADD_EXPENSE_TILE}"
+							press="onNavtoExpense" frameType="TwoByHalf"
+							subheader="⏰{
+        path: 'dashboardDetailModel>/userSpends/last_entry_date',
+        formatter: '.formatter.convertDatetoUsertimeFormat'
+    }">
+							<TileContent unit="{i18n>CURRENCY}">
+								<ObjectNumber
+									number="{dashboardDetailModel>/userSpends/balance}"
+									unit="Balance"
+									emphasized="true"
+								/>
+							</TileContent>
+						</GenericTile>
+
+					</VBox>
+					<VBox class="tileRow">
+						<GenericTile
+							class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout reduceTwoByHalfToOnebyHalf"
+							header="{i18n>DAILY_ROUTINE_TILE}"
+							press="onNavtoCalender" frameType="TwoByHalf">
+							<TileContent unit="" footer="Current Quarter">
+								<ImageContent src="sap-icon://time-entry-request" />
+							</TileContent>
+						</GenericTile>
+						<GenericTile
+							class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout reduceTwoByHalfToOnebyHalf"
+							header="{i18n>ADD_APPOINTMENT_TILE}"
+							press="onNavtoAddAppointment" frameType="TwoByHalf">
+							<TileContent unit="" footer="Current Quarter">
+								<ImageContent src="sap-icon://appointment-2" />
+							</TileContent>
+						</GenericTile>
+					</VBox>
+					<SlideTile class="sapUiTinyMarginBegin  sapUiTinyMarginEnd sapUiTinyMarginTop">
+						<GenericTile class="  "
+							backgroundImage="\images\Users\Dashboard\tileSlide1.jpg"
+							frameType="TwoByOne" press="pressOnTileOne">
+							<TileContent footer="Your smart daily companion.">
+								<NewsContent
+									contentText="Manage expenses and tasks effortlessly."
+									subheader="Track smarter. Plan better. Live easier." />
+							</TileContent>
+						</GenericTile>
+						<GenericTile class=""
+							backgroundImage="\images\Users\Dashboard\tileSlide2.jpg"
+							frameType="TwoByOne" press="pressOnTileTwo">
+							<TileContent footer="Stay organized. Stay confident.">
+								<NewsContent
+									contentText="Track spending and organize daily activities."
+									subheader="Everything you need. In one place." />
+							</TileContent>
+						</GenericTile>
+						<GenericTile class=""
+							backgroundImage="\images\Users\Dashboard\tileSlide3.jpg"
+							frameType="TwoByOne" press="pressOnTileTwo">
+							<TileContent footer="Simple. Smart. Secure.">
+								<NewsContent
+									contentText="Control finances and boost productivity."
+									subheader="Plan today. Achieve tomorrow." />
+							</TileContent>
+						</GenericTile>
+					</SlideTile>
+
+
+					<!-- <GenericTile  class="sapUiTinyMarginBegin  sapUiTinyMarginEnd  tileLayout
+					customTile3D "
+						header="{i18n>ADD_EXPENSE_TILE}" 
+						subheader="⏰{
+        path: 'dashboardDetailModel>/userSpends/last_entry_date',
+        formatter: '.formatter.convertDatetoUsertimeFormat'
+    }" press="onNavtoExpense">
+						<TileContent unit="{i18n>CURRENCY}">
+						<ObjectNumber
+  number="{dashboardDetailModel>/userSpends/balance}"
+  unit="Balance"
+  emphasized="true"
+/>
+						</TileContent>
+					</GenericTile> -->
+
+					<!-- <GenericTile
+						class="  sapUiTinyMarginBegin  sapUiTinyMarginEnd  tileLayout customTile3D "
+					header="{i18n>DAILY_ROUTINE_TILE}"
+						subheader="⏰ {oUserDashboardDataModel>/DashboardPage/OverViewTiles/dailyRoutine/lastEntryDateTime}"
+						press="onNavtoCalender">
+
+						<TileContent>
+							<ImageContent src="sap-icon://customer-history" />
+						</TileContent>
+					</GenericTile> -->
+
+
+					<!-- <GenericTile visible="{=! ${device>/system/phone}}"
+						class="sapUiTinyMarginBegin  sapUiTinyMarginEnd tileLayout customTile3D "
+						header="{i18n>ADD_APPOINTMENT_TILE}"
+						subheader="{i18n>ADD_APPOINTMENT_SUBHEADER_TILE}" press="onNavtoAddAppointment">
+						<TileContent unit="{i18n>ADD_APPOINTMENT_FOOTER_TILE}">
+							<ImageContent src="sap-icon://appointment-2" />
+						</TileContent>
+					</GenericTile> -->
+
+
+					<!-- <GenericTile visible="{=! ${device>/system/phone}}"
+	 class="sapUiTinyMarginBegin   tileLayout customTile3D " header="View Routine Map"
+				 subheader="View Day" press="onPress"  >
+		<TileContent   >
+			<ImageContent src="sap-icon://crm-sales" />
+		</TileContent>
+	</GenericTile> -->
+
+
+					<!-- </Carousel> -->
+
+				</HBox>
+			</ScrollContainer>
+
+
+		</Panel>
+
+		<!-- MAIN FLEX CONTAINER -->
+		<m:FlexBox
+			direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"
+			width="100%"
+			height="100%"
+			fitContainer="true">
+			<!-- LEFT SIDE (Desktop) or Top (Mobile) -->
+			<m:FlexBox
+				direction="Column"
+				width="{= ${device>/system/phone} ? '100%' : '65%'}"
+				justifyContent="Start"
+				alignItems="Stretch"
+				class="sapUiSmallMargin">
+				<!-- Health + Overview (side-by-side on desktop, stacked on mobile) -->
+				<m:FlexBox
+					direction="{= ${device>/system/phone} ? 'Row' : 'Row' }"
+					justifyContent="SpaceBetween"
+					width="100%">
+					<HBox width="{= ${device>/system/phone} ? '50%' : '50%'}">
+						<VBox justifyContent="Center" alignItems="Center">
+							<Title text="Health Status" />
+							<mc:ComparisonMicroChart scale="M" shrinkable="true" pressable="true"
+								press="onOpenHealthMonitor"
+								class="sapUiSmallMargin" width="100%" minValue="0" maxValue="100">
+								<mc:data>
+									<mc:ComparisonMicroChartData
+										title="Water"
+										value="{
+											path: 'dashboardDetailModel>/healthDetail/water_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+										color="{path: 'dashboardDetailModel>/healthDetail/water_percentage', formatter: '.formatter.getMicroChartColor'}"
+										displayValue="{dashboardDetailModel>/healthDetail/watercurrent} of {dashboardDetailModel>/healthDetail/watergoal}" />
+									<mc:ComparisonMicroChartData
+										title="Sleep"
+										value="{
+											path: 'dashboardDetailModel>/healthDetail/sleep_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+										color="{path: 'dashboardDetailModel>/healthDetail/sleep_percentage', formatter: '.formatter.getMicroChartColor'}"
+										displayValue="{dashboardDetailModel>/healthDetail/sleepcurrent} of {dashboardDetailModel>/healthDetail/sleepgoal}" />
+									<mc:ComparisonMicroChartData
+										title="Steps"
+										value="{
+											path: 'dashboardDetailModel>/healthDetail/steps_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+										color="{path: 'dashboardDetailModel>/healthDetail/steps_percentage', formatter: '.formatter.getMicroChartColor'}"
+										displayValue="{dashboardDetailModel>/healthDetail/stepscurrent} of {dashboardDetailModel>/healthDetail/stepsgoal}" />
+								</mc:data>
+							</mc:ComparisonMicroChart>
+						</VBox>
+					</HBox>
+					<HBox width="{= ${device>/system/phone} ? '50%' : '50%'}">
+						<HBox width="50%">
+							<VBox justifyContent="Center" alignItems="Center"
+								class="sapUiSmallMargin">
+
+								<Title text="Current Month Overview" level="H3" />
+
+								<ObjectStatus
+									title="Income"
+									text="₹ {dashboardDetailModel>/userSpends/income}"
+									state="Success"
+									class="sapUiSmallMarginTop" />
+
+								<ObjectStatus
+									title="Expense"
+									text="₹ {dashboardDetailModel>/userSpends/expense}"
+									state="Error"
+									class="sapUiTinyMarginTop" />
+
+								<ObjectStatus
+									title="Top Spend"
+									text="{dashboardDetailModel>/userSpends/top_expense_category}"
+									state="Warning"
+									class="sapUiTinyMarginTop" />
+
+							</VBox>
+						</HBox>
+
+						<VBox justifyContent="Center" alignItems="Center" visible="false">
+							<Title text="Current Month Overview" />
+							<mc:ColumnMicroChart press="press" class="sapUiSmallMargin"
+								allowColumnLabels="true">
+								<!-- Binding columns -->
+								<mc:columns>
+									<mc:ColumnMicroChartData
+										value="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/0/value}"
+										label="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/0/label}"
+										displayValue="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/0/displayValue}"
+										color="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/0/color}" />
+									<mc:ColumnMicroChartData
+										value="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/1/value}"
+										label="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/1/label}"
+										displayValue="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/1/displayValue}"
+										color="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/1/color}" />
+									<mc:ColumnMicroChartData
+										value="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/2/value}"
+										label="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/2/label}"
+										displayValue="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/2/displayValue}"
+										color="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/2/color}" />
+									<mc:ColumnMicroChartData
+										value="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/3/value}"
+										label="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/3/label}"
+										displayValue="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/3/displayValue}"
+										color="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/3/color}" />
+									<mc:ColumnMicroChartData
+										value="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/4/value}"
+										label="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/4/label}"
+										displayValue="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/4/displayValue}"
+										color="{oUserDashboardDataModel>/DashboardPage/WeeklyExpenseChartData/4/color}" />
+								</mc:columns>
+							</mc:ColumnMicroChart>
+						</VBox>
+					</HBox>
+				</m:FlexBox>
+				<!-- Chart below visible="{= ${device>/system/desktop}}"-->
+				<HBox width="100%">
+					<VBox width="100%">
+						<Title text="Spend Overview (Last 3 Months)" />
+						<viz:VizFrame width="95%"
+							id="idColumnChart"
+							vizType="column"
+							vizProperties='{
+									"title": {
+											"visible": false
+										},
+										"legend": { "visible": false },
+										"layout": { "padding": { "bottom": 80 } },   
+										"categoryAxis": {
+											"label": {
+												"rotation": 45,       
+												"showAsWrapped": false,
+												"visible": true
+											}
+										},
+										"valueAxis": {
+											"title": { "visible": false }
+										}
+									}'
+							dataset="{dashboardDetailModel>/monthlyExpenseChartData}">
+							<!-- Dataset -->
+							<viz:dataset>
+								<viz.data:FlattenedDataset
+									data="{dashboardDetailModel>/monthlyExpenseChartData}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Week"
+											value="{dashboardDetailModel>period}" />
+									</viz.data:dimensions>
+									<viz.data:measures>
+										<viz.data:MeasureDefinition name="Income"
+											value="{dashboardDetailModel>income}" />
+										<viz.data:MeasureDefinition name="Expense"
+											value="{dashboardDetailModel>expense}" />
+									</viz.data:measures>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+							<!-- Feeds -->
+							<viz:feeds>
+								<viz.feeds:FeedItem uid="valueAxis" type="Measure"
+									values="Income,Expense" />
+								<viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+									values="Week" />
+							</viz:feeds>
+						</viz:VizFrame>
+					</VBox>
+				</HBox>
+			</m:FlexBox>
+			<!-- RIGHT SIDE (Desktop only) -->
+			<HBox
+				width="{= ${device>/system/phone} ? '100%' : '45%'}"
+				class=" ">
+				<VBox width="100%" class="sapUiNoContentPadding  ">
+					<!-- <HBox width="100%" fitContainer="true"> -->
+					<Title text="Recurring/Remianders " alignItems="Center" />
+					<ScrollContainer
+						width="100%"
+						height="40rem"
+						vertical="true"
+						horizontal="false">
+						<NotificationList width="100%"
+							id="idNotificationList"
+							items="{
+                  path: 'dashboardDetailModel>/upcomingReminder'
+              }"
+							showUnreadStatus="true">
+							<NotificationListItem
+								title="{dashboardDetailModel>title}"
+								description="{dashboardDetailModel>description}"
+								datetime="{dashboardDetailModel>datetime}"
+								unread="{dashboardDetailModel>unread}"
+								priority="{dashboardDetailModel>priority}"
+								authorName="{dashboardDetailModel>author_name}"
+								authorPicture="{dashboardDetailModel>author_picture}"
+								showCloseButton="true"
+								press=".onNotificationPress">
+								<buttons>
+									<Button
+										icon="sap-icon://accept"
+										text="Complete"
+										press=".onCompletePress" />
+									<Button
+										icon="sap-icon://sys-cancel"
+										text="Ignore"
+										press=".onIgnorePress" />
+									<Button
+										icon="sap-icon://schedule"
+										text="Reschedule"
+										press=".onReschedulePress" />
+								</buttons>
+							</NotificationListItem>
+						</NotificationList>
+					</ScrollContainer>
+					<!-- </HBox> -->
+				</VBox>
+			</HBox>
+		</m:FlexBox>
+	</Page>
+</mvc:View>
+	

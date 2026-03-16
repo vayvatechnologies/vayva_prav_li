@@ -1,0 +1,108 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.user.expense.ExpenseOverviewChat"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+    <Page showHeader="false">
+        <landmarkInfo>
+            <PageAccessibleLandmarkInfo
+                rootRole="Region"
+                rootLabel="ExpenseTracker"
+                contentRole="Main"
+                contentLabel="ExpenseTracker" />
+        </landmarkInfo>
+        <HBox wrap="Wrap" alignItems="Start" justifyContent="Start" class="sapUiTinyMargin"
+            width="{= ${device>/system/phone} ? '95%' : '99%'}">
+            <!-- LEFT PANEL -->
+            <VBox width="{= ${device>/system/phone} ? '100%' : '25%'}" class="">
+                <!-- Date Range Filter -->
+                <DateRangeSelection id="dateRange" delimiter=" - " displayFormat="dd,MMM yyyy"
+                    valueFormat="dd-MM-yyyy" change="fnGetUserExpenseDetails" />
+                <!-- Filter / Export Buttons -->
+                <HBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+                    <Button text="Reset" press="fnResetExpenseTracker" />
+                    <Button text="Filter" press="fnGetUserExpenseDetails" />
+                    <Button text="Export Excel" icon="sap-icon://excel-attachment"
+                        press="onExportExcel" />
+                </HBox>
+                <!-- Chat Messages -->
+<VBox id="AIChatContainer" width="100%"/>
+
+<!-- <core:Fragment
+            fragmentName="sap.ui.demo.toolpageapp.view.pravAI.fragment.AIChatPanel"
+            type="XML"/> -->
+                
+
+
+            </VBox>
+            <!-- RIGHT PANEL -->
+            <VBox width="{= ${device>/system/phone} ? '100%' : '72%'}" class="sapUiTinyMargin sapUiLargeMarginTop">
+                <ScrollContainer
+                    width="100%"
+                    horizontal="true"
+                    vertical="false"
+                    showScrollbar="true">
+                    <HBox class="sapUiSmallMarginBottom sapUiTinyMargin">
+
+                        <VBox width="30%">
+                            <Text text="Chart Type:" class="sapUiTinyMarginEnd" />
+
+
+                            <Select
+                                width="300px"
+                                selectedKey="{viewModel>/chartType}"
+                                change="onChartTypeChange">
+                                <items>
+                                    <core:Item key="stacked_column" text="Stacked Column" />
+                                    <core:Item key="stacked_bar" text="Stacked Bar" />
+                                    <core:Item key="pie" text="Pie" />
+                                    <core:Item key="line" text="Line" />
+                                </items>
+                            </Select>
+                        </VBox>
+                        <VBox width="30%">
+                            <Text text="Group By:" class="sapUiTinyMarginEnd" />
+                            <Select
+                                width="300px" valueState="Warning"
+                                valueStateText="Available in Premium plan"
+                                selectedKey="{viewModel>/groupBy}"
+                                change="onGroupByChange">
+                                <items>
+                                    <core:Item key="category" text="Category" />
+                                    <core:Item key="subcategory" text="Sub Category" />
+                                    <core:Item key="payment_mode" text="Payment Mode" />
+                                </items>
+                            </Select>
+
+
+                        </VBox>
+                        <VBox width="30%">
+                            <Text text="Drill-down:" class="sapUiTinyMarginEnd" />
+                            <CheckBox
+                                text="Enable Drill-down animation"
+                                selected="{viewModel>/enableDrill}" />
+                        </VBox>
+                    </HBox>
+                </ScrollContainer>
+
+                <Button
+                    text="Back"
+                    icon="sap-icon://nav-back"
+                    press="onDrillBack"
+                    visible="{= ${viewModel>/drillLevel} === 'subcategory' }" />
+
+                <VBox id="chartBox" class="sapUiTinyMarginTop" />
+
+
+            </VBox>
+
+
+        </HBox>
+
+
+    </Page>
+</mvc:View>
+	

@@ -1,0 +1,134 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox width="390px" class="mobileChatWrapper sapUiSmallMarginAuto" height="65vh">
+
+        <VBox class="pageWrapper aiChatPage">
+
+            <!-- CHAT TITLE -->
+            <VBox class="chatTitleWrapper">
+                <Text text="Let’s Chat in Prav Ally" class="chatTitle" />
+                <Text text="Quick Expense planning Starts here" class="chatSubtitle" />
+            </VBox>
+
+            <!-- CHAT AREA -->
+            <ScrollContainer
+                id="chatScroll"
+                height="420px"
+                vertical="true"
+                class="chatScroll sapUiSmallMarginBegin">
+
+                <VBox items="{chatModel>/messages}" width="100%">
+    <HBox
+        justifyContent="{= ${chatModel>sender} === 'You' ? 'End' : 'Start'}"
+        class="chatRow"
+        width="100%">
+
+        <VBox class="{= ${chatModel>sender} === 'You' ? 'userWrap' : 'aiWrap'}" width="100%">
+            <!-- Sender Name -->
+            <Text
+                text="{chatModel>sender}"
+                class="chatSender"
+                wrapping="false"
+                visible="{= ${chatModel>sender} !== '' }" />
+
+            <!-- Chat Bubble -->
+            <VBox class="chatBubble {chatModel>animate}" width="100%">
+                <!-- AI Typing Loader -->
+                <HBox visible="{chatModel>loading}" class="typingLoader">
+                    <VBox class="dot" />
+                    <VBox class="dot" />
+                    <VBox class="dot" />
+                </HBox>
+
+                <!-- Message -->
+                <Text
+                    text="{chatModel>text}"
+                    wrapping="true"
+                    visible="{= !${chatModel>loading} }" />
+                
+                <!-- Upgrade Button
+                <Button
+                    text="Upgrade Plan"
+                    class="upgradeBtn sapUiTinyMarginTop"
+                    visible="{chatModel>upgradeBtn}"
+                    press="onUpgradePress"/> -->
+            </VBox>
+
+            <!-- Time -->
+            <Text text="{chatModel>time}" class="chatTime" />
+        </VBox>
+
+    </HBox>
+</VBox>
+
+
+            </ScrollContainer>
+
+            <!-- SUGGESTIONS -->
+            <VBox>
+                <FlexBox
+                    wrap="Wrap"
+                    direction="Row"
+                    class="quickActions"
+                    items="{chatModel>/suggestions}">
+
+                    <Button
+                        text="{chatModel>text}"
+                        press="onQuickSend"
+                        class="shortcutBtn"
+                        enabled="{= !${chatModel>/uiBusy} }">
+                        <layoutData>
+                            <FlexItemData growFactor="0" />
+                        </layoutData>
+                    </Button>
+
+                </FlexBox>
+            </VBox>
+
+            <!-- INPUT -->
+            <HBox
+                width="100%"
+                class="chatBar"
+                alignItems="Center"
+                enabled="{= !${chatModel>/uiBusy} }">
+
+                <TextArea
+                    value="{chatModel>/currentMessage}"
+                    growing="true"
+                    rows="2"
+                    placeholder="Ask Prav AI..."
+                    width="100%"
+                    class="chatInput">
+                    <layoutData>
+                        <FlexItemData growFactor="3" />
+                    </layoutData>
+                </TextArea>
+
+                <HBox alignItems="Center">
+
+                    <Button
+                        icon="sap-icon://microphone"
+                        press="onMicPressMessage"
+                        class="chatSend"
+                        enabled="{= !${chatModel>/uiBusy} }">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Button>
+
+                    <Button
+                        icon="sap-icon://paper-plane"
+                        press="onSendMessage"
+                        class="chatSend sapUiTinyMarginBegin"
+                        enabled="{= !${chatModel>/uiBusy} }">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </Button>
+
+                </HBox>
+            </HBox>
+
+        </VBox>
+
+    </VBox>
+</core:FragmentDefinition>

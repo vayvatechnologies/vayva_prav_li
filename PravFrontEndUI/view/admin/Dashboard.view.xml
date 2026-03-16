@@ -1,0 +1,94 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.admin.Dashboard"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Admin Dashboard" class="sapUiContentPadding">
+
+        <content>
+
+            <!-- ================= SUMMARY TILES ================= -->
+
+            <FlexBox wrap="Wrap">
+                <GenericTile frameType="OneByHalf" class="sapUiTinyMargin" header="Total">
+                    <TileContent>
+                        <NumericContent value="{/summary/totalUsers}" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile frameType="OneByHalf" class="sapUiTinyMargin" header="Basic">
+                    <TileContent>
+                        <NumericContent value="{/summary/basic}" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile frameType="OneByHalf" class="sapUiTinyMargin" header="Standard">
+                    <TileContent>
+                        <NumericContent value="{/summary/standard}" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile frameType="OneByHalf" class="sapUiTinyMargin" header="Premium">
+                    <TileContent>
+                        <NumericContent value="{/summary/premium}" />
+                    </TileContent>
+                </GenericTile>
+
+                <GenericTile frameType="OneByHalf" class="sapUiTinyMargin" header="Platinum">
+                    <TileContent>
+                        <NumericContent value="{/summary/platinum}" />
+                    </TileContent>
+                </GenericTile>
+            </FlexBox>
+
+            <!-- ================= USER TABLE ================= -->
+
+            <Toolbar class="sapUiMediumMarginTop">
+                <Title text="User List"/>
+                <ToolbarSpacer/>
+                <Button text="Create" press="onCreateUser"/>
+                <Button id="editBtn"
+                        text="Edit"
+                        enabled="false"
+                        class="sapUiTinyMarginBegin"
+                        press="onEditUser"/>
+            </Toolbar>
+
+            <Table id="userTable"
+                   mode="SingleSelectMaster"
+                   selectionChange="onUserSelect"
+                   items="{/users}">
+
+                <columns>
+                    <Column><Text text="Name"/></Column> 
+                    <Column><Text text="Mobile"/></Column>
+                    <Column><Text text="Email"/></Column>
+                    <Column><Text text="Plan"/></Column>
+                    <Column><Text text="Status"/></Column>
+                    <Column><Text text="Subscription Amount"/></Column>
+        <Column><Text text="Payment Proof"/></Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{first_name} {last_name}"/>
+                          
+                            <Text text="{mobilenumber}"/>
+                            <Text text="{email}"/>
+                            <Text text="{userplan}"/>
+                            <Text text="{status}"/>
+                            <Text text="{subscription_amount}"/>
+                <!-- Image column with press event -->
+                <Image src="{= ${payment_screenshot} ? ${payment_screenshot} : 'sap-icon://image-viewer' }" width="50px" height="50px"
+                       press=".onPaymentImagePress"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+        </content>
+
+    </Page>
+</mvc:View>

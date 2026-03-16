@@ -1,0 +1,69 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f">
+	<Popover
+        id="userPopover" 
+        title="{i18n>USER_DETAILS_TITLE}"
+        placement="Bottom"
+        class="sapUiNoContentPadding">
+		<!-- User Info -->
+		<VBox class="sapUiSmallMargin sapUiMediumMarginTopBottom" justifyContent="Center" alignItems="Start" >
+			<HBox visible="{= ${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }"  class="sapUiSmallMarginBottom sapUiSmallMarginEnd" justifyContent="SpaceBetween" width="100%">
+				<Text text="{i18n>NAME_LABEL}" />
+				<Text text="{oUserDetailsModel>/full_name}" class="colorCyan" />
+			</HBox>
+			<HBox   visible="{= ${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }" class="sapUiSmallMarginBottom sapUiSmallMarginEnd" justifyContent="SpaceBetween" width="100%" >
+				<Text text="{i18n>USERNAME_LABEL} " />
+				<Text text="{oUserDetailsModel>/user_id}" class="colorCyan" />
+			</HBox>
+			<HBox visible="{= ${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }"  class="sapUiSmallMarginBottom sapUiSmallMarginEnd" justifyContent="SpaceBetween" width="100%">
+				<Text text="Current Plan" />
+				<Text text="{oUserDetailsModel>/userplan}" wrapping="true" class="colorCyan" />
+			</HBox>
+			<HBox visible="{= ${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }"  class="sapUiSmallMarginBottom sapUiSmallMarginEnd" justifyContent="SpaceBetween" width="100%">
+				<Text text="{i18n>LASTLOGIN_LABEL}" />
+				<Text text="{ path: 'oUserDetailsModel>/last_login_at', formatter: '.convertDatetoUsertimeFormat' }" wrapping="true" class="colorCyan" />
+			</HBox>
+			<!-- Theme ComboBox -->
+			<Label text="{i18n>THEME_LABEL}" textAlign="Center" visible="{
+        parts: [
+            { path: 'oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded' },
+            { path: 'oApplicationConfigModel>/settings/enableThemeChange' }
+        ],
+        formatter: '.formatter.fnCheckTwoParamConditionTrue'
+    }"  />
+			<ComboBox
+                selectedKey="{oUserDetailsModel>/theme_preference}"
+                change=".onThemeChange" visible="{
+        parts: [
+            { path: 'oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded' },
+            { path: 'oApplicationConfigModel>/settings/enableThemeChange' }
+        ],
+        formatter: '.formatter.fnCheckTwoParamConditionTrue'
+    }"  
+                width="100%">
+				<items>
+					<core:Item key="sap_fiori_3" text="Fiori 3" />
+					<core:Item key="sap_horizon" text="Hoizon" />
+					<core:Item key="sap_fiori_3_dark" text="Fiori 3 Dark" />
+					<core:Item key="sap_fiori_3_hcb" text="High Contrast Black (Fiori 3)" />
+					<core:Item key="sap_fiori_3_hcw" text="High Contrast White (Fiori 3)" />
+					<core:Item key="sap_hcb" text="High Contrast Black" />
+					<core:Item key="sap_hcw" text="High Contrast White" />
+					<core:Item key="sap_belize" text="Belize" />
+					<core:Item key="sap_belize_hcb" text="Belize High Contrast Black" />
+					<core:Item key="sap_belize_hcw" text="Belize High Contrast White" />
+					<core:Item key="sap_belize_plus" text="Belize Plus" />
+					<core:Item key="sap_belize_plus_hcb" text="Belize Plus High Contrast Black" />
+					<core:Item key="sap_belize_plus_hcw" text="Belize Plus High Contrast White" />
+				</items>
+			</ComboBox>
+			<Button icon="sap-icon://action-settings" text="{i18n>SETTINGS_BTN}" type="Transparent" press=".onSettingsPress" />
+			<Button icon="sap-icon://email" text="{i18n>CONTACT_SUPPORT_BTN}" type="Transparent" press=".onContactSupport" />
+			<Button icon="sap-icon://hint" text="{i18n>ABOUT_BTN}" type="Transparent" press=".onAboutPress" />
+			<Button visible="{=${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }"
+			icon="sap-icon://log" text="{i18n>SIGNOUT_BTN}" type="Reject" press=".onSignOut" />
+		</VBox>
+	</Popover>
+</core:FragmentDefinition>

@@ -1,0 +1,103 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <Dialog id="calenderDialog" contentWidth="700px" stretchOnPhone="true">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Text text="{= ${oCalenderSaveModel>/isEdit} ? 'Edit Appointment' : 'Create Appointment'}" />
+                </contentLeft>
+                <contentRight>
+                    <Button icon="sap-icon://decline"
+                            type="Transparent"
+                            press=".onCancelTodo" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <VBox class="sapUiSmallMargin">
+
+            <!-- Title & Label -->
+            <FlexBox wrap="Wrap" justifyContent="SpaceBetween">
+                <VBox width="55%">
+                    <Label text="Title" required="true"/>
+                    <Input value="{oCalenderSaveModel>/title}" />
+                </VBox>
+                <VBox width="35%">
+                    <Label text="Label" />
+                    <Input value="{oCalenderSaveModel>/label}" />
+                </VBox>
+            </FlexBox>
+
+            <!-- Description / Notes -->
+            <FlexBox wrap="Wrap" justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
+                <VBox width="55%">
+                    <Label text="Description"  required="true"/>
+                    <TextArea value="{oCalenderSaveModel>/description}" rows="3" width="100%" />
+                </VBox>
+                <VBox width="35%">
+                  <Label text="Appointment Type"  required="true"/>
+                <Select selectedKey="{oCalenderSaveModel>/priority_type}">
+                    <core:Item key="Type01" text="Meeting" />
+                    <core:Item key="Type02" text="Focus Work" />
+                    <core:Item key="Type03" text="Call" />
+                    <core:Item key="Type04" text="Personal" />
+                    <core:Item key="Type05" text="Reminder" />
+                </Select>
+                </VBox>
+            </FlexBox>
+ 
+
+            <!-- Start / End -->
+            <FlexBox wrap="Wrap" justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
+                <VBox width="48%">
+                    <Label text="Start Date" required="true"/>
+                    <DateTimePicker id="idCalenderStartDate"
+                    dateValue="{
+        path: 'oCalenderSaveModel>/start_date',
+        formatter: '.formatter.convertIntoDateTimePIckerformat'
+    }"
+                        displayFormat="dd-MM-yyyy hh:mm:ss a" />
+                </VBox>
+                <VBox width="48%">
+                    <Label text="End Date" required="true"/>
+                    <DateTimePicker   id="idCalenderEndDate" 
+                    dateValue="{
+        path: 'oCalenderSaveModel>/end_date',
+        formatter: '.formatter.convertIntoDateTimePIckerformat'
+    }"
+                        displayFormat="dd-MM-yyyy hh:mm:ss a"/>
+                </VBox>
+            </FlexBox>
+
+        </VBox>
+
+       
+              <!-- Footer Buttons (ONLY THIS) -->
+    <buttons>
+    <!-- Primary action -->
+   <Button text="Save"  type="Success"
+        icon="sap-icon://save"   press="onSaveTodo"/>
+
+    <!-- Destructive action (only when id exists) -->
+   <Button text="Delete"
+                    type="Reject"
+        icon="sap-icon://delete"
+                    visible="{oCalenderSaveModel>/isEdit}"
+                    press="onDeleteTodo"/>
+
+    <!-- Secondary action -->
+    
+                     <Button
+        text="Cancel"
+         type="Transparent"
+        icon="sap-icon://decline" class="sapUiTinyMarginEnd"
+        press=".onCancelTodo" />
+</buttons>
+
+
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="userDialog" title="User" contentWidth="350px" stretchOnPhone="false">
+
+        <VBox class="sapUiMediumMargin">
+        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+            <VBox width="48%">
+                <Label text="First Name"  required="true" />
+                <Input id="idAdminFname" value="{dialogModel>/dialogData/first_name}" liveChange="onNameChange"/>
+            </VBox>
+            <VBox width="48%">
+                <Label text="Last Name"  required="true"/>
+                <Input id="idAdminLname" value="{dialogModel>/dialogData/last_name}" liveChange="onNameChange"/>
+            </VBox>
+        </FlexBox>
+        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+            <VBox width="48%">
+                <Label text="Initial"  required="true" />
+                <Input value="{dialogModel>/dialogData/initial}" editable="false"/>
+            </VBox>
+            <VBox width="48%">
+                <Label text="Mobile"  required="true"/>
+                <Input value="{dialogModel>/dialogData/mobilenumber}"/>
+            </VBox>
+        </FlexBox>
+        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+            <VBox width="48%">
+                <Label text="Password"  required="true" />
+                <Input value="{dialogModel>/dialogData/password}" type="Password"/>
+            </VBox>
+            <VBox width="48%">
+                <Label text="Status"  required="true"/>
+                <Select selectedKey="{dialogModel>/dialogData/status}">
+                <core:Item key="1" text="1 - Active"/>
+                <core:Item key="2" text="2 - Lock"/>
+                <core:Item key="3" text="3 - Block"/>
+            </Select>
+            </VBox>
+        </FlexBox>
+ 
+        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+            <VBox width="48%">
+                <Label text="is Admin Role"  required="true" />
+                <CheckBox selected="{dialogModel>/dialogData/isadmin}" />
+            </VBox>
+             <VBox width="48%">
+                <Label text="User Role"  required="true" />
+                 <Select selectedKey="{dialogModel>/dialogData/userplan}">
+                <core:Item key="Basic" text="Basic"/>
+                <core:Item key="Premium" text="Premium"/>
+                <core:Item key="Standard" text="Standard"/>
+                <core:Item key="Platinum" text="Platinum"/>
+            </Select>
+            </VBox>
+              
+        </FlexBox>
+ 
+             
+            
+
+            <!-- ================= ROLES ================= -->
+
+            <!-- <Title text="Assign Roles" class="sapUiMediumMarginTop"/>
+
+            <HBox justifyContent="SpaceBetween">
+
+                 <VBox width="40%">
+                    <Title text="Available"/>
+                    <List id="dialogAvailableRoles"
+                          mode="MultiSelect"
+                          items="{dialogModel>/availableRoles}">
+                        <StandardListItem title="{dialogModel>roleName}" />
+                    </List>
+                </VBox>
+
+                 <VBox alignItems="Center" justifyContent="Center">
+                    <Button icon="sap-icon://navigation-right-arrow"
+                            press="onDialogAssignRole"/>
+                    <Button icon="sap-icon://navigation-left-arrow"
+                            press="onDialogRemoveRole"
+                            class="sapUiSmallMarginTop"/>
+                </VBox>
+
+                 <VBox width="40%">
+                    <Title text="Assigned"/>
+                    <List id="dialogAssignedRoles"
+                          mode="MultiSelect"
+                          items="{dialogModel>/assignedRoles}">
+                        <StandardListItem title="{dialogModel>roleName}" />
+                    </List>
+                </VBox>
+
+            </HBox> -->
+
+        </VBox>
+
+        <beginButton>
+            <Button text="Save"
+                    type="Emphasized"
+                    press="onDialogSave"/>
+        </beginButton>
+
+        <endButton>
+            <Button text="Cancel"
+                    press="onDialogCancel"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

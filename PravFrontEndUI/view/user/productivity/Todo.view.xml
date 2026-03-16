@@ -1,0 +1,178 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.user.productivity.Todo"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:unified="sap.ui.unified"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <ScrollContainer height="100%" vertical="true">
+        <VBox class="sapUiSmallMargin">
+
+
+            <OverflowToolbar>
+                <Title text="To-Do Planner" />
+                <ToolbarSpacer />
+                <!-- Floating Create Button -->
+                <Button
+                    id="fabCreateTodo"
+                    icon="sap-icon://add"
+                    type="Transparent"
+                    press="onCreateTodo"
+                    class="fabCreateButton"
+                    tooltip="Create To-Do" />
+                <!-- Bottom added so hided for bk -->
+                <!-- <Button text="Add To Do"
+                    icon="sap-icon://add"
+                    type="Transparent"
+                    press="onCreateTodo"
+                    tooltip="Create To-Do" /> -->
+                <!-- Create button -->
+
+                <!-- View switch -->
+                <SegmentedButton id="idTodoSwitch"
+                    selectionChange="onViewToggle"
+                    selectedKey="{oTodoCalenderModel>/view/mode}">
+                    <items>
+                        <SegmentedButtonItem key="LIST" text="List" />
+                        <SegmentedButtonItem key="CAL" text="Calendar" />
+                    </items>
+                </SegmentedButton>
+
+            </OverflowToolbar>
+            <!-- Toolbar / Header -->
+            <OverflowToolbar visible="{oTodoCalenderModel>/isListView}">
+
+                <!-- Previous day -->
+                <Button
+                    icon="sap-icon://navigation-left-arrow"
+                    press="onPrevDay"
+                    tooltip="Previous Day" />
+
+                <!-- Today -->
+                <Button
+                    text="Today"
+                    press="onTodayPress" />
+
+                <!-- Next day -->
+                <Button
+                    icon="sap-icon://navigation-right-arrow"
+                    press="onNextDay"
+                    tooltip="Next Day" />
+
+                <!-- Date label -->
+                <Button
+                    id="lblDate"
+                    text="{= ${oTodoCalenderModel>/start_date} 
+            ? ${oTodoCalenderModel>/start_date}.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) 
+            : '' }"
+                    press="onDateLabelPress"
+                    class="sapUiTinyMarginBeginEnd" />
+
+                <ToolbarSpacer />
+
+
+            </OverflowToolbar>
+
+
+            <!-- CALENDAR VIEW -->
+            <SinglePlanningCalendar
+                id="spc"
+                showHeader="false"
+                visible="{oTodoCalenderModel>/isCalenderView}"
+                startDate="{oTodoCalenderModel>/start_date}"
+                startDateChange="onCalendarDateChange"
+                appointments="{oTodoCalenderModel>/todos}"
+                appointmentSelect="onAppointmentSelect"
+                appointmentDrop="onAppointmentDrop"
+                appointmentResize="onAppointmentResize"
+                appointmentCreate="onAppointmentCreate"
+                enableAppointmentsDragAndDrop="true"
+                enableAppointmentsResize="true"
+                enableAppointmentsCreate="true">
+
+                <views>
+                    <SinglePlanningCalendarDayView title="Day" />
+                </views>
+
+                <appointments>
+                    <unified:CalendarAppointment
+                        title="{oTodoCalenderModel>title}"
+                        text="{oTodoCalenderModel>status}"
+                        startDate="{oTodoCalenderModel>start_date}"
+                        endDate="{oTodoCalenderModel>end_date}"
+                        type="{oTodoCalenderModel>priority_type}" />
+                </appointments>
+            </SinglePlanningCalendar>
+
+            <!-- LIST VIEW -->
+            <List
+                id="todoList"
+                visible="{oTodoCalenderModel>/isListView}"
+                items="{oTodoCalenderModel>/todos}"
+                mode="SingleSelectMaster"
+                select="onListItemPress"
+                itemPress="onListItemPress">
+
+                <CustomListItem>
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+
+                        <!-- Left: Task info -->
+                        <VBox>
+                            <ObjectListItem
+                                class="bgTransprent"
+                                title="{oTodoCalenderModel>title}"
+                                numberState="Information"
+                                type="Inactive">
+                                <attributes>
+                                    <ObjectAttribute text="{oTodoCalenderModel>description}" />
+                                    <ObjectAttribute
+                                        text="{
+        parts: [
+            { path: 'oTodoCalenderModel>notes' },
+            { path: 'oTodoCalenderModel>label' }
+        ],
+         formatter: '.formatter.formatNotesTagsFromEndDateTime'
+    }" />
+                                    <ObjectAttribute
+                                        text="{
+        path: 'oTodoCalenderModel>start_date',
+        formatter: '.formatter.convertDatetoUsertimeOnlyFormat'
+    }
+         - {
+        path: 'oTodoCalenderModel>end_date',
+        formatter: '.formatter.convertDatetoUsertimeOnlyFormat'
+    }
+        "
+                                    />
+                                </attributes>
+                            </ObjectListItem>
+                        </VBox>
+
+                        <!-- Right: Priority / Edit / Delete -->
+                        <HBox>
+                            <ObjectListItem
+                                class="bgTransprent"
+                                number="{oTodoCalenderModel>status}"
+                                numberState="Information"
+                                type="Inactive">
+                                <firstStatus>
+                                    <ObjectStatus
+                                        text="Priority:{oTodoCalenderModel>priority_text}"
+                                        state="{path: 'oTodoCalenderModel>status', formatter: '.formatter.getPriorityObjectStatusColor'}" />
+                                </firstStatus>
+                            </ObjectListItem>
+                            <VBox>
+                                <Button icon="sap-icon://edit" type="Transparent"
+                                    press="onEditPress" tooltip="Edit" width="2.5rem" />
+                                <Button icon="sap-icon://delete" type="Transparent"
+                                    press="onDeletePress" tooltip="Delete" width="2.5rem" />
+                            </VBox>
+                        </HBox>
+
+                    </HBox>
+                </CustomListItem>
+            </List>
+
+        </VBox>
+    </ScrollContainer>
+</mvc:View>

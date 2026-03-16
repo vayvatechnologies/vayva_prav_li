@@ -1,0 +1,73 @@
+{
+    "status": "Success",
+    "message": "Login successful!",
+    "userDetails": {
+        "userid": "U12345",
+        "authtoken": "abcd1234efgh5678",
+        "initial": "JD",
+        "lastlogin": "2025-11-17T10:30:00Z",
+        "firstname": "John",
+        "lastname": "Doe",
+        "email": "john.doe@example.com",
+        "phonenumber": "+1234567890",
+        "theme": "sap_horizon"
+    },
+    "selectedKey": "Dashboard",
+    "assignedmenu": [
+        {
+            "titleI18nKey": "Dashboard",
+            "icon": "sap-icon://home",
+            "expanded": false,
+            "key": "Dashboard",
+            "items": []
+        },
+        {
+            "titleI18nKey": "Expense",
+            "icon": "sap-icon://settings",
+            "expanded": true,
+            "key": "ExpenseTracker",
+            "items": [
+                {
+                    "titleI18nKey": "expenseTracker",
+                    "key": "ExpenseTracker"
+                },
+                {
+                    "titleI18nKey": "expenseOverview",
+                    "key": "expenseOverview"
+                },
+                {
+                    "titleI18nKey": "expenseCategory",
+                    "key": "ExpenseCategory"
+                }
+            ]
+        }
+    ],
+    "notifications": [
+        {
+            "title": "New Order frm servie ds",
+            "description": "John Max has ordered Laptop",
+            "date": "1 hour ago",
+            "priority": "High",
+            "icon": "sap-icon://clinical-order"
+        },
+        {
+            "title": "Canceled Order",
+            "description": "Sara Rok has canceled her order",
+            "date": "5 hour ago",
+            "priority": "Medium",
+            "icon": "sap-icon://sys-cancel-2"
+        },
+        {
+            "title": "Delivery",
+            "description": "Order 112 has delivered to Nancy Klaus",
+            "date": "2 days ago",
+            "priority": "Low",
+            "icon": "sap-icon://message-success"
+        },
+        {
+            "title": "Password Error",
+            "subTitle": "Invalid password",
+            "description": "User S700 exceeded number of tries to enter password"
+        }
+    ]
+}

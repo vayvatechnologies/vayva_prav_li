@@ -1,0 +1,324 @@
+<mvc:View
+ controllerName="sap.ui.demo.toolpageapp.controller.AppInfo.setting"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  >
+   
+            <Page showHeader="false">
+
+                <IconTabBar backgroundDesign="Solid"
+		id="idIconTabBarMulti"
+		expanded="{device>/isNoPhone}"
+		class="sapUiResponsiveContentPadding">
+		<items>
+            <IconTabFilter iconColor="Positive" icon="sap-icon://employee" key="info" text="User Settings"
+    >
+    
+
+    <VBox class="sapUiResponsiveMargin">
+ 
+        <layout:Grid
+            hSpacing="1"
+            vSpacing="1"
+            defaultSpan="L4 M6 S12">
+            
+            <!-- Basic Information -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Basic Information"/>
+                <Label text="First Name" required="true"/>
+                <Input id="firstName" value="{settings>/user/firstName}" liveChange=".onNameChange"/>
+                
+                <Label text="Last Name" required="true"/>
+                <Input  id="lastName" value="{settings>/user/lastName}" liveChange=".onNameChange"/>
+                
+                <Label text="Initials (Auto)" required="true"/>
+                <Input value="{settings>/user/initials}" editable="false"/>
+                
+                <!-- <Label text="Date of Birth" required="true"/>
+                <DatePicker value="{settings>/user/dob}" displayFormat="dd/MM/yyyy"/> -->
+                
+                <Label text="Email" required="true"/>
+                <Input value="{settings>/user/email}" type="Email"/>
+                
+                <Label text="Mobile Number" required="true"/>
+                <HBox>
+                    <VBox width="80%">
+                            <Input value="{settings>/user/mobile}"
+                           type="Tel"
+                           liveChange=".onMobileLiveChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginBegin"  width="20%">
+                            <Button text="Verify OTP"  id="verifyOTPButton" enabled="true"
+                            press=".onSendOTP"
+                            type="Emphasized"/>
+
+                    </VBox>
+                </HBox>
+                     
+
+                
+                <ObjectStatus id="verfiyOtptext"  visible="false"
+    text="OTP Verified"
+    state="Success" />
+                    <Input placeholder="Enter OTP" id="idVerifyOTPInput" visible="false" liveChange="onVerifyOTP"
+                           value="{settings>/user/otpInput}"/>
+                <Label text="Password"/>
+                <Button text="Change Password"
+                                    type="Emphasized"
+                                    press=".onOpenPasswordDialog"/>
+            </VBox>
+
+            <!-- Preferences -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Preferences (**Platinum Users)"/>
+                
+                <Label text="Date Format"/>
+                <Select selectedKey="{userSettings>/date_format}" editable="false">
+                    <core:Item key="dd/MM/yyyy" text="DD/MM/YYYY"/>
+                    <core:Item key="MM/dd/yyyy" text="MM/DD/YYYY"/>
+                </Select>
+
+                <Label text="Date Time Format"/>
+                <Select selectedKey="{settings>/datetime_format}" editable="false">
+                    <core:Item key="dd/MM/yyyy HH:mm" text="DD/MM/YYYY HH:mm"/>
+                    <core:Item key="MM/dd/yyyy hh:mm a" text="MM/DD/YYYY hh:mm AM/PM"/>
+                </Select>
+
+                <Label text="Theme Preference"/>
+                <Select selectedKey="{settings>/theme_preference}" editable="false">
+                    <core:Item key="light" text="Light"/>
+                    <core:Item key="dark" text="Dark"/>
+                    <core:Item key="system" text="System Default"/>
+                </Select>
+
+                <Label text="Language"/>
+                <Select selectedKey="{settings>/user_language}" editable="false">
+                    <core:Item key="en" text="English"/>
+                    <core:Item key="de" text="German"/>
+                    <core:Item key="fr" text="French"/>
+                </Select>
+
+                <Label text="Notifications"/>
+                <VBox>
+                    <CheckBox text="Daily Summary" editable="false" selected="{settings>/user_language}"/>
+                    <CheckBox text="High Expense Alert" editable="false"  selected="{settings>/user_notification_high_exp_alert}"/>
+                    <CheckBox text="Monthly Report" editable="false"  selected="{settings>/user_notification_monthly_report}"/>
+                    <CheckBox text="Payment Reminder" editable="false"  selected="{settings>/user_notification_payment_reminder}"/>
+                </VBox>
+            </VBox>
+
+            <!-- Advanced -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Advanced  (**Platinum Users)"/>
+                
+                <Label text="Auto Backup (Cloud Sync)"/>
+                <Switch  enabled ="false"  state="{settings>/user_notification_auto_backup}"/>
+                
+                <Label text="Enable Offline Mode"/>
+                <Switch  enabled="false"  state="{settings>/user_notification_offline_mode}"/>
+            </VBox>
+
+        </layout:Grid>
+        
+    </VBox>
+</IconTabFilter>
+ 
+<IconTabFilter icon="sap-icon://money-bills" iconColor="Critical" key="expense" text="Expense Tracker"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <VBox class="sapUiResponsiveMargin">
+        <Title text="Expense Settings"/>
+
+        <layout:Grid defaultSpan="L6 M6 S12" hSpacing="1" vSpacing="1">
+
+            <!-- Payment Modes -->
+            <VBox class="sapUiSmallMargin">
+                <HBox justifyContent="SpaceBetween">
+                    <Title text="Payment Modes"  required="true"/>
+                    <Button icon="sap-icon://add" press=".onAddPaymentMode" type="Transparent"/>
+                </HBox>
+
+               <!-- Payment Modes -->
+<ScrollContainer id="scrollPaymentModes" vertical="true" horizontal="false">
+   <List items="{userSettings>/PaymentMode}">
+    <CustomListItem>
+        <HBox justifyContent="SpaceBetween" alignItems="Center">
+            <Text text="{userSettings>name}" />
+            <Button
+                icon="sap-icon://delete"
+                type="Transparent"
+                enabled="{userSettings>showdelete}"
+                press=".onDeletePaymentMode"/>
+        </HBox>
+    </CustomListItem>
+</List>
+</ScrollContainer>
+            </VBox>
+
+            <!-- Spending Mood -->
+            <VBox class="sapUiSmallMargin">
+                <HBox justifyContent="SpaceBetween">
+                    <Title text="Spending Mood"  required="true"/>
+                    <Button icon="sap-icon://add" press=".onAddMood" type="Transparent"/>
+                </HBox>
+
+               <!-- Spending Mood -->
+<ScrollContainer id="scrollMoods" vertical="true" horizontal="false">
+     
+      <List items="{userSettings>/ExpenseMood}">
+    <CustomListItem>
+        <HBox justifyContent="SpaceBetween" alignItems="Center">
+            <Text text="{userSettings>name}" />
+            <Button
+                icon="sap-icon://delete"
+                type="Transparent"
+                enabled="{userSettings>showdelete}"
+                press=".onDeleteMood"/>
+        </HBox>
+    </CustomListItem>
+</List>
+</ScrollContainer>
+            </VBox>
+
+            <!-- Extra Expense Settings -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Extra Settings"/>
+
+                <Label text="Monthly Budget"  required="true"/>
+                <Input type="Number" value="{userSettings>/user_expense_monthly_budget}"/>
+
+                <Label text="Budget Warning (%)"  required="true"/>
+                <Select selectedKey="{userSettings>/user_expense_budget_warning_pct}">
+                    <core:Item key="50" text="50%"/>
+                    <core:Item key="75" text="75%"/>
+                    <core:Item key="90" text="90%"/>
+                </Select>
+
+                <Label text="Enable Budget Alert"/>
+                <Switch state="{userSettings>/user_expense_enable_budget_alert}"/>
+
+                <Label text="Recurring Expense"/>
+                <Select selectedKey="{userSettings>/user_expense_recurring}">
+                    <core:Item key="none" text="None"/>
+                    <core:Item key="daily" text="Daily"/>
+                    <core:Item key="weekly" text="Weekly"/>
+                    <core:Item key="monthly" text="Monthly"/>
+                </Select>
+
+                <Label text="Default Category"  required="true"/>
+                <Select selectedKey="{userSettings>/user_expense_default_category}">
+                    <core:Item key="food" text="Food"/>
+                    <core:Item key="travel" text="Travel"/>
+                    <core:Item key="shopping" text="Shopping"/>
+                    <core:Item key="bills" text="Bills"/>
+                </Select>
+            </VBox>
+
+        </layout:Grid>
+    </VBox>
+</IconTabFilter>
+			 <IconTabFilter iconColor="Negative" icon="sap-icon://heart" key="health" text="Health"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <VBox class="sapUiResponsiveMargin">
+        <Title text="Health Settings"/>
+
+        <layout:Grid
+            hSpacing="1"
+            vSpacing="1"
+            defaultSpan="L4 M6 S12">
+
+            <!-- Water Intake -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Water Intake"/>
+
+                <Label text="Minimum Intake (Liters)"  required="true"/>
+                <Input type="Number" value="{userSettings>/user_health_water_min}"/>
+
+                <Label text="Maximum Intake (Liters)"  required="true"/>
+                <Input type="Number" value="{userSettings>/user_health_water_max}"/>
+
+                <Label text="Reminder Frequency" />
+                <Select selectedKey="{userSettings>/user_health_water_reminder_frequency}">
+                    <core:Item key="30" text="Every 30 Minutes"/>
+                    <core:Item key="60" text="Every 1 Hour"/>
+                    <core:Item key="120" text="Every 2 Hours"/>
+                    <core:Item key="custom" text="Custom"/>
+                </Select>
+ 
+
+                <Label text="Low Intake Notification"/>
+                <Switch state="{userSettings>/user_health_water_low_intake_notification}"/>
+
+              
+            </VBox>
+
+            <!-- Sleep Tracking -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Sleep Tracking"/>
+
+                <Label text="Minimum Sleep (Hours)"  required="true"/>
+                <Input type="Number" value="{userSettings>/user_health_sleep_min}"/>
+
+                <Label text="Maximum Sleep (Hours)"  required="true"/>
+                <Input type="Number" value="{userSettings>/user_health_sleep_max}"/>
+
+                <Label text="Sleep Time"/>
+                <TimePicker value="{userSettings>/user_health_sleep_time}"/>
+
+                <Label text="Wake Up Time"/>
+                <TimePicker value="{userSettings>/user_health_wake_up_time}"/>
+
+                <Label text="Low Sleep Alert"/>
+                <Switch state="{userSettings>/user_health_low_sleep_alert}"/>
+
+                <Label text="Alert Time (Morning)"/>
+                <TimePicker value="{userSettings>/user_health_sleep_alert_time}"/>
+ 
+            </VBox>
+
+            <!-- Steps Tracking -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Steps Tracking"/>
+ 
+
+                <Label text="Daily Goal" required="true"/>
+                <Input type="Number" value="{userSettings>/user_health_steps_goal}"/>
+ 
+
+                <Label text="Check Activity Every"/>
+                <Select selectedKey="{userSettings>/user_health_steps_check_interval}">
+                    <core:Item key="60" text="1 Hour"/>
+                    <core:Item key="120" text="2 Hours"/>
+                    <core:Item key="180" text="3 Hours"/>
+                </Select>
+ 
+            </VBox>
+
+        </layout:Grid>
+    </VBox>
+</IconTabFilter>
+			 
+		</items>
+	</IconTabBar>
+ <footer>
+    <Toolbar class="sapUiSmallMargin">
+        <ToolbarSpacer />
+        <Button text="Save"
+                type="Success"
+                press=".onSaveAllUserSettings"
+                class="sapUiMediumMarginEnd"/>
+    </Toolbar>
+</footer>
+            </Page>
+ 
+	 
+</mvc:View>

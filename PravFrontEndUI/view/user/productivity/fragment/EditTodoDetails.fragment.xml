@@ -1,0 +1,149 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <Dialog
+        id="todoDialog"
+        contentWidth="700px"
+        stretchOnPhone="true">
+
+        <!-- Header -->
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Text
+                        text="Save To-Do Details"
+                        class="sapUiTinyMarginBegin sapMBarTitle" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCancelTodo" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <!-- Content -->
+        <VBox class="sapUiTinyMargin">
+
+            <!-- Row 1 -->
+            <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                <VBox width="55%" class="sapUiTinyMarginBegin">
+                    <Label text="Title" required="true"/>
+                    <Input value="{dialog>/title}" placeholder="Enter task title" width="100%" />
+                </VBox>
+
+                <VBox width="35%" class="sapUiTinyMarginEnd">
+                    <Label text="Tags/Label" />
+                    <Input value="{dialog>/label}" placeholder="Enter tag/label" width="100%" />
+                </VBox>
+            </FlexBox>
+
+            <!-- Row 2 -->
+            <FlexBox
+                direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"
+                wrap="Wrap"
+                justifyContent="SpaceBetween"
+                class="sapUiSmallMarginBottom">
+
+                <VBox width="{= ${device>/system/phone} ? '98%' : '45%' }">
+                    <Label text="Description"  required="true"/>
+                    <TextArea value="{dialog>/description}" rows="3" width="100%" />
+                </VBox>
+
+                <VBox width="{= ${device>/system/phone} ? '98%' : '50%' }">
+                    <Label text="Notes" />
+                    <TextArea value="{dialog>/notes}" rows="3" width="100%" />
+                </VBox>
+            </FlexBox>
+
+            <!-- Row 3 -->
+            <FlexBox direction="Column">
+                <VBox class="sapUiTinyMarginBegin">
+                    <Label text="Status"  required="true"/>
+                    <SegmentedButton selectedKey="{dialog>/status}" width="100%">
+                        <items>
+                            <SegmentedButtonItem key="New" text="New" />
+                            <SegmentedButtonItem key="Pending" text="Pending" />
+                            <SegmentedButtonItem key="Progress" text="Progress" />
+                            <SegmentedButtonItem key="Done" text="Done" />
+                        </items>
+                    </SegmentedButton>
+                </VBox>
+
+                <VBox class="sapUiTinyMarginEnd" style="margin-top:0.5rem;">
+                    <Label text="Priority"  required="true"/>
+                    <Select selectedKey="{dialog>/priority_type}" width="100%">
+                        <core:Item key="Type08" text="High" />
+                        <core:Item key="Type01" text="Medium" />
+                        <core:Item key="Type05" text="Low" />
+                    </Select>
+                </VBox>
+            </FlexBox>
+
+            <!-- Row 4 -->
+            <FlexBox
+                direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"
+                wrap="Wrap"
+                justifyContent="SpaceBetween"
+                class="sapUiSmallMarginBottom">
+
+                <VBox width="{= ${device>/system/phone} ? '98%' : '45%' }">
+                    <Label text="Start Date"  required="true"/>
+                    <DateTimePicker
+                        id="idTodoStartDate"
+                        required="true"
+                        dateValue="{
+                            path: 'dialog>/start_date',
+                            formatter: '.formatter.convertIntoDateTimePIckerformat'
+                        }"
+                        displayFormat="dd-MM-yyyy hh:mm:ss a"
+                        width="100%" />
+                </VBox>
+
+                <VBox width="{= ${device>/system/phone} ? '98%' : '50%' }">
+                    <Label text="End Date"  required="true"/>
+                    <DateTimePicker
+                        id="idTodoEndDate"
+                        required="true"
+                        dateValue="{
+                            path: 'dialog>/end_date',
+                            formatter: '.formatter.convertIntoDateTimePIckerformat'
+                        }"
+                        displayFormat="dd-MM-yyyy hh:mm:ss a"
+                        width="100%" />
+                </VBox>
+            </FlexBox>
+
+        </VBox>
+
+        <!-- Footer Buttons (ONLY THIS) -->
+    <buttons>
+    <!-- Primary action -->
+    <Button
+        text="Save"
+        type="Success"
+        icon="sap-icon://save"   class="sapUiTinyMarginEnd"
+        press="onSaveTodo" />
+
+    <!-- Destructive action (only when id exists) -->
+    <Button
+        text="Delete"
+        type="Reject"
+        icon="sap-icon://delete"
+        press="onDeleteTodo"   class="sapUiTinyMarginEnd"
+        visible="{= !!${dialog>/id} }" />
+
+    <!-- Secondary action -->
+    <Button
+        text="Cancel" 
+        type="Transparent"
+        icon="sap-icon://decline"   class="sapUiTinyMarginEnd"
+        press="onCancelTodo" />
+</buttons>
+
+
+    </Dialog>
+</core:FragmentDefinition>

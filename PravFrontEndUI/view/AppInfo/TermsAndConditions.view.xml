@@ -1,0 +1,81 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.AppInfo.termsandConditions"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <Page showHeader="true" title="Terms and Conditions">
+        <landmarkInfo>
+            <PageAccessibleLandmarkInfo
+                rootRole="Region"
+                rootLabel="{i18n>Home_rootLabel}"
+                contentRole="Main"
+                contentLabel="{i18n>Home_contentLabel}"/>
+        </landmarkInfo>
+
+        <ScrollContainer width="100%" height="100%" vertical="true">
+            <VBox class="sapUiContentPadding" width="100%" fitContainer="true" renderType="Bare" justifyContent="Center" alignItems="Center">
+
+                <!-- Main container with responsive width -->
+                <VBox width="{= ${device>/system/phone} ? '95%' : '70%' }" class="sapUiMediumMarginTopBottom">
+
+                    <!-- Section 1 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="1. Acceptance of Terms" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="{= 'By using ' + ${oApplicationConfigModel>/companyDetails/companyName} + ' (the App), you agree to these terms and conditions. If you do not agree, please do not use the App.'}" wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 2 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="2. Data Storage" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="The App stores all data locally on your device. We do not collect, save, or transmit your personal data to external servers." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 3 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="3. Sharing Personal Expenses" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="By using the App, you agree to share your personal expense information within the App for its intended purpose (e.g., tracking or analysis). This data is only stored locally." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 4 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="4. User Responsibilities" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="You are responsible for: Maintaining your device security, ensuring your expense entries are accurate, and using the App according to applicable laws." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 5 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="5. Prohibited Activities" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="You may not attempt to access others data, use the App for illegal or harmful purposes, or modify/disrupt the App in unauthorized ways." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 6 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="6. Limitation of Liability" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="{= 'The App is provided “as-is.” ' + ${oApplicationConfigModel>/companyDetails/companyName} + ' is not responsible for any loss, errors, or damages arising from use of the App.'}" wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 7 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="7. Modifications" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="We may update the App or these terms at any time. Continued use constitutes acceptance of changes." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 8 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="8. Governing Law" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="These terms are governed by the laws of your jurisdiction." wrapping="true"/>
+                    </VBox>
+
+                    <!-- Section 9 -->
+                    <VBox class="sapUiCard sapUiSmallMargin sapUiPadding" renderType="Bare">
+                        <Title text="9. Contact" level="H3" class="sapUiTitleColor sapUiTinyMarginBottom"/>
+                        <Text text="{= 'For more information, visit our website: ' + ${oApplicationConfigModel>/companyDetails/website}}" wrapping="true"/>
+                    </VBox>
+
+                </VBox>
+            </VBox>
+        </ScrollContainer>
+    </Page>
+</mvc:View>

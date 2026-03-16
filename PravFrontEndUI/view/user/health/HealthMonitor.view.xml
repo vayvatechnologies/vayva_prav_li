@@ -1,0 +1,283 @@
+<mvc:View
+	controllerName="sap.ui.demo.toolpageapp.controller.user.health.HealthMonitor"
+	xmlns:mc="sap.suite.ui.microchart"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"  xmlns:core="sap.ui.core"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz="sap.viz.ui5.controls">
+
+	<Page title="Health Tracker">
+
+		<content>
+
+			<!-- ================= INPUT ROW ================= -->
+			<VBox class="sapUiMediumMargin">					
+				<Label text="Health Record"></Label>
+
+				<HBox wrap="Wrap" alignItems="End" justifyContent="SpaceBetween">
+					
+					<VBox >
+						<Text text="Date" />
+							 
+
+						<DatePicker
+						id="healthMonitorDate"
+						width="12rem" change="fnResetHealthMonitorInput"
+						placeholder="Select Date"
+						value="{/entryDate}" />
+					</VBox>
+
+
+					<VBox width="10rem">
+						<HBox justifyContent="SpaceBetween">
+							<Text text="Water (L)" />
+							<Text text="Target:  {oUserDetailsModel>/daily_water_goal_l} L" />
+						</HBox>
+
+						<Slider id="healthMonitor_waters"
+							min="0"
+							max="15"
+							step="0.5"
+							value="{/water}"
+							showAdvancedTooltip="true"
+							width="100%" />
+					</VBox>
+
+					<VBox width="10rem">
+						<HBox justifyContent="SpaceBetween">
+							<Text text="Sleep (hrs)" />
+							<Text text="Target: {oUserDetailsModel>/daily_sleep_goal_hr} hrs" />
+						</HBox>
+						<Slider id="healthMonitor_sleep"
+							min="0"
+							max="15"
+							step="0.5"
+							value="{/sleep}"
+							showAdvancedTooltip="true"
+							width="100%" />
+					</VBox>
+
+					<VBox width="10rem">
+
+						<Text text="" />
+						<HBox justifyContent="SpaceBetween">
+							<Text text="Steps" />
+							<Text text="Target: {oUserDetailsModel>/daily_steps_goal} steps" />
+						</HBox>
+						<StepInput id="healthMonitor_steps"
+							min="0"
+							max="25000"
+							step="500"
+							value="{/steps}"
+							width="100%" />
+					</VBox>
+
+					<Button
+						text="Save"
+						type="Emphasized"
+						icon="sap-icon://save"
+						press="onSaveHealthData" />
+				</HBox>
+			</VBox>
+
+			<!-- ================= TABLE HEADER WITH TOGGLE ================= -->
+			<Panel class="sapUiMediumMarginTop sapUiResponsiveContentPadding">
+
+				<!-- HEADER WITH SWITCH -->
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="Health Records" />
+						<ToolbarSpacer />
+
+						<Label text="Chart View" />
+						<Switch class="sapUiMediumMarginEnd"
+							id="chartSwitch"
+							change="onToggleChart" />
+						 
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<!-- PRO WARNING MESSAGE -->
+				<MessageStrip 
+					text="Chart analytics is a Pro feature. Upgrade to unlock insights."
+					type="Warning"
+					showIcon="true"
+					visible="{/showNotProUserMessage}" />
+
+				<!-- TABLE (ALWAYS VISIBLE) -->
+				<Table visible="{/showTable}"
+					items="{oHealthMonitorModel>/data}"
+					growing="true">
+
+					<noData>
+						<IllustratedMessage
+							illustrationType="sapIllus-NoData"
+							title="No Health Records"
+							description="Add your daily health data to see it here." />
+					</noData>
+
+					<columns>
+						<Column>
+							<Text text="Date" />
+						</Column>
+						<Column>
+							<Text text="Water" />
+						</Column>
+						<Column>
+							<Text text="Sleep" />
+						</Column>
+						<Column>
+							<Text text="Steps" />
+						</Column>
+						<Column hAlign="Center">
+							<Text text="Actions" />
+						</Column>
+					</columns>
+
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text
+									text="{
+        path: 'oHealthMonitorModel>date',
+        formatter: '.formatter.convertDatetoUserDateFormat'
+    }" />
+								<!-- <Text text="{water}" /> -->
+								<mc:ComparisonMicroChart scale="L" shrinkable="true"
+									pressable="false"
+									class="" width="100%" minValue="0" maxValue="100">
+									<mc:data>
+										<mc:ComparisonMicroChartData
+											value="{
+											path: 'oHealthMonitorModel>water_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+											color="{path: 'oHealthMonitorModel>water_percentage', formatter: '.formatter.getMicroChartColor'}"
+											displayValue="{oHealthMonitorModel>watercurrent} of {oHealthMonitorModel>watergoal}" />
+
+									</mc:data>
+								</mc:ComparisonMicroChart>
+								<mc:ComparisonMicroChart scale="hr" shrinkable="true"
+									pressable="false"
+									class="" width="100%" minValue="0" maxValue="100">
+									<mc:data>
+										<mc:ComparisonMicroChartData
+											value="{
+											path: 'oHealthMonitorModel>sleep_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+											color="{path: 'oHealthMonitorModel>sleep_percentage', formatter: '.formatter.getMicroChartColor'}"
+											displayValue="{oHealthMonitorModel>sleepcurrent} of {oHealthMonitorModel>sleepgoal}" />
+
+									</mc:data>
+								</mc:ComparisonMicroChart>
+
+								<mc:ComparisonMicroChart scale="count" shrinkable="true"
+									pressable="false"
+									class="" width="100%" minValue="0" maxValue="100">
+									<mc:data>
+										<mc:ComparisonMicroChartData
+											value="{
+											path: 'oHealthMonitorModel>steps_percentage',
+											type: 'sap.ui.model.type.Integer'
+											}"
+											color="{path: 'oHealthMonitorModel>steps_percentage', formatter: '.formatter.getMicroChartColor'}"
+											displayValue="{oHealthMonitorModel>stepscurrent} of {oHealthMonitorModel>stepsgoal}" />
+
+									</mc:data>
+								</mc:ComparisonMicroChart>
+
+								<HBox justifyContent="Center">
+									<Button icon="sap-icon://edit"
+										type="Transparent"
+										press=".onEdit" />
+
+									<Button icon="sap-icon://delete"
+										type="Transparent"
+										press=".onDelete" />
+
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+<VBox class="sapUiSmallMargin"  visible="{/showChart}">
+
+    <!-- Metric Selector -->
+    <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+		<Title text="(Last 1 Year Data)"></Title>
+        <Select
+            id="metricSelect"
+            width="200px"
+            selectedKey="water"
+            change=".onMetricChange">
+
+            <items>
+                <core:Item key="water" text="Water Intake"/>
+                <core:Item key="sleep" text="Sleep"/>
+                <core:Item key="steps" text="Steps"/>
+            </items>
+        </Select>
+    </HBox>
+
+    <!-- Chart -->
+    <viz:VizFrame
+        id="healthVizFrame"
+        uiConfig="{applicationSet:'fiori'}"
+        height="350px"
+        width="100%"
+        vizType="line">
+
+        <viz:dataset>
+            <viz.data:FlattenedDataset
+                id="healthDataset"
+                data="{oHealthMonitorModel>/data}">
+
+                <viz.data:dimensions>
+                    <viz.data:DimensionDefinition
+                        name="Date"
+                        value="{
+                            path: 'oHealthMonitorModel>date',
+                            formatter: '.formatter.convertDatetoUserDateFormat'
+                        }"/>
+                </viz.data:dimensions>
+
+                <!-- Measure will be set dynamically -->
+                <viz.data:measures>
+                    <viz.data:MeasureDefinition
+                        name="Water %"
+                        value="{oHealthMonitorModel>water_percentage}"/>
+                </viz.data:measures>
+
+            </viz.data:FlattenedDataset>
+        </viz:dataset>
+
+        <viz:feeds>
+            <viz.feeds:FeedItem
+                uid="valueAxis"
+                type="Measure"
+                values="Water %"/>
+
+            <viz.feeds:FeedItem
+                uid="categoryAxis"
+                type="Dimension"
+                values="Date"/>
+        </viz:feeds>
+
+        <viz:dependents>
+            <viz:Popover id="healthPopover"/>
+        </viz:dependents>
+
+    </viz:VizFrame>
+
+</VBox>
+
+
+
+			</Panel>
+
+
+		</content>
+	</Page>
+</mvc:View>

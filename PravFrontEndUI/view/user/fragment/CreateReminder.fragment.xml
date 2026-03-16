@@ -1,0 +1,200 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout">
+
+	<Dialog
+		id="createReminderDialog"
+		title="Create Reminder"
+		stretch="{device>/system/phone}"
+		contentWidth="{= ${device>/system/phone} ? '100%' : '900px'}"
+		draggable="true"
+		resizable="true"
+		class="sapUiResponsivePadding">
+
+		<!-- Header -->
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title text="Create Reminder" />
+				</contentLeft>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCloseReminderDialog" type="Transparent" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+
+		<content>
+			<VBox class="sapUiSmallMargin">
+				<!-- Title, Description, Recurrence Checkbox -->
+				<FlexBox
+					direction="{= ${device>/system/phone} ? 'Column' : 'Row'}"
+					wrap="Wrap"
+					justifyContent="SpaceBetween"
+					class="sapUiSmallMarginBottom">
+
+					<VBox class="" fitContainer="true">
+						<Label text="Title" required="true" />
+						<Input value="{reminder>/title}" placeholder="Enter reminder title" width="100%" />
+					</VBox>
+
+					<VBox class="" fitContainer="true">
+						<Label text="Description" />
+						<TextArea value="{reminder>/description}" rows="1" placeholder="Optional" width="100%" />
+					</VBox>
+
+					<VBox class="" fitContainer="true">
+
+						<Label text="Type?" />                       
+                         <Input id="calenderType"
+                        showValueHelp="true" 
+                        valueHelpRequest="onValueHelpRequest"
+                        value="{/category}"
+                        placeholder="Select category..."
+                        />
+                    </VBox>
+					<VBox class="" fitContainer="true">
+						 
+						<Label text="Recurring?" />
+						<CheckBox selected="{reminder>/isRecurring}" select="onRecurringToggled" />
+					</VBox>
+				</FlexBox>
+
+				<!-- Non-Recurring -->
+				<FlexBox
+					direction="{= ${device>/system/phone} ? 'Column' : 'Row'}"
+					wrap="Wrap"
+					visible="{= !${reminder>/isRecurring} }"
+					class="sapUiSmallMarginBottom">
+					
+					<VBox class="" fitContainer="true">
+						<Label text="From Date Time" />
+						<DateTimePicker value="{reminder>/fromDateTime}" displayFormat="medium" width="100%" />
+					</VBox>
+					
+					<VBox class="" fitContainer="true">
+						<Label text="To Date Time" />
+						<DateTimePicker value="{reminder>/toDateTime}" displayFormat="medium" width="100%" />
+					</VBox>
+				</FlexBox>
+
+				<!-- Recurring Block -->
+				<VBox visible="{reminder>/isRecurring}" class="sapUiSmallMarginBottom">
+					
+					<FlexBox
+						direction="{= ${device>/system/phone} ? 'Column' : 'Row'}"
+						wrap="Wrap"
+						class="sapUiSmallMarginBottom"
+						 >
+
+						<VBox class="" fitContainer="true">
+							<Label text="From Date" />
+							<DatePicker value="{reminder>/recurringFromDate}" displayFormat="medium" />
+						</VBox>
+
+						<VBox class="" fitContainer="true">
+							<Label text="To Date" />
+							<DatePicker value="{reminder>/recurringToDate}" displayFormat="medium"   />
+						</VBox>
+
+						<VBox class="" fitContainer="true">
+							<Label text="From Time" />
+							<TimePicker id="fromTimePicker" value="{reminder>/defaultFromTime}" displayFormat="HH:mm"  />
+						</VBox>
+
+						<VBox class="" fitContainer="true">
+							<Label text="To Time" />
+							<TimePicker id="toTimePicker" value="{reminder>/defaultToTime}" displayFormat="HH:mm"  />
+						</VBox>
+					</FlexBox>
+
+					<FlexBox
+						direction="{= ${device>/system/phone} ? 'Column' : 'Row'}"
+						wrap="Wrap" 
+						class="sapUiSmallMarginBottom">
+
+						<VBox   class="">
+							<Label text="Recurrence Pattern" />
+							<SegmentedButton width="100%" selectedKey="{reminder>/recurrenceType}" select="onRecurrenceTypeChange">
+								<items>
+									<SegmentedButtonItem key="daily" text="Daily" />
+									<SegmentedButtonItem key="weekly" text="Weekly" />
+									<SegmentedButtonItem key="monthly" text="Monthly" />
+								</items>
+							</SegmentedButton>
+						</VBox>
+
+						<VBox   class="">
+							<VBox visible="{= ${reminder>/recurrenceType} === 'weekly' }" class="">
+								<Label text="Select Days of the Week" />
+								<MultiComboBox
+									items="{ path: 'reminder>/daysOfWeek' }"
+									selectedKeys="{reminder>/selectedDays}">
+									<core:Item key="{reminder>key}" text="{reminder>text}" />
+								</MultiComboBox>
+							</VBox>
+
+							<VBox visible="{= ${reminder>/recurrenceType} === 'monthly' }">
+								<Label text="Select Days of the Month" />
+								<MultiComboBox
+									items="{ path: 'reminder>/daysOfMonth' }"
+									selectedKeys="{reminder>/selectedMonthDays}">
+									<core:Item key="{reminder>key}" text="{reminder>text}" />
+								</MultiComboBox>
+							</VBox>
+						</VBox>
+					</FlexBox>
+
+					<!-- Preview Table -->
+					<Table
+						id="previewTable"
+						items="{reminder>/previewReminders}"
+						class="sapUiSmallMarginTop"
+						editable="true"
+						growing="true"
+						growingScrollToLoad="true">
+
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Preview Reminders" />
+								<ToolbarSpacer />
+								<Button text="Load" icon="sap-icon://refresh" press="onLoadReminders" />
+							</Toolbar>
+						</headerToolbar>
+
+						<columns>
+							<Column width="30%"><Text text="Date" /></Column>
+							<Column width="35%"><Text text="From Time" /></Column>
+							<Column width="30%"><Text text="To Time" /></Column>
+							<Column width="5%"><Text text=" " /></Column>
+						</columns>
+
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{reminder>dateLabel}" />
+									<TimePicker  value="{reminder>/defaultFromTime}" displayFormat="HH:mm" />
+									<TimePicker   value="{reminder>/defaultToTime}" displayFormat="HH:mm" />
+
+									<!-- <DateTimePicker value="{reminder>fromTime}" displayFormat="short" valueFormat="yyyy-MM-ddTHH:mm:ss" width="100%" />
+									<DateTimePicker value="{reminder>toTime}" displayFormat="short" valueFormat="yyyy-MM-ddTHH:mm:ss" width="100%" /> -->
+									<Button icon="sap-icon://decline" type="Transparent" press=".onDeleteReminderRow" tooltip="Delete this row" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+			</VBox>
+		</content>
+
+		<beginButton>
+			<Button text="Save" type="Emphasized" press="onSaveReminder" />
+		</beginButton>
+
+		<endButton>
+			<Button text="Cancel" press="onCloseReminderDialog" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

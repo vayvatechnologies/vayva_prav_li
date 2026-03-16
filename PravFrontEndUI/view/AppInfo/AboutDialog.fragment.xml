@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <Dialog
+        id="aboutDialog" 
+        afterClose=".onCloseAbout"
+        title="About Application"
+        showCloseButton="true"
+        stretchOnPhone="true"
+        class="sapUiCard">
+        <customHeader>
+        <Bar>
+            <contentLeft>
+                <Text text="About Application"  class="sapUiTinyMarginBegin sapMBarTitle" />
+            </contentLeft>
+
+            <contentRight>
+                <Button icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCloseAbout" />
+            </contentRight>
+        </Bar>
+    </customHeader>
+
+        <content>
+            <VBox class="" justifyContent="Start" alignItems="Center" width="100%">
+
+                <!-- Logo Centered -->
+                <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginBottom">
+                    <Image
+                        src="{oApplicationConfigModel>/applicationInfo/logo}"
+                        width="120px"
+                        height="100px"
+                        class="sapUiSmallMarginBottom"/>
+                </HBox>
+
+                <!-- App Name and Version -->
+                <ObjectHeader
+                    title="{oApplicationConfigModel>/applicationInfo/name}"
+                    number="{oApplicationConfigModel>/applicationInfo/version}"
+                    numberUnit="Version"
+                    class="sapUiMediumMarginBottom"
+                    markFavorite="false"
+                     />
+
+                <!-- App Description -->
+                <Text
+                    text="{oApplicationConfigModel>/applicationInfo/description}"
+                    class="sapUiMediumMarginBottom"
+                    wrapping="true"
+                    textAlign="Center"
+                    design="Bold"/>
+
+                <!-- Company Details Form -->
+                <form:SimpleForm
+                    layout="ResponsiveGridLayout"
+                    editable="false"
+                    class="sapUiSmallMarginBottom">
+
+                    <Label text="Company"/>
+                    <Text text="{oApplicationConfigModel>/companyDetails/companyName}"/>
+
+                    <Label text="Support Email"/>
+                    <Link
+                        text="{oApplicationConfigModel>/companyDetails/supportEmail}"
+                        href="{= 'mailto:' + ${oApplicationConfigModel>/companyDetails/supportEmail} }"/>
+
+                    <Label text="Website"/>
+                    <Link
+                        text="{oApplicationConfigModel>/companyDetails/website}"
+                        href="{oApplicationConfigModel>/companyDetails/website}"
+                        target="_blank"/>
+                </form:SimpleForm>
+
+                <!-- Footer -->
+                <Text
+                    text="{= '© 2026 ' + ${oApplicationConfigModel>/companyDetails/companyName} + '. All rights reserved.'}"
+                    class="sapUiTinyMarginTop sapUiMediumMarginBottom"
+                    wrapping="true"
+                    textAlign="Center"
+                    design="Italic"/>
+
+            </VBox>
+        </content>
+
+        <endButton>
+            <Button
+                type="Reject"
+                icon="sap-icon://decline"
+                text="Close"
+                press=".onCloseAbout"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -1,0 +1,235 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.user.productivity.Calendar"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:unified="sap.ui.unified"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+        <Title text="My Calender" class="sapUiTinyMarginBegin sapUiTinyMarginTop"/>
+
+    <ScrollContainer height="100%" vertical="true" visible="{oCalenderModel>/isCalenderView}">
+      <VBox class="sapUiSmallMargin">
+
+    <!-- Toolbar for Calendar Actions -->
+   <Toolbar visible="false">
+    <!-- Left: Calendar title -->
+    <Title text="My Calendar"/>
+    <ToolbarSpacer/>
+
+    <!-- Right: Full Day toggle and Create Appointment -->
+  
+ 
+
+    <!-- SegmentedButton for views -->
+    <!-- <SegmentedButton selectedKey="{oCalenderModel>/selectedViewKey}"
+    class="sapUiTinyMarginEnd" selectionChange="onViewChange">
+    <Button key="DayView" text="Day"/>
+    <Button key="WorkWeekView" text="Work Week"/>
+    <Button key="WeekView" text="Week"/>
+</SegmentedButton> -->
+<SegmentedButton id="SB1" selectionChange="onViewChange" >
+				<items>
+					<SegmentedButtonItem text="Day" key="DayView"/>
+					<!-- <SegmentedButtonItem text="Work Week" key="WorkWeekView"/> -->
+					<SegmentedButtonItem text="Week" key="WeekView"/>
+				</items>
+			</SegmentedButton>
+
+   	<ToggleButton text="Full Day" class="sapUiTinyMarginEnd" press="onToggleFullDayTime"/>
+ 				 
+
+					 <Button text="Create Appoitment"
+						icon="sap-icon://add" class="sapUiTinyMarginEnd"
+						type="Accept"
+						press="onCreateAppoitment"  />
+					
+    
+
+<Button text="Table View" icon="sap-icon://table-view" type="Emphasized" press="onChangetoTableView" />
+</Toolbar>
+
+
+
+    <!-- CALENDAR VIEW -->
+    <SinglePlanningCalendar
+        id="idUserCalender"  
+        enableAppointmentsDragAndDrop="true"
+        enableAppointmentsResize="true"
+        enableAppointmentsCreate="true"
+        selectedViewKey="{oCalenderModel>/selectedViewKey}"
+        startDateChange="_filterTodosByDate"
+        showHeader="false" 
+        startHour="{oCalenderModel>/startHour}"
+        endHour="{oCalenderModel>/endHour}" 
+        fullDay="false"
+        legend="SinglePlanningCalendarLegend"
+        startDate="{oCalenderModel>/start_date}"
+        appointments="{oCalenderModel>/appointments}"
+        appointmentSelect="onAppointmentSelect"
+        appointmentDrop="onAppointmentDrop"
+        appointmentResize="onAppointmentResize"
+        appointmentCreate="onAppointmentCreate">
+        	<views>
+				<SinglePlanningCalendarDayView key="DayView" title="Day" /> 
+				<SinglePlanningCalendarWeekView key="WeekView" title="Week" /> 
+			</views>
+
+<actions>
+					<ToggleButton text="Full Day" press="onToggleFullDayTime"/>
+ 				                 <!-- Bottom added so hided for bk -->
+ <!-- <Button text="Create Appoitment"
+						icon="sap-icon://add" class="sapUiTinyMarginEnd"
+						type="Accept"
+						press="onCreateAppoitment"  /> -->
+					
+    
+
+<Button text="Table View" icon="sap-icon://table-view" type="Emphasized" press="onChangetoTableView" />
+
+					 <!-- <Button text="Create Appoitment"
+						icon="sap-icon://add"
+						type="Accept"
+						press="onCreateAppoitment"  /> -->
+					
+
+				</actions>
+        <!-- Appointments -->
+        <appointments>
+            <unified:CalendarAppointment
+                title="{oCalenderModel>title}"
+                text="{oCalenderModel>status}"
+                startDate="{oCalenderModel>start_date}"
+                endDate="{oCalenderModel>end_date}"
+                type="{oCalenderModel>priority_type}" 
+                allDay="{oCalenderModel>fullDay}" />
+        </appointments>
+        
+    </SinglePlanningCalendar>
+</VBox>
+    </ScrollContainer>
+        <ScrollContainer height="100%" vertical="true" visible="{oCalenderModel>/isTableView}">
+ 
+            
+         <!-- Search / Filter Bar -->
+            <Toolbar> 
+                <ToolbarSpacer/>
+                <SearchField 
+                    width="14rem"  class="sapUiTinyMarginEnd"
+                    placeholder="Search by title / label"
+                    liveChange="onLiveSearch"/>
+                
+                    
+					 <!-- <Button text="Create Appoitment"
+						icon="sap-icon://add" class="sapUiTinyMarginEnd"
+						type="Accept"
+						press="onCreateAppoitment"  /> -->
+
+              <Button icon="sap-icon://calendar" text="Calender View" type="Emphasized" press="onChangetoTableView"/>
+            </Toolbar>
+
+            <!-- Todo Table -->
+            <Table   class="sapUiTinyMargin" 
+                id="todoTable"
+                items="{oCalenderModel>/appointments}"
+                growing="true"
+                growingScrollToLoad="true">
+
+                <columns>
+                    <Column>
+                        <Text text="Task"/>
+                    </Column>
+
+                    <Column>
+                        <Text text="Description"/>
+                    </Column>
+
+                    <Column  minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                        <Text text="Type"/>
+                    </Column>
+
+                    <Column  minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+            <Text text="Start Date"/>
+        </Column>
+        <Column  minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+            <Text text="End Date"/>
+        </Column>
+        <Column demandPopin="true" hAlign="Center">
+            <Text text="Status"/>
+        </Column>
+        <!-- Action Column -->
+        <Column hAlign="Center" >
+            <Text text="Actions"/>
+        </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Active" press="onRowPress">
+                        <cells>
+
+                            <!-- Title + Label -->
+                            <ObjectIdentifier
+                                title="{oCalenderModel>title}"
+                                text="{oCalenderModel>label}"/>
+
+                            <!-- Description -->
+                            <Text
+                                text="{oCalenderModel>description}"
+                                wrapping="true"/>
+
+                            <!-- Appointment Type -->
+                            <Text
+                                text="{oCalenderModel>priority_text}"/>
+
+                            <!-- Start Date -->
+                            <Text
+                                text="{
+                                    path: 'oCalenderModel>start_date',
+                                    formatter: '.formatter.convertDatetoUsertimeFormat'
+                                }"/>
+
+                            <!-- End Date -->
+                            <Text
+                                text="{
+                                    path: 'oCalenderModel>end_date',
+                                    formatter: '.formatter.convertDatetoUsertimeFormat'
+                                }"/>
+
+                            <!-- Priority / Status -->
+                            <ObjectStatus
+                                text="{
+                                    path: 'oCalenderModel>priority_type',
+                                    formatter: '.formatter.formatUserCalenderPriorityText'
+                                }"
+                                state="{
+                                    path: 'oCalenderModel>priority_type',
+                                    formatter: '.formatter.formatUserCalenderPriorityState'
+                                }"/>
+
+                                 <HBox justifyContent="Center" class="sapUiTinyMargin">
+                    <Button
+                        icon="sap-icon://edit"
+                        type="Transparent"
+                        press=".onEditTodo"
+                        tooltip="Edit"/>
+                    <Button
+                        icon="sap-icon://delete"
+                        type="Transparent"
+                        press=".onDeleteTodoRow"
+                        tooltip="Delete"/>
+                </HBox>
+
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+    </ScrollContainer>
+     <!-- Floating Create Button -->
+           
+                 <Button
+                id="fabCreateCalender"
+                icon="sap-icon://add"
+                type="Transparent"
+                press="onCreateAppoitment"
+                class="fabCreateButton"
+                tooltip="Create Appoitment" />  
+                
+</mvc:View>

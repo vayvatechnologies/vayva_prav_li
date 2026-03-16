@@ -1,0 +1,46 @@
+{
+  "DashboardPage": {
+     
+    "monthlyExpenseChartData": [
+      { "Week": "W1 Jan,25", "Income": 100, "Expense": 30 },
+      { "Week": "W2 Jan,25", "Income": 120, "Expense": 50 },
+      { "Week": "W3 Jan,25", "Income": 150, "Expense": 70 },
+      { "Week": "W4 Jan,25", "Income": 170, "Expense": 90 },
+
+      { "Week": "W1 Feb,25", "Income": 200, "Expense": 100 },
+      { "Week": "W2 Feb,25", "Income": 180, "Expense": 60 },
+      { "Week": "W3 Feb,25", "Income": 160, "Expense": 80 },
+      { "Week": "W4 Feb,25", "Income": 210, "Expense": 120 },
+
+      { "Week": "W1 Mar,25", "Income": 220, "Expense": 110 },
+      { "Week": "W2 Mar,25", "Income": 240, "Expense": 130 },
+      { "Week": "W3 Mar,25", "Income": 260, "Expense": 150 },
+      { "Week": "W4 Mar,25", "Income": 280, "Expense": 170 }
+    ],
+    "WeeklyExpenseChartData": [
+      { "value": 4000, "label": "Q1", "color": "Error" },
+      { "value": 3253, "label": "Q2", "displayValue": "80M", "color": "Error" },
+      { "value": 3500, "label": "Q3", "color": "Error" },
+      { "value": 1360, "label": "Q4", "displayValue": "avg", "color": "Neutral" },
+      { "value": 155, "label": "Q5", "color": "Neutral" }
+    ],
+    "healthStatusData": {
+      "minValue": 0, 
+      "maxValue": 40,
+      "lists": [
+        { "title": "Water", "color": "Good", "displayValue": "1L of 10L", "value": 100 },
+        { "title": "Sleep", "color": "Good", "displayValue": "5hr of 8hr", "value": 50 },
+        { "title": "Steps", "color": "Good", "displayValue": "1000 of 8000", "value": 10 }
+      ]
+    },
+    "OverViewTiles": {
+      "dailyRoutine": {
+        "lastEntryDateTime": "Today 12:10 PM"
+      },
+      "Expense": {
+        "lastEntryDateTime": "Today 12:10 PM",
+        "totalExpense": "10900"
+      }
+    }
+  }
+}

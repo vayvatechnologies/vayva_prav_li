@@ -1,0 +1,80 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Panel  
+					expandable="false"
+					expanded="{oExpeseTrackerModel>/toogleOverviewShow}"
+					class="  sapUiSmallMarginBottom newsPanel">
+					<!-- Show/Hide Button -->
+					<!-- Custom "Header" with Title left and Button right -->
+					<HBox justifyContent="SpaceBetween" alignItems="Center" class="">
+						<!-- Left title -->
+						<VBox>
+							<Title text="Let’s plan—Chat With Prav AI" level="H3" />
+						</VBox>
+						<!-- Right show/hide button -->
+						<Button
+							press="onTogglePravAICarousel"
+							text="{= ${oExpeseTrackerModel>/toogleOverviewShow} ? 'Hide' : 'Show' }"
+							icon="{= ${oExpeseTrackerModel>/toogleOverviewShow} 
+									? 'sap-icon://navigation-up-arrow'    
+									: 'sap-icon://navigation-down-arrow'    
+								}"
+						/>
+					</HBox>
+					<VBox class="pageWrapper" width="100%"
+						visible="{oExpeseTrackerModel>/toogleOverviewShow}">
+						<!-- 🟦 Title Section -->
+						<VBox class="titleSection">
+							<Text text="Hi {oUserDetailsModel>/full_name}," class="titleHi" />
+							<Text text="Ready to Plan Expense with Prav AI?" class="titleMain" />
+						</VBox>
+						<!-- 🟨 Feature Cards -->
+						<HBox class="featureCards">
+							<VBox class="featureCard">
+								<Image src="images/prav.png" class="cardIcon" />
+								<Text
+									text="Plan smarter, act faster — track expenses and goals in one tap."
+									class="cardTitle" />
+								<Text text="Track,Act instantly." class="cardSubtitle" />
+							</VBox>
+							<VBox class="featureCard">
+								<Image src="images/prav.png" class="cardIcon" />
+								<Text
+									text="Organize your finances and schedule with clarity and confidence."
+									class="cardTitle" />
+								<Text text="Plan clearly" class="cardSubtitle" />
+							</VBox>
+						</HBox>
+						<!-- 🟩 Bottom Chat Input -->
+						<MessageStrip
+							text="Chat is a Pro feature. Upgrade to unlock insights."
+							type="Warning"
+							showIcon="true"
+							visible="{/showNotProUserMessage}" />
+
+						<VBox class="chatBar" width="100%" visible="true">
+							<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+								<!-- Input takes 90% -->
+								<!-- INPUT takes 90% -->
+								<TextArea width="92%" rows="2" growing="true"
+									placeholder="Example: 'Top 5 Expense'">
+									<layoutData>
+										<FlexItemData growFactor="9" />
+									</layoutData>
+								</TextArea>
+								<!-- Each button takes 5% -->
+								<Button icon="sap-icon://microphone"
+									class="chatButton" enabled="false"
+									width="5%" />
+								<Button icon="sap-icon://paper-plane"  enabled="false"
+									class="chatSend sapUiTinyMarginBegin"
+									width="5%" />
+							</HBox>
+							<!-- <HBox justifyContent="SpaceBetween" width="100%">
+								<Button text="Top 5 Expense" class="shortcutBtn" />
+								<Button text="Where Spend More" class="shortcutBtn" />
+								<Button text="Create Expense" class="shortcutBtn" />
+							</HBox> -->
+						</VBox>
+					</VBox>
+				</Panel>
+</core:FragmentDefinition>

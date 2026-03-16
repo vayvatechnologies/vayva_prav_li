@@ -1,0 +1,64 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:l="sap.ui.layout"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <Popover
+    id="botPopover"
+    title="P-BOT "
+    contentWidth="300px"
+    contentHeight="400px"
+    placement="Auto"
+    showHeader="true"
+    verticalScrolling="true"
+    class="sapUiResponsivePadding">
+
+    <endButton>
+      <Button icon="sap-icon://delete" tooltip="Clear Chat" press=".onClearChat" />
+
+      <Button icon="sap-icon://decline" press=".onCloseBotPopover" />
+    </endButton>
+
+    <VBox
+      id="chatArea"
+      width="100%"
+      height="300px"
+      scrollable="true"
+      class="">
+      <!-- Chat messages will appear here -->
+    </VBox>
+
+    <HBox width="100%"
+      class="sapUiSmallMarginTop"
+      alignItems="Center">
+
+ 
+      <TextArea  width="100%" rows="2"
+        id="userInput"
+        placeholder="Type a message..."
+       />
+       
+<!-- 
+      <Button  width="20%" press="onStartVoiceInput"
+        icon="sap-icon://microphone"
+        type="Transparent" /> -->
+
+<Button id="voiceButton"  icon="sap-icon://microphone"  
+ type="Transparent"
+width="20%" press="onStartVoiceInput" />
+
+<Button id="clearButton"  icon="sap-icon://clear-all"  
+ type="Transparent"
+width="20%" press="onClearChat" />
+
+
+      <Button  width="20%" 
+        icon="sap-icon://paper-plane"
+        type="Accept"
+        press=".onSendMessage" />
+
+    </HBox>
+
+  </Popover>
+</core:FragmentDefinition>

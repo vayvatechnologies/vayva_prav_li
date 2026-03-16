@@ -1,0 +1,283 @@
+<mvc:View height="100%" id="idAppView"
+	controllerName="sap.ui.demo.toolpageapp.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt">
+	<tnt:ToolPage visible="{
+        parts: [
+            'oGlobalAIModel>/ApplicationConfigurations/isApplicationDetailsLoaded',
+            'oGlobalAIModel>/maintenance/isUnderMaintenance'
+        ],
+        formatter: '.formatter.fnHomeShowLanding'
+    }"
+		id="app"
+		class="sapUiDemoToolPage">
+		<tnt:header class="customToolHeader">
+			<tnt:ToolHeader>
+				<Button
+					id="sideNavigationToggleButton"
+					icon="sap-icon://menu2"
+					type="Transparent"
+					press=".onSideNavButtonPress"
+					tooltip="{i18n>collpaseMenuButtonText}">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<ToolbarSpacer/>
+				<Image
+					src="{oApplicationConfigModel>/applicationInfo/logo}" 
+					alt="{oApplicationConfigModel>/applicationInfo/name}" 
+					height="40px"
+					width="auto"
+				/>
+				<!-- <Title
+					text="{oApplicationConfigModel>/applicationInfo/name}"
+					level="H2"/> -->
+				<ToolbarSpacer/>
+				<Button 
+				visible="{oApplicationConfigModel>/settings/showAI}"
+					id="errorButton"
+					icon="sap-icon://ai"
+ 					type="Transparent"
+					press=".onMessagePopoverPress"
+					tooltip="{i18n>errorButtonTooltip}">
+					<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>
+					</layoutData>
+				</Button>
+				<Button
+					id="idAdminButton" 
+					text="Admin Dashboard"
+					icon="sap-icon://action"
+					visible="false"
+					type="Transparent"
+					press=".onNavAdminDashboard"
+					tooltip="Admin Panel">
+					 <!-- Badge -->
+					 
+					<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>
+					</layoutData>
+				</Button>
+				
+				<Button
+					id="notificationButton"
+					icon="sap-icon://ui-notifications"
+					 visible="{= ${oGlobalAIModel>/ApplicationConfigurations/isUserDetailsLoaded} }"
+					type="Transparent"
+					press=".onNotificationPress"
+					tooltip="{i18n>notificationButtonTooltip}">
+					 <!-- Badge -->
+					<customData>
+						<BadgeCustomData
+							value="{= ${oGlobalNotifModel>/notifications}.length }"
+							visible="{= ${oGlobalNotifModel>/notifications}.length > 0 }"
+							state="Error"/>
+					</customData>
+					<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>
+					</layoutData>
+				</Button>
+				
+				
+
+				<!-- <Button
+					id="userButton"
+    				text="{= ${oUserDetailsModel>/initial} ? ${oUserDetailsModel>/initial} : 'Info' }"
+					type="Transparent"
+					press=".onUserNamePress">
+					<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>
+					</layoutData>
+				</Button> -->
+				<Avatar
+						initials="{= ${oUserDetailsModel>/initial} ? ${oUserDetailsModel>/initial} : 'GST' }"
+						displaySize="XS"
+						displayShape="Square"
+						press=".onUserNamePress">
+						<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>
+					</layoutData>
+				</Avatar>
+
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			
+			<tnt:SideNavigation  class="customSideNav"
+				expanded="true"
+				selectedKey="{oSideMenu>/selectedKey}">
+				<tnt:NavigationList    itemSelect=".onSideMenuSelect"
+					items="{
+						path: 'oSideMenu>/navigation',
+						templateShareable: false
+					}">
+					<tnt:NavigationListItem 
+						text="{path: 'oSideMenu>titleI18nKey', formatter: '.getBundleText'}"
+						icon="{oSideMenu>icon}"
+						expanded="{oSideMenu>expanded}"
+						items="{
+							path: 'oSideMenu>items',
+							templateShareable: false
+						}"
+						key="{oSideMenu>key}"
+						href="#/{oSideMenu>key}">
+						<tnt:NavigationListItem
+							text="{path: 'oSideMenu>titleI18nKey', formatter: '.getBundleText'}"
+							key="{oSideMenu>key}"
+							href="#/{oSideMenu>key}"></tnt:NavigationListItem>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList itemSelect=".onSideMenuSelect">
+						<!-- Privacy Button -->
+						<tnt:NavigationListItem key="Dashboard" 
+                text="{oApplicationConfigModel>/companyDetails/companyName}"
+                   ></tnt:NavigationListItem>
+						<!-- Privacy Button -->
+						<!-- <tnt:NavigationListItem key="privacyPolicy"
+                text="Privacy Policy"
+                icon="sap-icon://shield"
+                  ></tnt:NavigationListItem> -->
+						<!-- Terms & Conditions Button -->
+						<!-- <tnt:NavigationListItem key="termsAndConditions"
+                text="Terms  Conditions"
+                icon="sap-icon://document-text"
+                  ></tnt:NavigationListItem> -->
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+		<MessageStrip
+			visible="{messageStripModel>/showMessageStrip}"
+			text="{messageStripModel>/text}"
+			type="{messageStripModel>/type}"
+			showIcon="{messageStripModel>/showIcon}"
+			showCloseButton="{messageStripModel>/showCloseButton}"
+			class="sapUiTinyMargin" />
+			<App id="mainContents"/>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+
+ 
+<!-- 
+   <VBox visible="{=${oGlobalAIModel>/maintenance/isUnderMaintenance}}"
+    width="100%"
+    height="100%"
+    alignItems="Center"
+    justifyContent="Start"
+    class="sapUiLargeMarginTop">
+
+    <VBox alignItems="Center" class="sapUiSmallMargin" width="50%">
+
+        <Title
+            text="{oGlobalAIModel>/maintenance/maintenancemessage}"
+            level="H2"
+            style="font-weight: bold; font-size: 1.8rem;"
+            class="sapUiSmallMarginBottom" />
+
+      
+
+	<Image src="images/loading.png"/>
+	
+        <Button class="sapUiLargeMarginTop"
+            text="Refresh"
+            type="Emphasized"
+            press=".onRefresh"
+            width="150px" />
+
+    </VBox>
+
+</VBox>
+
+
+  <VBox visible="{
+        parts: [
+            'oGlobalAIModel>/ApplicationConfigurations/isApplicationDetailsLoaded',
+            'oGlobalAIModel>/maintenance/isUnderMaintenance'
+        ],
+        formatter: '.formatter.fnHomeShowAppLoading'
+    }"
+    width="100%"
+    height="100%"
+    alignItems="Center"
+    justifyContent="Start"
+    class="sapUiLargeMarginTop">
+
+    <VBox alignItems="Center" class="sapUiSmallMargin" width="50%">
+
+   
+
+      
+
+	<Image src="images/loading.gif"/>
+	 
+
+    </VBox>
+
+</VBox> -->
+<FlexBox
+ visible="{=${oGlobalAIModel>/maintenance/isUnderMaintenance}}"
+ direction="Column"
+ alignItems="Center"
+ justifyContent="Start"
+ class="sapUiResponsiveMargin sapUiLargeMarginTop">
+
+
+<FlexBox
+    direction="Column"
+    alignItems="Center"
+    justifyContent="Center"
+    width="100%"
+    class="sapUiContentPadding sapUiSmallMargin">
+
+    <Title
+        text="{oGlobalAIModel>/maintenance/maintenancemessage}"
+        level="H2"
+        class="sapUiSmallMarginBottom"/>
+
+    <Image
+        src="images/loading.png"
+        width="150px"
+        densityAware="false"
+        class="sapUiSmallMarginTop"/>
+
+    <Button
+        text="Refresh"
+        type="Emphasized"
+        press=".onRefresh"
+        width="150px"
+        class="sapUiLargeMarginTop"/>
+
+</FlexBox>
+
+
+</FlexBox>
+
+<FlexBox
+ visible="{
+     parts: [
+         'oGlobalAIModel>/ApplicationConfigurations/isApplicationDetailsLoaded',
+         'oGlobalAIModel>/maintenance/isUnderMaintenance'
+     ],
+     formatter: '.formatter.fnHomeShowAppLoading'
+ }" 
+ direction="Column"
+ alignItems="Center"
+ justifyContent="Center"
+ class="sapUiResponsiveMargin sapUiLargeMarginTop">
+ 
+
+<Image
+    src="images/loading.gif"
+      width="100%"
+    height="100%"
+    densityAware="false"/>
+
+
+</FlexBox>
+
+ 
+</mvc:View>

@@ -1,0 +1,42 @@
+<mvc:View
+	controllerName="sap.ui.demo.toolpageapp.controller.Login"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo
+				rootRole="Region"
+				rootLabel="{i18n>Home_rootLabel}"
+				contentRole="Main"
+				contentLabel="{i18n>Home_contentLabel}"/>
+		</landmarkInfo>
+		<VBox height="450px"  width="100%" class="sapUiContentPadding"
+                fitContainer="true" alignItems="Center" justifyContent="Center" >
+			<!-- Login/Signup Form -->
+			<VBox justifyContent="Center" alignItems="Center" class="loginForm">
+				<!-- Logo (optional) -->
+				<Image src="{oGlobalAIModel>/applicationDetails/logoPath}" width="250px" height="auto" class="loginLogo"/>
+				<!-- Login/Signup Header -->
+				<Label text="{i18n>LOGIN_TO_YOUR_ACCOUNT_LABEL}" class="loginTitle"/>
+				<!-- Username / Mobile Number -->
+				<Input id="idInputUserID" placeholder="{i18n>USERNAME_INPUT_PLACEHOLDER}" width="100%" class="inputField" type="Number"/>
+				<!-- Password -->
+				<Input  id="idInputPwd" placeholder="{i18n>PASSWORD_PLACEHOLDER}" class="inputField" type="Password"/>
+				<CheckBox  id="idInputRememberme" class="sapUiMediumMarginBegin" text="{i18n>REMEMBER_ME}" wrapping="true" width="200px">
+					<layoutData>
+						<l:GridData linebreak="true"
+								indentL="4"
+								indentM="4" />
+					</layoutData>
+				</CheckBox>
+				<!-- Login Button -->
+				<Button text="{i18n>LOGIN_BTN}" type="Emphasized" class="loginButton" press="onLoginPress"/>
+				<!-- Signup Button -->
+				<Label text="{i18n>DONT_HAVE_ACCOUNT_LABEL}" class="signupText"/>
+				<Button text="{i18n>SIGN_UP_BTN}" type="Transparent" press="onSignUpPress" class="signupButton"/>
+			</VBox>
+		</VBox>
+	</Page>
+</mvc:View>

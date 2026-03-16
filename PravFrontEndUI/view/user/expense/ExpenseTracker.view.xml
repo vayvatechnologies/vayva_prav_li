@@ -1,0 +1,306 @@
+<mvc:View
+	controllerName="sap.ui.demo.toolpageapp.controller.user.expense.ExpenseTracker"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo
+				rootRole="Region"
+				rootLabel="ExpenseTracker"
+				contentRole="Main"
+				contentLabel="ExpenseTracker" />
+		</landmarkInfo>
+		<HBox wrap="Wrap" alignItems="Start" justifyContent="Start" class="sapUiTinyMargin"
+			width="{= ${device>/system/phone} ? '95%' : '99%'}">
+			<!-- LEFT PANEL -->
+			<VBox width="{= ${device>/system/phone} ? '100%' : '25%'}" class="">
+				<!-- Date Range Filter -->
+				<DateRangeSelection id="dateRange" delimiter=" - " displayFormat="dd,MMM yyyy"
+					valueFormat="dd-MM-yyyy" change="fnGetUserExpenseDetails" />
+				<!-- Filter / Export Buttons -->
+				<HBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+					<Button text="Reset" press="fnResetExpenseTracker" />
+					<Button text="Filter" press="fnGetUserExpenseDetails" />
+					<Button text="Export Excel" icon="sap-icon://excel-attachment"
+						press="onExportExcel" />
+				</HBox>
+				<!-- Chat Messages -->
+				<VBox class="pageWrapper sapUiSmallMarginTop" width="100%"
+					visible="{=! ${device>/system/phone}}">
+					<!-- 🟦 Title Section -->
+					<VBox class="titleSection">
+						<Text text="Hi {oUserDetailsModel>/first_name}," class="titleHi" />
+						<Text text="Ready to Plan Expense with {oApplicationConfigModel>/applicationInfo/name}?" class="titleMain" />
+					</VBox>
+					<!-- 🟨 Feature Cards -->
+					<HBox class="featureCards">
+						<VBox class="featureCard">
+							<Image src="images/prav.png" class="cardIcon" />
+							<Text
+								text="Plan smarter, act faster — track expenses and goals in one tap."
+								class="cardTitle" />
+							<Text text="Track,Act instantly." class="cardSubtitle" />
+						</VBox>
+						<VBox class="featureCard">
+							<Image src="images/prav.png" class="cardIcon" />
+							<Text
+								text="Organize your finances and schedule with clarity and confidence."
+								class="cardTitle" />
+							<Text text="Plan clearly" class="cardSubtitle" />
+						</VBox>
+					</HBox>
+					<!-- 🟩 Bottom Chat Input -->
+				 
+
+					<MessageStrip
+						text="Unlock advanced insights with Chat Assistant.
+Available on the Platinum plan."
+						type="Warning"
+						showIcon="true"
+						visible="{/showNotProUserMessage}" />
+						<HBox justifyContent="Center" alignItems="Center">
+<Button
+    text="Upgrade Now"
+    type="Transparent"
+    press="onUpgradePress"
+    class="warningUpgradeBtn"/>
+						</HBox>
+					<VBox class="chatBar" width="100%" visible="false">
+						<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+							<!-- Input takes 90% -->
+							<!-- INPUT takes 90% -->
+							<TextArea width="92%" rows="2" growing="true"
+								placeholder="Example: 'Top 5 Expense'">
+								<layoutData>
+									<FlexItemData growFactor="9" />
+								</layoutData>
+							</TextArea>
+							<!-- Each button takes 5% -->
+							<Button icon="sap-icon://microphone"
+								class="chatButton" enabled="false"
+								width="5%" />
+							<Button icon="sap-icon://paper-plane"  enabled="false"
+								class="chatSend sapUiTinyMarginBegin"
+								width="5%" />
+						</HBox>
+						<!-- <HBox justifyContent="SpaceBetween" width="100%">
+							<Button text="Top 5 Expense" class="shortcutBtn" />
+							<Button text="Where Spend More" class="shortcutBtn" />
+							<Button text="Create Expense" class="shortcutBtn" />
+						</HBox> -->
+					</VBox>
+				</VBox>
+				<Panel visible="{= ${device>/system/phone}}"
+					expandable="false"
+					expanded="{oExpeseTrackerModel>/toogleOverviewShow}"
+					class="  sapUiSmallMarginBottom newsPanel">
+					<!-- Show/Hide Button -->
+					<!-- Custom "Header" with Title left and Button right -->
+					<HBox justifyContent="SpaceBetween" alignItems="Center" class="">
+						<!-- Left title -->
+						<VBox>
+							<Title text="Let’s plan—Chat With {oApplicationConfigModel>/applicationInfo/name}" level="H3" />
+						</VBox>
+						<!-- Right show/hide button -->
+						<Button
+							press="onTogglePravAICarousel"
+							text="{= ${oExpeseTrackerModel>/toogleOverviewShow} ? 'Hide' : 'Show' }"
+							icon="{= ${oExpeseTrackerModel>/toogleOverviewShow} 
+									? 'sap-icon://navigation-up-arrow'    
+									: 'sap-icon://navigation-down-arrow'    
+								}"
+						/>
+					</HBox>
+					<VBox class="pageWrapper" width="100%"
+						visible="{oExpeseTrackerModel>/toogleOverviewShow}">
+						<!-- 🟦 Title Section -->
+						<VBox class="titleSection">
+							<Text text="Hi {oUserDetailsModel>/first_name}," class="titleHi" />
+							<Text text="Ready to Plan Expense with {oApplicationConfigModel>/applicationInfo/name}?" class="titleMain" />
+						</VBox>
+						<!-- 🟨 Feature Cards -->
+						<HBox class="featureCards">
+							<VBox class="featureCard">
+								<Image src="images/prav.png" class="cardIcon" />
+								<Text
+									text="Plan smarter, act faster — track expenses and goals in one tap."
+									class="cardTitle" />
+								<Text text="Track,Act instantly." class="cardSubtitle" />
+							</VBox>
+							<VBox class="featureCard">
+								<Image src="images/prav.png" class="cardIcon" />
+								<Text
+									text="Organize your finances and schedule with clarity and confidence."
+									class="cardTitle" />
+								<Text text="Plan clearly" class="cardSubtitle" />
+							</VBox>
+						</HBox>
+						<!-- 🟩 Bottom Chat Input -->
+						<MessageStrip
+							text="Unlock advanced insights with Chat Assistant.
+Available on the Platinum plan."
+							type="Warning"
+							showIcon="true"
+							visible="{/showNotProUserMessage}" />
+	<HBox justifyContent="Center" alignItems="Center">
+<Button
+    text="Upgrade Now"
+    type="Transparent"
+    press="onUpgradePress"
+    class="warningUpgradeBtn"/>
+						</HBox>
+						<VBox class="chatBar" width="100%" visible="true">
+							<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+								<!-- Input takes 90% -->
+								<!-- INPUT takes 90% -->
+								<TextArea width="92%" rows="2" growing="true"
+									placeholder="Example: 'Top 5 Expense'">
+									<layoutData>
+										<FlexItemData growFactor="9" />
+									</layoutData>
+								</TextArea>
+								<!-- Each button takes 5% -->
+								<Button icon="sap-icon://microphone"
+									class="chatButton"  enabled="false"
+									width="5%" />
+								<Button icon="sap-icon://paper-plane"  enabled="false"
+									class="chatSend sapUiTinyMarginBegin"
+									width="5%" />
+							</HBox>
+							<!-- <HBox justifyContent="SpaceBetween" width="100%">
+								<Button text="Top 5 Expense" class="shortcutBtn" />
+								<Button text="Where Spend More" class="shortcutBtn" />
+								<Button text="Create Expense" class="shortcutBtn" />
+							</HBox> -->
+						</VBox>
+					</VBox>
+				</Panel>
+				<!-- chat end -->
+			</VBox>
+			<!-- RIGHT PANEL -->
+			<VBox width="{= ${device>/system/phone} ? '100%' : '72%'}" class="sapUiSmallMargin">
+				<ScrollContainer
+					width="100%"
+					horizontal="true"
+					vertical="false"
+					showScrollbar="true">
+					<HBox class="sapUiSmallMarginBottom">
+						<VBox width="20%">
+							<ObjectStatus text="Total Income" state="Success" />
+							<Text text="{oExpenseModel>/summary/total_income}" />
+						</VBox>
+						<VBox width="20%">
+							<ObjectStatus text="Total Expense" state="Warning" />
+							<Text text="{oExpenseModel>/summary/total_expense}" />
+						</VBox>
+						<VBox width="20%">
+							<ObjectStatus text="Weekly Expense" state="Warning" />
+							<Text text="{oExpenseModel>/summary/weekly_expense}" />
+						</VBox>
+						<VBox width="20%">
+							<ObjectStatus text="Top Category" state="Information" />
+							<Text text="{oExpenseModel>/summary/top_expense_category}" />
+						</VBox>
+						<VBox width="20%">
+							<ObjectStatus text="Last Exp." state="None" />
+							<Text
+								text="{oExpenseModel>/summary/last_expense_category} / {oExpenseModel>/summary/last_expense_subcategory}" />
+						</VBox>
+					</HBox>
+				</ScrollContainer>
+				<Table id="expenseTable"
+					mode="none"
+					growing="true" growingThreshold="10"
+					growingScrollToLoad="false"
+					inset="false"
+					class="  sapUiSmallMarginTop"
+					items="{oExpenseModel>/expenses}">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title
+								text="{
+		parts: [
+			{ path: 'oExpenseModel>/summary/total_expense' },
+			{ path: 'oExpenseModel>/summary/total_income' }
+		],
+		formatter: '.formatter.formatTotalExpense'
+	}" />
+							<ToolbarSpacer />
+							<Button
+								id="fabCreateAdd"
+								icon="sap-icon://add"
+								type="Transparent"
+								press="onAddExpense"
+								class="fabCreateButton"
+								tooltip="Create To-Do" />
+							<Button
+								text="Add Expense"
+								icon="sap-icon://add"
+								type="Emphasized"
+								press="onAddExpense"
+								tooltip="Add Expense" />
+
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="10rem">
+							<Text text="Expense" />
+						</Column>
+						<Column width="12rem" minScreenWidth="Tablet" demandPopin="true"
+							popinDisplay="Inline">
+							<Text text="Date/Time" />
+						</Column>
+						<Column width="12rem" minScreenWidth="Tablet" demandPopin="true"
+							popinDisplay="Inline">
+							<Text text="Description" />
+						</Column>
+						<Column width="8rem" minScreenWidth="Tablet" demandPopin="true"
+							popinDisplay="Inline">
+							<Text text="Payment Mode" />
+						</Column>
+						<Column width="5rem" hAlign="End">
+							<Text text="Amount" />
+						</Column>
+						<Column width="6rem" hAlign="Center">
+							<Text text="Actions" />
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem
+							highlight="{ path: 'oExpenseModel>type', formatter: '.formatter.rowColorByType' }">
+							<cells>
+								<ObjectIdentifier
+									title="{oExpenseModel>category}"
+									text="{oExpenseModel>subcategory}" />
+								<Text
+									text="{
+        path: 'oExpenseModel>transactiondatetime',
+        formatter: '.formatter.convertDatetoUsertimeFormat'
+    }" />
+								<Text text="{oExpenseModel>description}" />
+								<Text text="{oExpenseModel>payment_mode}" />
+								<!-- <Text text="{oExpenseModel>amount}" /> -->
+									<ObjectStatus
+							class="sapUiSmallMarginBottom"
+							text="{oExpenseModel>amount}"
+							inverted="true"
+							active="false"
+							state="Indication05" />
+								<HBox>
+									<Button icon="sap-icon://edit" type="Transparent"
+										press="onEditPress" />
+									<Button icon="sap-icon://delete" type="Transparent"
+										press="onDelete" />
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</HBox>
+	</Page>
+</mvc:View>
+	

@@ -1,0 +1,649 @@
+/* Title Heading color */
+.sapUiTitleColor {
+    color: #1a73e8; /* Blue title for emphasis */
+    font-weight: bold;
+}
+  
+  /* Reduce base font size for the whole app */
+html, body {
+    font-size: 14px !important;   
+} 
+
+
+/* Optional: Reduce SAPUI5 specific control fonts */
+/* .sapUiBody {
+    font-size: 12px !important;
+}
+   */
+  
+  /* --- ToolPage Background --- */
+.sapUiDemoToolPage {
+    background: linear-gradient(145deg, #a5bada36, #00e8ff30); /* Blue to green gradient */
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.2); /* subtle 3D depth */
+    min-height: 100vh;
+}  
+
+/* --- Top Toolbar / ToolHeader --- */
+.sapTntToolPageHeader div{
+    background:  linear-gradient(145deg, #8ac8f130 50%, #8dffb630 0%);/* Blue to green gradient */
+    color: white;
+    /* padding: 0 20px; */
+    /* box-shadow: 0 4px 10px rgba(0,0,0,0.3);   */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Toolbar buttons inside the header */
+.sapTntToolPageHeader .sapMBtn {
+    background-color: rgb(32 57 63 / 6%);
+    border-radius: 8px;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+} 
+ 
+/* --- Side Navigation --- */
+.sapTntSideNavigation {
+        background: linear-gradient(145deg, #d9ebf8fa 30%, #ecfff3 100%); /* Blue to green gradient */
+
+    /* background: linear-gradient(145deg, #8ac8f12b 30%, #8dffb61f 100%);  */
+    /* Blue to green gradient */
+    color: white; 
+    box-shadow: 3px 0 15px rgba(0,0,0,0.25); /* 3D effect */
+    padding-top: 15px;
+}
+
+/* Navigation items */
+.sapTntSideNavigation .sapTntNavLIItem {
+    border-radius: 10px;
+    margin: 5px 10px;
+    background-color: rgb(32 57 63 / 6%);
+    padding: 8px 15px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+ /* Navigation items */
+.sapTntSideNavigation .sapTntNavLIItem:hover {
+    border-radius: 10px;
+    margin: 5px 10px;
+    background-color:  rgb(0 0 0 / 10%);
+    padding: 8px 15px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+ .sapTntSideNavigation .sapTntNavLIItemSelected{
+     background-color: rgb(0 0 0 / 29%);
+}
+
+
+ 
+/* Login Form Styles */
+.loginForm {
+    background:linear-gradient(145deg, #65c1ff78 0%, #8dffb6cf 100%); 
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    width: 100%;
+    max-width: 400px; /* Ensures the form doesn't get too wide on larger screens */
+    text-align: center;
+}
+
+.loginLogo {
+    margin-bottom: 20px;
+    max-width: 100%; /* Ensures logo is responsive */
+    height: auto;
+}
+
+.loginTitle {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.inputField div{
+    width: 100%;
+    padding: 5px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.inputField div:focus {
+    border-color: #0066cc; /* Blue focus border */
+    outline: none;
+}
+
+.loginButton div {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    background-color: #0066cc;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.loginButton div:hover {
+    background-color: #005bb5;
+}
+
+.signupText {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.signupButton {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #0066cc;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.signupButton:hover {
+    text-decoration: underline;
+}
+
+/* Remember me checkbox */
+.sapUiCheckbox  {
+    margin-top: 10px;
+    font-size: 14px;
+}
+ 
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .loginForm {
+        padding: 20px;
+        width: 100%;
+        max-width: none;
+    }
+
+    .loginTitle {
+        font-size: 20px;
+    }
+
+    .inputField div {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .loginButton {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+ 
+
+/* Login Page end */
+
+
+/* Dashboard */
+
+/* Light blue + light green */
+.newsPanel .sapMPanelContent {
+    background: linear-gradient(145deg, #2a96de2b 0%, #8dffb68c 100%);  
+     
+    padding: 15px;
+ }
+.genericTileStyle {
+    background: linear-gradient(0deg, lightcyan, white, lightcyan);
+}
+
+/* Dashboard */
+
+/* Background gradient */
+.aiHomePage {
+   
+    height: 100%;
+    padding: 20px;
+}
+
+/* Layout wrapper */
+.pageWrapper {
+     background: linear-gradient(125deg, #3756d480, #01ff0045);
+    border:2px solid #21adae;
+    gap: 30px;
+    padding: 20px;
+}
+
+/* Headings */
+/* Headings */
+.titleHi {
+    font-size: 25px;
+    font-weight: 700;
+    color: #179213;
+}
+.titleMain {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1b1b1b;
+}
+
+/* Robot section */
+.robotWrapper {
+    position: relative;
+    width: 100%;
+    justify-content: flex-end;
+}
+.robotImage {
+    width: 160px;
+    margin-top: -40px;
+}
+.robotBubble {
+    position: absolute;
+    top: 10px;
+    right: 170px;
+    padding: 10px 16px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 18px rgb(255 0 0 / 10%);
+    font-size: 14px;
+}
+
+/* Feature Cards */
+.featureCards {
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.featureCard {
+    width: 280px;
+    padding: 15px;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 6px 25px rgb(124 205 188 / 54%);
+    transition: 0.2s;
+}
+.featureCard:hover {
+    transform: translateY(-4px);
+}
+
+.cardIcon {
+    width: 50px;
+    margin-bottom: 12px;
+}
+.cardTitle {
+    font-size: 15;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.cardSubtitle {
+    font-size: 14px;
+    color: gray;
+}
+
+/* Chat Input Bar */
+.chatBar {
+    padding: 12px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgb(0 255 45 / 37%);
+    gap: 12px;
+}
+
+.chatInput .sapMInputBaseContentWrapper {
+    flex: 1;
+    border: none;
+    font-size: 16px;
+}
+
+.chatButton, .chatSend {
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+}
+
+.shortcutBar {
+    justify-content: center;
+    gap: 12px;
+}
+
+.shortcutBtn .sapMBtnInner  {
+    background-color: #abebff;
+    color: #000000;
+    border-radius: 25px;
+    font-size: 12px;
+}
+.previewList {
+    height: 16rem;              /* fit ~10 rows */
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    display: block;             /* needed to allow scroll */
+}
+
+
+
+/* Payment mode heading bold with margin */
+.expensePaymentMode {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+/* Each expense row spacing */
+.expenseItemHBox {
+    padding-left: 15px;  /* indent under payment mode */
+    margin-bottom: 3px;
+}
+
+/* Description text styling */
+.expenseDescText {
+    font-size: 0.95rem;
+}
+
+/* Amount text styling, right aligned */
+.expenseAmountText {
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding-right:25px;
+}
+
+
+.bgTransprent{
+    background:transparent
+}
+
+
+/* Floating Action Button (FAB) */
+ 
+
+.fabCreateButton {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #5bf754a3, #5977c6c9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    z-index: 9999; /* Make sure it's always on top */
+}
+
+/* Icon centered & bigger */
+.fabCreateButton .sapMBtnIcon {
+    font-size: 1.8rem;
+}
+/* Icon centered & bigger */
+.fabCreateButton .sapUiIcon {
+    color: #ffffff;
+}
+.fabCreateButton .sapMBtnInner  {
+    font-size: 1.8rem;
+    border:none;
+    border-radius:50%;
+    overflow:hidden;
+    color:#ffffff;
+}
+
+/* Floating Action Button (FAB) End */
+
+/* Dashboard tile buttons */
+.sapMFlexItem .reduceTwoByHalfToOnebyHalf  {
+    width:160px
+}
+
+
+/* Carousel Image Slider */
+
+
+/* === Carousel container === */
+.heroCarousel {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Match SlideTile TwoByOne proportions */
+.heroCarousel .sapMCrslInner {
+    height: 10rem;           /* Same visual height as TwoByOne tile */
+    max-height: 12rem;
+    width:30rem;
+    min-height: 8rem;
+}
+
+/* Each slide */
+.heroSlide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0.25rem;  /* Same as GenericTile */
+    cursor: pointer;
+}
+
+/* Image fills tile */
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Gradient overlay (same as tile footer feel) */
+.heroOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.1)
+    );
+}
+
+/* Title text */
+.heroTitle {
+    color: #ffffff;
+    font-size: 1.375rem;   /* Similar to tile header */
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Subtitle text */
+.heroSubtitle {
+    color: #eaeaea;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+
+@media (max-width: 1024px) {
+    .heroCarousel .sapMCrslInner {
+        height: 16rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .heroCarousel .sapMCrslInner {
+        height: 13rem;
+    }
+
+    .heroTitle {
+        font-size: 1.1rem;
+    }
+}
+
+/* Caroisel Image Slider End here */
+
+/* User Subcription Expired  start */
+/* Center content */
+.upgradeDialogContent {
+    text-align: center;
+}
+
+/* Plan badge styling */
+.planBadge {
+    font-weight: bold;
+    font-size: 0.95rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Dialog smooth look */
+.sapMDialog {
+    border-radius: 12px !important;
+}
+
+/* Upgrade button glow */
+.sapMBtnEmphasized {
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+
+/* User Subcription Expired End here  */
+
+
+/* delete template *//* PAGE */
+.aiChatPage {
+    background: linear-gradient(135deg, #f4fbff, #eafff4);
+}
+
+/* TITLE */
+.chatTitle {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #3756d4, #21adae, #01ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.chatSubtitle { font-size: 14px; color: #555; }
+
+/* CHAT */
+.chatScroll {
+    background: rgba(255,255,255,.4);
+    border-radius: 16px;
+    padding: 5px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar */
+.chatScroll::-webkit-scrollbar { width: 8px; }
+.chatScroll::-webkit-scrollbar-track { background: transparent; }
+.chatScroll::-webkit-scrollbar-thumb {
+    background: rgba(33,173,174,.5);
+    border-radius: 4px;
+}
+
+/* BUBBLES */
+.userWrap { align-items: flex-end; }
+.aiWrap { align-items: flex-start; }
+
+.userWrap .chatBubble {
+    background: linear-gradient(135deg, #3756d4, #21adae);
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(55,86,212,.5);
+}
+.aiWrap .chatBubble {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+
+/* ANIMATIONS */
+.userIn { animation: userSend .35s cubic-bezier(.4,0,.2,1); }
+.aiIn { animation: aiFade .45s ease; }
+
+@keyframes userSend { from { transform: translateX(40px) scale(.85); opacity:0; } to { transform: translateX(0) scale(1); opacity:1; } }
+@keyframes aiFade { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+/* TYPING */
+.typingLoader .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #21adae, #01ff00);
+    animation: pulse 1.2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* SUGGESTIONS */
+.shortcutBtn .sapMBtnInner {
+    background: linear-gradient(135deg, #abebff, #7cd1c3);
+    border-radius: 26px;
+    font-weight: 600;
+    font-size: 12px;
+}
+.quickActions {
+    overflow-y: hidden;
+    overflow-x: visible;
+    transition: all 0.5s ease;
+}
+
+/* INPUT */
+.chatBar {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0,255,45,.35);
+}
+.chatSender { font-size: 0.75rem; font-weight: bold; color: #226a17; margin-bottom: 4px; }
+
+/* Upgrade Button */
+.upgradeBtn {
+    margin-top: 5px;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #fff;
+}
+/* USER & AI BUBBLES */
+.userWrap .chatBubble {
+    background: linear-gradient(135deg, #3756d4, #21adae);
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(55,86,212,.5);
+    border-radius: 16px 16px 0 16px; /* rounded corners, unique style */
+    max-width: 85%; /* nearly full width */
+    padding: 12px 16px;
+    word-break: break-word;
+}
+
+.aiWrap .chatBubble {
+    background: linear-gradient(135deg, #e6f7ff, #d0f0ff);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    border-radius: 16px 16px 16px 0; /* opposite rounded corner */
+    max-width: 85%; /* nearly full width */
+    padding: 12px 16px;
+    word-break: break-word;
+}
+
+/* Adjust chat row spacing */
+.chatRow {
+    margin-bottom: 10px;
+    width: 100%; /* full row width */
+    display: flex;
+}
+
+/* Optional: sender name styling */
+.chatSender {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* Upgrade button */
+.upgradeBtn {
+    margin-top: 8px;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #fff;
+    border-radius: 20px;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Chat scroll padding */
+.chatScroll {
+    
+    border-radius: 16px;
+    background: rgba(255,255,255,0.4);
+}
+
+
+/* delete template end */

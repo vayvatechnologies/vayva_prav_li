@@ -1,0 +1,60 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  core:require="{ formatter: 'frontEndUI/model/formatter' }"
+  xmlns:core="sap.ui.core">
+
+  <Dialog
+    stretchOnPhone="true"
+    afterClose="onValueHelpClose">
+
+    <!-- Custom Header with Title and Close Icon on the right -->
+    <customHeader>
+      <Bar>
+        <contentLeft>
+          <Title text="Select Calender Type" />
+        </contentLeft>
+        <contentRight>
+          <Button
+            icon="sap-icon://decline"
+            press="onValueHelpClose"
+            type="Transparent" />
+        </contentRight>
+      </Bar>
+    </customHeader>
+
+    <List
+      items="{/types}"
+      mode="SingleSelectMaster"
+      selectionChange="onValueHelpSelect">
+
+      <items>
+        <StandardListItem class="{ path: '{colorClass}', formatter: 'formatter.getColorClass' }"
+          title="{category} - {type}"
+          icon="{icon}" >
+       <!-- <customData>
+        <core:CustomData key="color" value="{color}" writeToDom="true" />
+      </customData> -->
+      
+    </StandardListItem>
+      </items>
+    </List>
+
+    <!-- Footer with OK and Cancel buttons -->
+    <footer>
+  <Toolbar>
+    <ToolbarSpacer />
+    <Button
+      text="Cancel"
+      press="onValueHelpClose"
+      type="Transparent" />
+    <Button
+      text="OK"
+      press="onValueHelpOk"
+      type="Emphasized" />
+  </Toolbar>
+</footer>
+
+
+  </Dialog>
+
+</core:FragmentDefinition>

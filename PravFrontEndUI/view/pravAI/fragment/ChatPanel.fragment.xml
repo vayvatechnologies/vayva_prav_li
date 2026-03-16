@@ -1,0 +1,80 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <!-- Outer container with fixed height 90% -->
+    <VBox class="chatPanelWrapper sapUiSizeCompact"
+          height="90vh"
+          width="100%"
+          justifyContent="SpaceBetween"
+          backgroundDesign="Solid">
+
+        <!-- 🟦 Title Section -->
+        <VBox class="chatTitleSection sapUiSmallMargin sapUiPadding">
+            <Text text="Hi {oUserDetailsModel>/full_name}," class="chatTitleHi" />
+            <Text text="Ready to Plan Expense with Prav AI?" class="chatTitleMain" />
+        </VBox>
+
+        <!-- 🟨 Feature Cards -->
+        <HBox class="chatFeatureCards sapUiSmallMargin sapUiPadding" justifyContent="SpaceBetween">
+            <VBox class="chatFeatureCard sapUiShadow">
+                <Image src="images/prav.png" class="chatCardIcon" />
+                <Text text="Plan smarter, act faster — track expenses and goals in one tap." class="chatCardTitle"/>
+                <Text text="Track, Act instantly." class="chatCardSubtitle"/>
+            </VBox>
+
+            <VBox class="chatFeatureCard sapUiShadow">
+                <Image src="images/prav.png" class="chatCardIcon" />
+                <Text text="Organize your finances and schedule with clarity and confidence." class="chatCardTitle"/>
+                <Text text="Plan clearly" class="chatCardSubtitle"/>
+            </VBox>
+        </HBox>
+
+        <!-- 🟩 MessageStrip if not Premium -->
+        <MessageStrip
+            text="Chat is a Pro feature. Upgrade to unlock insights."
+            type="Warning"
+            showIcon="true"
+            visible="{= !${userPravAIUIModel>/isPremiumUser} }"
+            press="onShowProUpgrade"
+            class="sapUiSmallMarginBottom sapUiClickable"/>
+
+        <!-- 🟪 Chat Input Section -->
+        <VBox class="chatInputWrapper sapUiPadding" width="100%" justifyContent="End" height="auto" >
+
+            <!-- TextArea with mic & send -->
+            <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center" class="chatInputBox">
+                <TextArea
+                    width="92%"
+                    rows="2"
+                    growing="true"
+                    placeholder="Example: 'Top 5 Expense'"
+                    enabled="{userPravAIUIModel>/isPremiumUser}"
+                    class="chatTextArea"
+                />
+                <Button
+                    icon="sap-icon://microphone"
+                    class="chatButton"
+                    width="5%"
+                    enabled="{userPravAIUIModel>/isPremiumUser}"/>
+                <Button
+                    icon="sap-icon://paper-plane"
+                    class="chatSendButton"
+                    width="5%"
+                    enabled="{userPravAIUIModel>/isPremiumUser}"
+                    press="onSendChat"/>
+            </HBox>
+
+            <!-- Quick Action Buttons - Only Premium -->
+            <HBox justifyContent="SpaceBetween" width="100%" class="chatQuickButtons sapUiSmallMarginTop"
+                  visible="{userPravAIUIModel>/isPremiumUser}">
+                <Button text="Top 5 Expense" class="chatShortcutBtn" press="onQuickAction"/>
+                <Button text="Where Spend More" class="chatShortcutBtn" press="onQuickAction"/>
+                <Button text="Create Expense" class="chatShortcutBtn" press="onQuickAction"/>
+            </HBox>
+
+        </VBox>
+
+    </VBox>
+</core:FragmentDefinition>

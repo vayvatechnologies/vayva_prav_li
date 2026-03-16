@@ -1,0 +1,161 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout">
+    <Dialog stretch="{= ${device>/system/phone} }"
+        id="expenseDialog"
+        class=" "
+        contentWidth="50%"
+        contentHeight="auto"
+        stretchOnPhone="true"
+        afterClose=".onCreateExpenseDialogClose">
+        <customHeader>
+        <Bar>
+            <contentLeft>
+                <Text text="{= ${oCreateEditExpenseDetailsModel>/fragMode} === 'create' ? 'Add Expense' : 'Edit Expense' }"
+                      class="sapUiTinyMarginBegin sapMBarTitle" />
+            </contentLeft>
+
+            <contentRight>
+                <Button icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCreateExpenseDialogClose" />
+            </contentRight>
+        </Bar>
+    </customHeader>
+        <IconTabBar id="myTwoTabs" class="sapUiResponsiveContentPadding" expandable="false">
+            <items>
+                <!-- TAB 1 -->
+                <IconTabFilter maxTabWidth="100%"
+                    key="tab1"
+                    text="Expense"
+                    icon="sap-icon://money-bills">
+                    <VBox class="sapUiSmallMargin">
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="60%">
+                                <Label text="Date - Time"/>
+                               
+  <DateTimePicker id="DateTime"  required="true"
+    dateValue="{
+        path: 'oCreateEditExpenseDetailsModel>/expenseDetails/transactiondatetime',
+        formatter: '.formatter.convertIntoDateTimePIckerformat'
+    }"
+    displayFormat="dd-MM-yyyy hh:mm:ss a"
+/>
+ 
+
+
+
+
+                            </VBox>
+                            <VBox width="37%">
+                                <Label text="Type"  required="true" />
+                                <ComboBox width="100%" selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/type}" items="{oCreateEditExpenseDetailsModel>/types}">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="48%">
+                                <Label text="Category"  required="true" />
+                                <ComboBox width="100%" selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/category}" items="{oCreateEditExpenseDetailsModel>/category}"
+                                    selectionChange=".fnGetSubCategoryDetails">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox width="48%">
+                                <Label text="Sub Category"  required="true"/>
+                                <ComboBox width="100%" selectionChange=".onChangeSubCategory" selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/subcategory}" items="{subcategoryModel>/data}">
+                                    <core:Item key="{subcategoryModel>subcategory}" text="{subcategoryModel>subcategory}" />
+                                </ComboBox>
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="100%">
+                                <Label text="Description" />
+                                <TextArea width="100%" value="{oCreateEditExpenseDetailsModel>/expenseDetails/description}" rows="2"/>
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="62%">
+                                <Label text="Payment Mode"  required="true"/>
+                                <ComboBox width="100%" selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/payment_mode}" items="{oCreateEditExpenseDetailsModel>/paymentModes}">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox width="32%">
+                                <Label text="Amount"  required="true"/>
+                                <Input width="100%" value="{oCreateEditExpenseDetailsModel>/expenseDetails/amount}" type="Number" />
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="65%">
+                                <Label text="Payment Status"/>
+                                <ComboBox width="100%" selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/payment_status}" items="{oCreateEditExpenseDetailsModel>/paymentStatuses}">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox width="23%">
+                                <Label text="Is Planned" />
+                                <Switch width="100%" state="{oCreateEditExpenseDetailsModel>/expenseDetails/is_planned}" change=".onSwitchChange" />
+                            </VBox>
+                        </FlexBox>
+                        <Button text="Next" type="Emphasized" press=".onNextStep"/>
+                    </VBox>
+                </IconTabFilter>
+                <!-- TAB 2 -->
+                <IconTabFilter maxTabWidth="12rem"
+                    key="tab2"
+                    text="Merchant"
+                    icon="sap-icon://supplier">
+                    <VBox class="sapUiSmallMargin">
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="45%">
+                                <Label text="Merchant Name" />
+                                <TextArea width="100%" value="{oCreateEditExpenseDetailsModel>/expenseDetails/merchant_name}" rows="2"/>
+                            </VBox>
+                            <VBox width="35%">
+                                <Label text="With Whom"/>
+                                <TextArea width="100%" value="{oCreateEditExpenseDetailsModel>/expenseDetails/with_whom}" rows="2"/>
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="45%">
+                                <Label text="Cycle" />
+                                <ComboBox selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/cycle}" items="{oCreateEditExpenseDetailsModel>/cycles}">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                            <VBox width="25%">
+                                <Label text="Impact Saving" />
+                                <Switch state="{oCreateEditExpenseDetailsModel>/expenseDetails/saving_impact}" />
+                            </VBox>
+                            <VBox width="30%">
+                                <Label text="Expense Mood"/>
+                                <ComboBox selectedKey="{oCreateEditExpenseDetailsModel>/expenseDetails/expense_mood}" items="{oCreateEditExpenseDetailsModel>/moods}">
+                                    <core:Item key="{oCreateEditExpenseDetailsModel>key}" text="{oCreateEditExpenseDetailsModel>text}" />
+                                </ComboBox>
+                            </VBox>
+                        </FlexBox>
+                        <FlexBox direction="Row" wrap="Wrap" justifyContent="SpaceBetween">
+                            <VBox width="100%">
+                                <Label text="Notes"/>
+                                <TextArea width="100%" value="{oCreateEditExpenseDetailsModel>/expenseDetails/notes}" rows="2"/>
+                            </VBox>
+                        </FlexBox>
+                    </VBox>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+        <endButton>
+            <Button text="Cancel" type="Reject"
+                icon="sap-icon://decline" press="onCreateExpenseDialogClose" />
+        </endButton>
+        <beginButton>
+            <Button text="Save" type="Success" 
+                icon="sap-icon://save"  press=".onSaveExpense" />
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

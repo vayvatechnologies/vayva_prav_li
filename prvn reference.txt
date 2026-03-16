@@ -1,0 +1,91 @@
+SELECT 
+     to_char((e.transactiontime AT TIME ZONE 'UTC' AT TIME ZONE u.timezone), u.datetimeformat) AS transactiondatetime,
+       e.* 
+FROM prav_ai_users_expense_spends e
+JOIN prav_ai_users u ON e.user_id = u.user_id 
+      WHERE e.user_id = $1
+
+
+
+      | User setting            | Output example         |
+| ----------------------- | ---------------------- |
+| `dd-MM-yyyy hh:mm:ss a` | 20-12-2025 08:20:20 PM |
+| `MM/dd/yyyy hh:mm a`    | 12/20/2025 08:20 PM    |
+| `yyyy-MM-dd HH:mm:ss`   | 2025-12-20 20:20:20    |
+
+
+
+
+
+
+
+
+
+In my application - we have exoeonse tracker by cateogroes and auto suggestion based on each spend by application
+we can see expenses overview and track last on spends by categotoes sub catgo or payment modes where we pend more how to stop overspending and save more
+
+in calendar - we have smooth sheduling the appoitment , event or even any small functoin ot incidient to track backend
+in todo - notes or action to done very small
+remainder and reccinring options for modules
+healthtracker -- steps sleep water for each day we tracking due low water what impact sleep slw like all ai sugestion it will give
+
+so this is track is half focus another focus in AI for suggstion or imporovement or make saving the amount where we loosing or diong irrevelnt or unwanted 
+we have AI chatbot is our main foucs and imporiemtns
+so ai chatbot and tracker expense tracker overveiw , totdo calendar and health montinor
+so im creating the landing page i did templete bt need to replace the text
+
+
+let me tell u templete design u can redesign for my app landing page
+
+
+1 page only for all link to focus on tab
+
+inintal 
+below are templete need to replace all for me
+
+Title left  center home about,feature,pricing ,review,contact  2 button login start fee torer
+main  
+
+left side below
+title  - The Revolutionary App That Helps To Control Your Own Fitness
+desc -Tempor rebum no at dolore lorem clita rebum rebum ipsum rebum stet dolor sed justo kasd. Ut dolor sed magna dolor sea diam. Sit diam sit justo amet ipsum vero ipsum clita lorem
+
+
+2 button - readmore contanct
+
+right side app homepage imag
+
+next about app
+About App
+#1 App For Your Fitness
+Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet
+
+1234
+Active Install
+
+1234
+Clients Reviews
+
+readmore button
+
+right side - 3app image
+
+
+nextApp Features
+App Features
+Awesome Features
+
+
+we have each tile
+
+
+High Resolution
+Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.
+
+Retina Ready
+Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.
+
+lke this we need 
+
+
+give me upto ths remaing im coming next

@@ -1,0 +1,39 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+    
+    <Popover width="50%" placement="Bottom" showHeader="true" showArrow="true">
+        
+        <customHeader>
+            <Bar class="customDialogHeaderGradient">
+                <contentMiddle>
+                    <Title text="{i18n>NOTIFICATIONS_TITLE}" level="H2" />
+                </contentMiddle>
+                <contentRight> 
+                    <Button icon="sap-icon://decline" press="onCloseNotificationPopover" tooltip="{i18n>CLOSE}" />
+                </contentRight>
+            </Bar>
+        </customHeader> 
+
+        <!-- Wrap NotificationList in VBox to maintain minHeight -->
+        <VBox minHeight="200px" width="100%">
+            <NotificationList id="idUserNotificationList" items="{oGlobalNotifModel>/notifications}">
+                <NotificationListItem
+                    title="{oGlobalNotifModel>title}"
+                    description="{oGlobalNotifModel>description}"
+                    datetime="{oGlobalNotifModel>datetime}"
+                    unread="{oGlobalNotifModel>unread}"
+                    priority="{oGlobalNotifModel>priority}"
+                    authorName="{oGlobalNotifModel>authorName}"
+                    authorPicture="{oGlobalNotifModel>authorPicture}"
+                    authorInitials="{oGlobalNotifModel>authorInitials}"
+                    authorAvatarColor="{oGlobalNotifModel>authorAvatarColor}"
+                    showCloseButton="true"
+                    close=".onItemClose"
+                    press=".onListItemPress" />
+            </NotificationList>
+ 
+        </VBox>
+
+    </Popover>
+</core:FragmentDefinition>

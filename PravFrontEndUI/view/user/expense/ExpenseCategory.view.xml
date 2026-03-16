@@ -1,0 +1,155 @@
+<mvc:View
+	controllerName="sap.ui.demo.toolpageapp.controller.user.expense.ExpenseCategory"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo
+				rootRole="Region"
+				rootLabel="ExpenseTracker"
+				contentRole="Main"
+				contentLabel="ExpenseTracker"/>
+		</landmarkInfo>
+		<HBox wrap="Wrap" alignItems="Start" justifyContent="Start" class="sapUiTinyMargin"  width="{= ${device>/system/phone} ? '95%' : '99%'}">
+			<!-- RIGHT PANEL -->
+			<VBox  class="">
+				<Panel
+        expandable="true"
+        expanded="false"
+        headerText="Filter"
+        class="sapUiTinyMargin">
+					<l:Grid
+            defaultSpan="L2 M6 S12"
+            hSpacing="1"
+            vSpacing="1"
+            width="100%"
+            containerQuery="true">
+						<!-- Category Label -->
+						<Label text="Category" class="sapUiSmallMarginEnd" />
+						<!-- Category Input -->
+						<ComboBox id="filterCategory"
+                items="{categoryModel>/expense}"
+                selectionChange=".onCategoryChange">
+							<core:Item
+                    key="{categoryModel>key}"
+                    text="{categoryModel>text}" />
+						</ComboBox>
+						<!-- Subcategory Label -->
+						<Label text="Sub Category" class="sapUiSmallMarginEnd" />
+						<!-- Subcategory Input -->
+						<ComboBox items="{subcategoryModel>/}"  id="filterSubCategory">
+							<core:Item
+                    key="{subcategoryModel>subcategory}"
+                    text="{subcategoryModel>subcategory}" />
+						</ComboBox>
+						<!-- Filter Button -->
+						<Button
+                icon="sap-icon://filter"
+                text="Apply Filter"
+                type="Emphasized"
+                press=".onApplyFilter" />
+						<Button
+                icon="sap-icon://reset"
+                text="Reset"
+                type="Emphasized"
+                press=".onResetFilter" />
+					</l:Grid>
+				</Panel>
+				<Table id="idUserExpenseCategories"   fixedColumnCount="3"  growing="true" growingThreshold="10" growingScrollToLoad="false"
+  autoPopinMode="true" contextualWidth="Auto" popinChanged=".onPopinChanged" items="{oUserExpeseCategoryModel>/expense}">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title text="Expense Categories" level="H2" />
+							<ToolbarSpacer />
+							          <!-- Floating Create Button -->
+						<Button 
+							icon="sap-icon://add" press="onAddExpenseCategory"
+							type="Transprent"
+							class="fabCreateButton"
+							tooltip="Add" />
+								<Button text="Create Category"
+							icon="sap-icon://add" press="onAddExpenseCategory"
+							type="Emphasized" 
+							tooltip="Add" />
+
+							
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<!-- <Column width="14em" importance="High" visible="{=${device>/system/phone}}"><Text text="Categories" /></Column> -->
+						<Column width="7em" importance="High"  >
+							<Text text="Category" />
+						</Column>
+						<Column width="7em"  importance="High"   >
+							<Text text="Sub Category" />
+						</Column>
+						<Column width="8em" importance="Low"  >
+							<Text text="Suggestions" />
+						</Column>
+						<Column width="8%" importance="Low">
+							<Text text="Payment Mode" />
+						</Column>
+						<Column width="7em" importance="Medium">
+							<Text text="Limit Goal" />
+						</Column>
+						<Column width="4em" importance="None" visible="{= !${device>/system/phone} }">
+							<Text text="Planned" />
+						</Column>
+						<Column width="4em" hAlign="Center" importance="Low" visible="{= !${device>/system/phone} }">
+							<Text text="Recurring" />
+						</Column>
+						<Column width="6%" hAlign="Center" importance="Medium">
+							<Text text="Status" />
+						</Column>
+						<Column width="6em" hAlign="End" importance="Low">
+							<Text text="Created On" />
+						</Column>
+						<Column width="6em" hAlign="Center" importance="High">
+							<Text text="Actions" />
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem vAlign="Middle">
+							<cells>
+								<!-- <ObjectIdentifier title="{oUserExpeseCategoryModel>category}" text="{oUserExpeseCategoryModel>subcategory}" /> -->
+								<ObjectIdentifier title="{oUserExpeseCategoryModel>category}" />
+								<ObjectIdentifier title="{oUserExpeseCategoryModel>subcategory}"   />
+								<Text text="{oUserExpeseCategoryModel>suggestions}" />
+								<Text text="{oUserExpeseCategoryModel>payment_mode}" />
+								<VBox>
+									<HBox  >
+										<Text text="{= 'Week: ' + ${oUserExpeseCategoryModel>weeklimit}  }" />
+									</HBox>
+									<HBox>
+										<Text text="{= 'Month: ' + ${oUserExpeseCategoryModel>monthlimit} }" />
+									</HBox>
+									<HBox>
+										<Text text="{= 'Quarterly: ' + ${oUserExpeseCategoryModel>quarterlimit} }" />
+									</HBox>
+									<HBox>
+										<Text text="{= 'Year: ' + ${oUserExpeseCategoryModel>yearlimit}  }" />
+									</HBox>
+								</VBox>
+								<CheckBox  editable="false" partiallySelected="{oUserExpeseCategoryModel>is_planned}" selected="{oUserExpeseCategoryModel>is_planned}" valueState="{= ${oUserExpeseCategoryModel>is_planned} ? 'Success' : 'None' }"/>
+								<CheckBox   editable="false"  partiallySelected="{oUserExpeseCategoryModel>recurring}" selected="{oUserExpeseCategoryModel>recurring}" valueState="{= ${oUserExpeseCategoryModel>recurring} ? 'Success' : 'None' }"/>
+								<ObjectNumber number="{oUserExpeseCategoryModel>status}" />
+ 									<Text text="{
+        path: 'oUserExpeseCategoryModel>created_at',
+        formatter: '.formatter.convertDatetoUserDateFormat'
+    }"/>
+								<HBox justifyContent="Center">
+									<Button icon="sap-icon://edit" press="onEditPress" type="Transparent" />
+									<Button icon="sap-icon://delete" press="onDeletePress" type="Transparent" />
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</HBox>
+	</Page>
+</mvc:View>
+	

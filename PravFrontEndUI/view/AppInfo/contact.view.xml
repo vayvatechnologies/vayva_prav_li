@@ -1,0 +1,73 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.AppInfo.contact"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    
+    <Page showHeader="true" title="Contact Us">
+        <landmarkInfo>
+            <PageAccessibleLandmarkInfo
+                rootRole="Region"
+                rootLabel="{i18n>Contact_rootLabel}"
+                contentRole="Main"
+                contentLabel="{i18n>Contact_contentLabel}"/>
+        </landmarkInfo>
+
+        <ScrollContainer width="100%" height="100%" vertical="true">
+            <VBox class="sapUiContentPadding sapUiMediumMarginTopBottom" width="100%" fitContainer="true" justifyContent="Start" alignItems="Center">
+
+                <!-- Contact Info Cards -->
+                <FlexBox
+                    direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"
+                    justifyContent="SpaceAround"
+                    alignItems="Start"
+                    class="sapUiSmallMargin">
+
+                    <!-- Phone Card -->
+                    <VBox
+                        width="{= ${device>/system/phone} ? '100%' : '30%' }"
+                        class="sapUiCard sapUiSmallMargin"
+                        renderType="Bare"
+                        alignItems="Start">
+                        <Title text="Call Us" level="H3" class="sapUiTinyMarginBottom"/>
+                        <Text text="Available Mon–Fri, 9 AM – 6 PM (Your Timezone)" wrapping="true"/>
+                        <Text text="+91 95788 97871" wrapping="true"/>
+                    </VBox>
+
+                    <!-- Website Card -->
+                    <VBox
+                        width="{= ${device>/system/phone} ? '100%' : '30%' }"
+                        class="sapUiCard sapUiSmallMargin"
+                        renderType="Bare"
+                        alignItems="Start">
+                        <Title text="Visit Our Website" level="H3" class="sapUiTinyMarginBottom"/>
+                        <Button text="{oApplicationConfigModel>/companyDetails/website}" icon="sap-icon://internet-browser" type="Transparent" press="onGoToWebsite"/>
+                    </VBox>
+
+                    <!-- Email Support Card -->
+                    <VBox
+                        width="{= ${device>/system/phone} ? '100%' : '30%' }"
+                        class="sapUiCard sapUiSmallMargin"
+                        renderType="Bare"
+                        alignItems="Start">
+                        <Title text="Email Support" level="H3" class="sapUiTinyMarginBottom"/>
+                        <Text text="{= 'Reach out anytime at ' + ${oApplicationConfigModel>/companyDetails/companyName}}" wrapping="true"/>
+                        <Button text="Send Email" icon="sap-icon://email" type="Emphasized" press="onSendEmail"/>
+                    </VBox>
+
+                </FlexBox>
+
+                <!-- Feedback Form -->
+                <VBox justifyContent="Center" alignItems="Stretch" width="{= ${device>/system/phone} ? '90%' : '70%' }" class="sapUiMediumMargin sapUiCard sapUiPadding">
+                    <Title text="Send Feedback" level="H3" class="sapUiTinyMarginBottom"/>
+                    <Input id="inputName" placeholder="Name (optional)" width="100%" class="sapUiTinyMarginBottom"/>
+                    <Input id="inputEmail" placeholder="Email (optional)" width="100%" class="sapUiTinyMarginBottom"/>
+                    <TextArea id="inputMessage" placeholder="Message (required)" width="100%" rows="5" class="sapUiTinyMarginBottom"/>
+                    <Button text="Submit" icon="sap-icon://paper-plane" type="Emphasized" press="onSubmitFeedback"/>
+                </VBox>
+
+            </VBox>
+        </ScrollContainer>
+    </Page>
+</mvc:View>

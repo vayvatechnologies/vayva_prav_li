@@ -1,0 +1,96 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox width="390px" class="mobileChatWrapper sapUiSmallMarginAuto" height="65vh">
+
+        <!-- CHAT PAGE -->
+        <VBox class="pageWrapper aiChatPage">
+
+            <!-- CHAT TITLE -->
+            <VBox class="chatTitleWrapper">
+                <Text text="Let’s Chat in Prav Ally" class="chatTitle" />
+                <Text text="Quick Expense Planning Starts Here" class="chatSubtitle" />
+            </VBox>
+
+            <!-- CHAT AREA -->
+            <ScrollContainer
+                id="chatScroll"
+                height="420px"
+                vertical="true"
+                class="chatScroll">
+
+                <List
+                    id="chatList"
+                    items="{chatModel>/messages}"
+                    class="chatList"
+                    showSeparators="None">
+
+                    <CustomListItem>
+                        <HBox
+                            justifyContent="{= ${chatModel>sender} === 'You' ? 'End' : 'Start'}"
+                            class="chatRow"
+                            width="100%">
+                            <VBox
+                                class="{= ${chatModel>sender} === 'You' ? 'userWrap' : 'aiWrap'}"
+                                width="100%">
+                                
+                                <!-- Sender Name -->
+                                <Text
+                                    text="{chatModel>sender}"
+                                    class="chatSender"
+                                    visible="{= ${chatModel>sender} !== ''}" />
+
+                                <!-- Chat Bubble -->
+                                <VBox
+                                    class="chatBubble {chatModel>animate}"
+                                    width="100%">
+                                    
+                                    <!-- Typing Loader -->
+                                    <HBox visible="{chatModel>loading}" class="typingLoader">
+                                        <VBox class="dot" />
+                                        <VBox class="dot" />
+                                        <VBox class="dot" />
+                                    </HBox>
+
+                                    <!-- Message Text -->
+                                    <Text
+                                        text="{chatModel>text}"
+                                        wrapping="true"
+                                        visible="{= !${chatModel>loading} }" />
+                                </VBox>
+
+                                <!-- Time -->
+                                <Text text="{chatModel>time}" class="chatTime" />
+                            </VBox>
+                        </HBox>
+                    </CustomListItem>
+
+                </List>
+            </ScrollContainer>
+
+            <!-- SUGGESTIONS -->
+            <FlexBox
+                wrap="Wrap"
+                direction="Row"
+                class="quickActions"
+                items="{chatModel>/suggestions}">
+                <Button
+                    text="{chatModel>text}"
+                    press="onQuickSend"
+                    class="shortcutBtn"
+                    enabled="{= !${chatModel>/uiBusy} }">
+                    <layoutData>
+                        <FlexItemData growFactor="0" />
+                    </layoutData>
+                </Button>
+            </FlexBox>
+
+            <!-- CHAT INPUT -->
+            <FeedInput
+                value="{chatModel>/currentMessage}"
+                post="onSendMessage"
+                enabled="{= !${chatModel>/uiBusy} }"
+                placeholder="Ask Prav Ally..."
+                class="chatFeedInput" />
+
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>
