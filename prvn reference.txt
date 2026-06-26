@@ -1,3 +1,8 @@
+Git push from VS Code - 11.56pm 26jun
+
+
+
+
 SELECT 
      to_char((e.transactiontime AT TIME ZONE 'UTC' AT TIME ZONE u.timezone), u.datetimeformat) AS transactiondatetime,
        e.* 
