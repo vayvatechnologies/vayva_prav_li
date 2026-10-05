@@ -1,7 +1,7 @@
 const { sendSuccess, sendError } = require('../../../utils/responseHelper');
 const db = require('../../../utils/db');
 const { checkUserAuthToken } = require('../../general/generalController');
-const { fetchUpcomingReminders} = require('../../users/Expense/reminderController');
+const { fetchUpcomingReminders,fetchCurrentMonthReminders} = require('../../users/Expense/reminderController');
 const { fetchUserExpenseSpendsChartDataByFilter,fetchUserDashboardUserSpends} = require('../../users/Expense/expenseDetailsController');
 const { fetchHealthDetailByDate} = require('../../users/health/healthController');
 
@@ -23,6 +23,7 @@ const fetchDashboardDetails = async (req, res, next) => {
     // ✅ Continue business logic
 
     const upComingReminder = await fetchUpcomingReminders(user.user_id, 10, 0);
+    const currentMonthReminder = await fetchCurrentMonthReminders(user.user_id, 10, 0);
    const now = new Date();
 
 const lastThreeMonthWeeklyChart =
@@ -47,6 +48,7 @@ const userHealthDetail =
       
     const oUserDashboardDetail = {
       upcomingReminder:upComingReminder.data,
+      currentMonthReminder:currentMonthReminder.data,
       userSpends: expenseDashboardDetails.data[0],
       monthlyExpenseChartData: lastThreeMonthWeeklyChart.data,
       healthDetail : userHealthDetail.data

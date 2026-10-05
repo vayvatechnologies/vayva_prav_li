@@ -445,7 +445,19 @@
 				class=" ">
 				<VBox width="100%" class="sapUiNoContentPadding  ">
 					<!-- <HBox width="100%" fitContainer="true"> -->
-					<Title text="Recurring/Remianders " alignItems="Center" />
+					<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+						<!-- Left side -->
+						<Title text="Recurring/Reminders" titleStyle="H4" />
+
+						<!-- Right side -->
+						<HBox alignItems="Center">
+							<Label text="Upcoming All?" class="sapUiTinyMarginEnd" />
+							<Switch id="idReminderSwitch" state="false" customTextOn="All" customTextOff="No" change=".onReminderSwitchChange" />
+						</HBox>
+
+					</HBox>
+
+					<!-- <Title text="Recurring/Remianders " alignItems="Center" /> -->
 					<ScrollContainer
 						width="100%"
 						height="40rem"
@@ -454,7 +466,7 @@
 						<NotificationList width="100%"
 							id="idNotificationList"
 							items="{
-                  path: 'dashboardDetailModel>/upcomingReminder'
+                  path: 'dashboardDetailModel>/currentMonthReminder'
               }"
 							showUnreadStatus="true">
 							<NotificationListItem

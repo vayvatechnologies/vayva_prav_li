@@ -38,6 +38,7 @@ sap.ui.define([
 				!oGlobalModel.getProperty("/ApplicationConfigurations/isApplicationDetailsLoaded")) {
 				this.fnCkUserLoggedIn(oRouter,"home");
 			}
+            this.onReminderPageMatched();
 		},
 		 getUserAuthToken: function () {
             const oToken = localStorage.getItem("pravAPP_Authtoken_forService");
@@ -253,6 +254,29 @@ sap.ui.define([
                 oControl.setValueState(sState);
             }
         },
+        onReminderPageMatched: function () {
+           this.byId("idReminderSwitch").setState(false);
+            const oList = this.byId("idNotificationList"); 
+            oList.bindItems({
+                path: "dashboardDetailModel>/currentMonthReminder",
+                template: oList.getBindingInfo("items").template
+            });
+        },
+        onReminderSwitchChange: function (oEvent) {
+            const oSwitch = oEvent.getSource();
+            const bUpcoming = oSwitch.getState();
+
+            const oList = this.byId("idNotificationList");
+
+            const sPath = bUpcoming
+                ? "dashboardDetailModel>/upcomingReminder"
+                : "dashboardDetailModel>/currentMonthReminder";
+
+            oList.bindItems({
+                path: sPath,
+                template: oList.getBindingInfo("items").template
+            });
+        }
 
 	 
 

@@ -154,5 +154,60 @@ async function fetchUpcomingReminders(userId, limit = 10, offset = 0) {
   }
 }
 
+async function fetchCurrentMonthReminders(userId, limit = 10, offset = 0) {
+  try {
+    const query = `
+      SELECT 
+        e.reminder_id,
+        e.title,
+        e.description,
+        to_char(
+          e.datetime AT TIME ZONE u.timezone,
+          u.dateformat
+        ) AS datetime,
+        e.status,
+        e.unread,
+        e.priority,
+        e.author_name,
+        e.author_picture,
+        e.reminder_type,
+        e.reminder_parent_id
+      FROM prav_ai_users_upcoming_reminders e
+      JOIN prav_ai_users u 
+        ON e.user_id = u.user_id
+      WHERE 
+        e.user_id = $1
+        AND e.status != 'Removed'
+        AND e.datetime >= date_trunc('month', CURRENT_DATE)
+        AND e.datetime < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
+      ORDER BY e.datetime ASC
+      LIMIT $2 OFFSET $3
+    `;
 
-module.exports = { insertReminder,getReminderByParentId,deleteReminderbyTypeAndParentId,deleteReminderbyIds,fetchUpcomingReminders};
+    const result = await db.query(query, [userId, limit, offset]);
+
+    if (result.rows.length === 0) {
+      return {
+        success: true,
+        data: [],
+        message: "No reminders found for the current month."
+      };
+    }
+
+    return {
+      success: true,
+      data: result.rows,
+      message: "Current month reminders fetched successfully."
+    };
+
+  } catch (error) {
+    return {
+      success: false,
+      data: [],
+      error: error.message
+    };
+  }
+}
+
+
+module.exports = { insertReminder,getReminderByParentId,deleteReminderbyTypeAndParentId,deleteReminderbyIds,fetchUpcomingReminders,fetchCurrentMonthReminders};
