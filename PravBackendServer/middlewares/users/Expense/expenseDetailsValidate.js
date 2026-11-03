@@ -31,4 +31,27 @@ const saveExpenseSpendValidateRequests = (req, res, next) => {
 
   next(); // input is valid
 };
-module.exports = { validateExpenseDetailsReuests ,getCreateExpenseValidateRequests,saveExpenseSpendValidateRequests};
+const deleteExpenseValidateRequests = (req, res, next) => {
+  const { sAuthToken, expenseId } = req.body;
+
+  if (!sAuthToken || sAuthToken.trim() === "") {
+    return sendError(
+      res,
+      "Auth token is required",
+      400,
+      "VALIDATION_ERROR"
+    );
+  }
+
+  if (!expenseId || isNaN(Number(expenseId)) || Number(expenseId) <= 0) {
+    return sendError(
+      res,
+      "Valid expense ID is required",
+      400,
+      "VALIDATION_ERROR"
+    );
+  }
+
+  next();
+};
+module.exports = { validateExpenseDetailsReuests ,deleteExpenseValidateRequests,getCreateExpenseValidateRequests,saveExpenseSpendValidateRequests};

@@ -571,9 +571,110 @@ _navigateToCreateCategory: function () {
 onUpgradePress:function(){
 
  this.navtoUpgradePlans();
-}
+},
+onImportBulkExpenseScreen:function (){
+    this.fnCkUserLoggedIn(oRouter,"BulkExpenseTracker")
+},
 
+onDelete: function (oEvent) {
+    var that = this;
 
+    // Get selected expense details from table row
+    var oContext = oEvent.getSource().getBindingContext("oExpenseModel");
+
+    if (!oContext) {
+        MessageToast.show("Unable to get expense details");
+        return;
+    }
+
+    var oExpense = oContext.getObject();
+    var expenseId = oExpense.id;
+
+    if (!expenseId) {
+        MessageToast.show("Expense ID not found");
+        return;
+    }
+
+    // Confirmation before delete
+    sap.m.MessageBox.confirm(
+        "Are you sure you want to delete this expense?",
+        {
+            title: "Confirm Delete",
+            actions: [
+                sap.m.MessageBox.Action.YES,
+                sap.m.MessageBox.Action.NO
+            ],
+            emphasizedAction: sap.m.MessageBox.Action.YES,
+
+            onClose: function (sAction) {
+                if (sAction === sap.m.MessageBox.Action.YES) {
+                    that.fnDeleteExpenseSpend(expenseId);
+                }
+            }
+        }
+    );
+},
+fnDeleteExpenseSpend: function (expenseId) {
+    var that = this;
+    const sAuthToken = that.getUserAuthToken();
+
+    if (!sAuthToken) {
+        MessageToast.show("Session expired. Please login again.");
+        return;
+    }
+
+    BusyIndicator.show(0);
+
+    const oPayload = {
+        sAuthToken: sAuthToken,
+        expenseId: expenseId
+    };
+
+    $.ajax({
+        url: "/api/v1/userDetail/deleteExpenseSpend",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(oPayload),
+
+        success: function (oResponse) {
+            BusyIndicator.hide();
+
+            MessageToast.show(
+                oResponse.message || "Expense deleted successfully"
+            );
+
+            // Remove deleted expense from UI model
+            var oExpenseModel = that.getView().getModel("oExpenseModel");
+
+            if (oExpenseModel) {
+                var aExpenses = oExpenseModel.getProperty("/expenses") || [];
+
+                aExpenses = aExpenses.filter(function (oExpense) {
+                    return String(oExpense.id) !== String(expenseId);
+                });
+
+                oExpenseModel.setProperty("/expenses", aExpenses);
+            }
+
+            // Refresh expense summary and dashboard here
+            // Call your existing expense details fetch method if required.
+        },
+
+        error: function (xhr) {
+            BusyIndicator.hide();
+
+            let oError = {};
+
+            try {
+                oError = JSON.parse(xhr.responseText);
+            } catch (err) { }
+
+            MessageBox.error(
+                oError.message || "Unable to delete expense. Please try again."
+            );
+        }
+    });
+},
 
 
 

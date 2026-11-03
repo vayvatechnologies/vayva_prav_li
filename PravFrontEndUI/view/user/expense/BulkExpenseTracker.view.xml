@@ -1,0 +1,220 @@
+<mvc:View
+    controllerName="sap.ui.demo.toolpageapp.controller.user.expense.BulkExpenseTracker"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <Page
+        showHeader="true"
+        title="Bulk Expense Import"
+        enableScrolling="true">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        type="Transparent"
+                        press=".onNavBack"/>
+                    <Title text="Bulk Expense Import"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        text="Add Row"
+                        icon="sap-icon://add"
+                        type="Emphasized"
+                        press=".onAddRow"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <MessageStrip
+                    text="Enter multiple expenses below. Use More Details to enter optional merchant and expense information."
+                    type="Information"
+                    showIcon="true"
+                    showCloseButton="false"
+                    class="sapUiSmallMarginBottom"/>
+
+                <ScrollContainer
+    width="100%"
+    height="85%"
+    horizontal="true"
+    vertical="false"
+    focusable="true">
+
+   
+<Table
+    id="bulkExpenseTable"
+    class="bulkExpenseTable"
+    items="{bulkExpenseModel>/rows}"
+    fixedLayout="true"
+    width="125rem"
+    inset="false"
+    growing="true"
+    growingThreshold="20">
+
+                    <columns>
+                        <Column >
+                            <Text text="Date - Time"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Type"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Category"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Sub Category"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Description"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Payment Mode"/>
+                        </Column>
+
+                        <Column  hAlign="End">
+                            <Text text="Amount"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="Payment Status"/>
+                        </Column>
+
+                        <Column>
+                            <Text text="More / Delete"/>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem vAlign="Middle"     class="bulkExpenseRow">
+                            <cells>
+
+                                <DateTimePicker
+                                    width="13rem"
+                                    dateValue="{bulkExpenseModel>transactiondatetime}"
+                                    displayFormat="dd-MM-yyyy hh:mm a"
+                                    valueFormat="yyyy-MM-dd'T'HH:mm:ss"/>
+
+                                <ComboBox
+                                    width="9rem"
+                                    selectedKey="{bulkExpenseModel>type}"
+                                    items="{bulkExpenseModel>/types}">
+                                    <core:Item
+                                        key="{bulkExpenseModel>key}"
+                                        text="{bulkExpenseModel>text}"/>
+                                </ComboBox>
+
+                                <ComboBox
+                                    width="12rem"
+                                    selectedKey="{bulkExpenseModel>category}"
+                                    items="{bulkExpenseModel>/category}"
+                                    selectionChange=".onBulkCategoryChange">
+                                    <core:Item
+                                        key="{bulkExpenseModel>key}"
+                                        text="{bulkExpenseModel>text}"/>
+                                </ComboBox>
+
+                                <ComboBox
+                                    width="13rem"
+                                    selectedKey="{bulkExpenseModel>subcategory}"
+                                    items="{bulkExpenseModel>subcategories}"
+                                    enabled="{= ${bulkExpenseModel>subcategories}.length > 0 }"
+                                    selectionChange=".onBulkSubCategoryChange">
+                                    <core:Item
+                                        key="{bulkExpenseModel>subcategory}"
+                                        text="{bulkExpenseModel>subcategory}"/>
+                                </ComboBox>
+
+                                <Input
+                                    width="18rem"
+                                    value="{bulkExpenseModel>description}"
+                                    placeholder="Description"/>
+
+                                <ComboBox
+                                    width="11rem"
+                                    selectedKey="{bulkExpenseModel>payment_mode}"
+                                    items="{bulkExpenseModel>/paymentModes}">
+                                    <core:Item
+                                        key="{bulkExpenseModel>key}"
+                                        text="{bulkExpenseModel>text}"/>
+                                </ComboBox>
+
+                                <Input
+                                    width="9rem"
+                                    type="Number"
+                                    textAlign="End"
+                                    value="{bulkExpenseModel>amount}"
+                                    placeholder="Amount"/>
+
+                                <ComboBox
+                                    width="11rem"
+                                    selectedKey="{bulkExpenseModel>payment_status}"
+                                    items="{bulkExpenseModel>/paymentStatuses}">
+                                    <core:Item
+                                        key="{bulkExpenseModel>key}"
+                                        text="{bulkExpenseModel>text}"/>
+                                </ComboBox>
+
+                               
+<VBox
+    width="11rem"
+    alignItems="Center"
+    justifyContent="Center">
+
+    <Button
+        text="More Details"
+        icon="sap-icon://detail-view"
+        type="Transparent"
+        width="10rem"
+        press=".onToggleMoreDetails"
+        class="sapUiTinyMarginBottom"/>
+
+    <Button
+        text="Delete"
+        icon="sap-icon://delete"
+        type="Reject"
+        width="10rem"
+        press=".onDeleteRow"/>
+
+</VBox>
+
+
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+</ScrollContainer>
+               
+
+            </VBox>
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button
+                    text="Cancel"
+                    icon="sap-icon://decline"
+                    type="Reject"
+                    press=".onCancelBulkExpense"/>
+                <Button
+                    text="Save Expenses"
+                    icon="sap-icon://save"
+                    type="Emphasized"
+                    press=".onSaveBulkExpenses"/>
+            </OverflowToolbar>
+        </footer>
+
+    </Page>
+</mvc:View>

@@ -242,6 +242,12 @@ Available on the Platinum plan."
 								type="Emphasized"
 								press="onAddExpense"
 								tooltip="Add Expense" />
+							<Button
+								text="Bulk Import"
+								icon="sap-icon://upload"
+								type="Emphasized"
+								press="onImportBulkExpenseScreen"
+								tooltip="Nav to Import Screen" />
 
 						</OverflowToolbar>
 					</headerToolbar>

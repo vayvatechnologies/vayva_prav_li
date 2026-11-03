@@ -172,6 +172,13 @@
 					"target": "home",
           			"loginRequired": false
 				},
+				
+				{
+					"pattern": "BulkExpenseTracker",
+					"name": "BulkExpenseTracker",
+					"target": "BulkExpenseTracker",
+          			"loginRequired": true
+				},
 				{
 					"pattern": "ExpenseTracker",
 					"name": "ExpenseTracker",
@@ -261,6 +268,10 @@
 				"ExpenseTracker": {
 					"viewId": "ExpenseTracker",
 					"viewName": "user.expense.ExpenseTracker"
+				},
+				"BulkExpenseTracker": {
+					"viewId": "BulkExpenseTracker",
+					"viewName": "user.expense.BulkExpenseTracker"
 				},
 				"ExpenseCategory": {
 					"viewId": "ExpenseCategory",

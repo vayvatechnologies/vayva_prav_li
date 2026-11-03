@@ -17,15 +17,14 @@ router.post('/getAllUsersList', validateUserDetailsReuests , getAllUsersListCont
 
 
 
-const { getExpenseDetails,getCreateExpenseDetails ,saveExpenseSpend} = require('../controllers/users/Expense/expenseDetailsController');
-const { validateExpenseDetailsReuests , getCreateExpenseValidateRequests,saveExpenseSpendValidateRequests } = require('../middlewares/users/Expense/expenseDetailsValidate');
+const { getExpenseDetails,deleteExpenseSpend,getCreateExpenseDetails ,saveExpenseSpend} = require('../controllers/users/Expense/expenseDetailsController');
+const { validateExpenseDetailsReuests ,deleteExpenseValidateRequests, getCreateExpenseValidateRequests,saveExpenseSpendValidateRequests } = require('../middlewares/users/Expense/expenseDetailsValidate');
 
 // Route: /api/v1/data/login
 router.post('/getExpenseDetails', validateExpenseDetailsReuests , getExpenseDetails);
 router.post('/getCreateExpense', getCreateExpenseValidateRequests , getCreateExpenseDetails);
 router.post('/saveExpenseSpend', saveExpenseSpendValidateRequests , saveExpenseSpend);
-
-  
+  router.post('/deleteExpenseSpend', deleteExpenseValidateRequests, deleteExpenseSpend);
 
 const { getExpenseCategoriesByCategoryandSubcategoryController,getExpenseCategories,getCategoryLists,getSubCategorybyCategory,readExpenseCategoriesbyId,saveExpenseCategories ,deleteExpenseCategoryController} = require('../controllers/users/Expense/expenseCategoryController');
 const { getExpenseCategoriesByCategoryandSubcategoryValidation,validateExpenseCategoryRequests,getCreateExpenseCategoryValidateRequests,insertExpenseCategoryValidateRequests ,deleteExpenseCategoryValidation } = require('../middlewares/users/Expense/expenseCategoryValidate');

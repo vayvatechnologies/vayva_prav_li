@@ -647,3 +647,66 @@ html, body {
 
 
 /* delete template end */
+
+
+.bulkExpenseTable .sapMListTblRow:nth-child(odd) {
+    background-color: #f7f9fc;
+}
+
+.bulkExpenseTable .sapMListTblRow:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.bulkExpenseTable .sapMListTblCell {
+    vertical-align: middle;
+    padding: 0.65rem 0.45rem;
+}
+
+.bulkExpenseTable .sapMInputBase,
+.bulkExpenseTable .sapMComboBox,
+.bulkExpenseTable .sapMDateTimePicker {
+    width: 100%;
+}
+
+.bulkExpenseTable .sapMInputBaseContentWrapper {
+    border-radius: 6px;
+}
+
+.bulkExpenseTable .sapMListTblHeaderCell {
+    background: #edf2f7;
+}
+
+/* Bulk Expense Table */
+
+.bulkExpenseTable .sapMListTblHeaderCell {
+    background-color: #edf2f7;
+    vertical-align: middle;
+    padding: 0.75rem 0.5rem;
+}
+
+.bulkExpenseTable .sapMListTblRow:nth-child(odd) {
+    background-color: #f5f8fc;
+}
+
+.bulkExpenseTable .sapMListTblRow:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.bulkExpenseTable .sapMListTblCell {
+    vertical-align: middle;
+    padding: 0.65rem 0.5rem;
+}
+
+.bulkExpenseTable .sapMInputBase,
+.bulkExpenseTable .sapMComboBox,
+.bulkExpenseTable .sapMDateTimePicker {
+    width: 100%;
+}
+
+.bulkExpenseTable .sapMInputBaseContentWrapper {
+    border-radius: 6px;
+}
+
+.bulkExpenseTable .sapMBtn {
+    border-radius: 6px;
+}

@@ -23,7 +23,7 @@ const getExpenseSpendLists = async (user_id,oFromDate,oToDate) => {
     }
       
     let sQuery = ` SELECT * FROM public.prav_ai_users_expense_spends
-      WHERE user_id = $1 AND transactiondatetime >= $2
+      WHERE user_id = $1 AND transactiondatetime >= $2 and status !='Deleted'
       AND transactiondatetime <= $3 ORDER BY transactiondatetime DESC`;
     
     const result = await db.query(sQuery, [user_id, oFromDate, oToDate]);
@@ -626,5 +626,109 @@ LEFT JOIN top_expense_category ON TRUE;
   };
 }
 
+const deleteExpenseSpend = async (req, res, next) => {
+  try {
+    const { sAuthToken, expenseId } = req.body;
 
-module.exports = { fetchUserExpenseSpendsChartDataByFilter,fetchUserDashboardUserSpends,getExpenseDetails, getCreateExpenseDetails ,saveExpenseSpend};
+    // Step 1: Validate user authorization
+    const authResult = await checkUserAuthToken(sAuthToken);
+
+    if (!authResult.success) {
+      return sendError(
+        res,
+        authResult.message,
+        authResult.type === "SERVER_ERROR" ? 500 : 401,
+        authResult.type
+      );
+    }
+
+    const user = authResult.user;
+
+    // Step 2: Validate expense ID
+    if (!expenseId) {
+      return sendError(
+        res,
+        "Expense ID is required",
+        400,
+        "VALIDATION_ERROR"
+      );
+    }
+
+    // Step 3: Delete expense (Soft Delete)
+    const result = await deleteExpense(user.user_id, expenseId);
+
+    if (!result.success) {
+      return sendError(
+        res,
+        result.message,
+        result.statusCode || 500,
+        result.type || "SERVER_ERROR"
+      );
+    }
+
+    return sendSuccess(
+      res,
+      "Expense deleted successfully",
+      result.data
+    );
+
+  } catch (error) {
+    console.error("Delete Expense Error:", error);
+
+    return sendError(
+      res,
+      "Internal server error",
+      500,
+      "SERVER_ERROR"
+    );
+  }
+};
+async function deleteExpense(userId, expenseId) {
+  try {
+    const deleteQuery = `
+      UPDATE prav_ai_users_expense_spends
+      SET
+        status = 'Deleted',
+        modified_on = NOW(),
+        is_deleted = true,
+        modified_by = $1
+      WHERE
+        user_id = $1
+        AND id = $2
+        AND status = 'Active'
+      RETURNING id;
+    `;
+
+    const result = await db.query(deleteQuery, [
+      userId,
+      expenseId
+    ]);
+
+    if (result.rows.length === 0) {
+      return {
+        success: false,
+        message: "Expense not found or already deleted",
+        statusCode: 404,
+        type: "NOT_FOUND"
+      };
+    }
+
+    return {
+      success: true,
+      data: {
+        expenseId: result.rows[0].id
+      },
+      message: "Expense deleted successfully"
+    };
+
+  } catch (error) {
+    console.error("Delete Expense DB Error:", error);
+
+    return {
+      success: false,
+      message: error.message
+    };
+  }
+}
+
+module.exports = { fetchUserExpenseSpendsChartDataByFilter,fetchUserDashboardUserSpends,getExpenseDetails, getCreateExpenseDetails ,saveExpenseSpend,deleteExpenseSpend};
